@@ -15,6 +15,8 @@
 		AF872E0C2382ED82002B070C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF872E0A2382ED82002B070C /* LaunchScreen.storyboard */; };
 		AF872E172382ED82002B070C /* Galaxy_EscapeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF872E162382ED82002B070C /* Galaxy_EscapeTests.swift */; };
 		AF872E222382ED82002B070C /* Galaxy_EscapeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF872E212382ED82002B070C /* Galaxy_EscapeUITests.swift */; };
+		AF872E3023841455002B070C /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF872E2F23841455002B070C /* MainMenuViewController.swift */; };
+		AF872E34238420CE002B070C /* SPACP.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AF872E33238420CE002B070C /* SPACP.TTF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		AF872E1D2382ED82002B070C /* Galaxy EscapeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Galaxy EscapeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF872E212382ED82002B070C /* Galaxy_EscapeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Galaxy_EscapeUITests.swift; sourceTree = "<group>"; };
 		AF872E232382ED82002B070C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF872E2F23841455002B070C /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		AF872E33238420CE002B070C /* SPACP.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = SPACP.TTF; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +107,10 @@
 				AF872E012382ED7F002B070C /* art.scnassets */,
 				AF872E032382ED7F002B070C /* GameViewController.swift */,
 				AF872E052382ED7F002B070C /* Main.storyboard */,
+				AF872E2F23841455002B070C /* MainMenuViewController.swift */,
 				AF872E082382ED82002B070C /* Assets.xcassets */,
 				AF872E0A2382ED82002B070C /* LaunchScreen.storyboard */,
+				AF872E33238420CE002B070C /* SPACP.TTF */,
 				AF872E0D2382ED82002B070C /* Info.plist */,
 			);
 			path = "Galaxy Escape";
@@ -233,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF872E022382ED7F002B070C /* art.scnassets in Resources */,
+				AF872E34238420CE002B070C /* SPACP.TTF in Resources */,
 				AF872E0C2382ED82002B070C /* LaunchScreen.storyboard in Resources */,
 				AF872E092382ED82002B070C /* Assets.xcassets in Resources */,
 				AF872E072382ED7F002B070C /* Main.storyboard in Resources */,
@@ -260,6 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF872E3023841455002B070C /* MainMenuViewController.swift in Sources */,
 				AF872E042382ED7F002B070C /* GameViewController.swift in Sources */,
 				AF872E002382ED7F002B070C /* AppDelegate.swift in Sources */,
 			);
@@ -437,6 +445,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G3CQTBK5N8;
 				INFOPLIST_FILE = "Galaxy Escape/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,6 +464,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G3CQTBK5N8;
 				INFOPLIST_FILE = "Galaxy Escape/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

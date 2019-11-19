@@ -44,7 +44,7 @@ class GameViewController: UIViewController {
         let ship = scene.rootNode.childNode(withName: "ship", recursively: true)!
         
         // animate the 3d object
-        ship.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
+        //ship.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
         
         // retrieve the SCNView
         let scnView = self.view as! SCNView
@@ -65,6 +65,8 @@ class GameViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         scnView.addGestureRecognizer(tapGesture)
     }
+    
+    
     
     @objc
     func handleTap(_ gestureRecognize: UIGestureRecognizer) {
