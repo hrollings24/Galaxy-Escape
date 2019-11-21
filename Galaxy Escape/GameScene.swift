@@ -10,8 +10,13 @@ import UIKit
 import SceneKit
 import Foundation
 
+struct CollisionCategory: OptionSet {
+   let rawValue: Int
+   static let laserCategory  = CollisionCategory(rawValue: 1 << 0)
+   static let meteorCategory = CollisionCategory(rawValue: 1 << 1)
+}
 
-class GameScene: SCNScene{
+class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
     var cameraNode: SCNNode!
     
@@ -34,6 +39,7 @@ class GameScene: SCNScene{
 
     func setupScene() {
             
+        self.physicsWorld.contactDelegate = self
         self.background.contents = "Comet Clash Background.png"
     }
         
@@ -48,7 +54,7 @@ class GameScene: SCNScene{
       self.rootNode.addChildNode(cameraNode)
     }
         
-    func spawnShape() {
+    func spawnMeteor() {
         // 1
         var geometry:SCNGeometry
         // 2
@@ -59,10 +65,12 @@ class GameScene: SCNScene{
           chamferRadius: 0.0)
         }
         // 4
-        let geometryNode = SCNNode(geometry: geometry)
+        let meteorNode = SCNNode(geometry: geometry)
         // 5
-        geometryNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        geometryNode.physicsBody?.isAffectedByGravity = false
+        meteorNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        meteorNode.physicsBody?.isAffectedByGravity = false
+        meteorNode.physicsBody?.categoryBitMask = CollisionCategory.meteorCategory.rawValue
+        meteorNode.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue
         // 1
         let randomX = Float.random(in: -12 ..< -7)
         let randomY = Float.random(in: -5 ..< 5)
@@ -71,11 +79,11 @@ class GameScene: SCNScene{
         // 3
         let position = SCNVector3(x: 0.05, y: 0.05, z: 0.05)
         // 4
-        geometryNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
+        meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
 
         let randomPosY = Float.random(in: -8 ..< 8)
-        geometryNode.position = SCNVector3(x: 18, y: Float(randomPosY), z: 0)
-        self.rootNode.addChildNode(geometryNode)
+        meteorNode.position = SCNVector3(x: 18, y: Float(randomPosY), z: 0)
+        self.rootNode.addChildNode(meteorNode)
         
     }
     
@@ -95,8 +103,6 @@ class GameScene: SCNScene{
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
-
-        
         laserNode.position = SCNVector3(x: -10, y: 0, z: 0)
         laserNode.rotation = SCNVector4Make(1, 0, 0, .pi / 2)
         laserNode.rotation = SCNVector4Make(0, 0, 1, .pi / 2)
@@ -105,26 +111,33 @@ class GameScene: SCNScene{
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         laserNode.physicsBody?.velocity = SCNVector3Make(10, 0, 0)
         laserNode.physicsBody?.isAffectedByGravity = false
+        laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
+        laserNode.physicsBody?.collisionBitMask = CollisionCategory.meteorCategory.rawValue
 
         self.rootNode.addChildNode(laserNode)
     }
     
-
-        
+    
         
         
     func scheduledTimerWithTimeInterval(){
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.spawnMeteor), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
     }
 
-    @objc func spawnMeteor(){
-        spawnShape()
+    @objc func spawnMeteor1(){
+        spawnMeteor()
     }
     
     func randRange (lower: Int , upper: Int) -> Int {
         return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
     }
+    
+   func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        
+        print("collision")
+    }
+    
     
     
     
