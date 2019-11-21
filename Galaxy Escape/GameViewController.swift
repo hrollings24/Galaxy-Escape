@@ -51,7 +51,7 @@ class GameViewController: UIViewController {
       scnScene = SCNScene()
       scnView.scene = scnScene
         
-        scnScene.background.contents = "GeometryFighter.scnassets/Textures/Comet Clash Background.png"
+      scnScene.background.contents = "Comet Clash Background.png"
     }
     
     func setupCamera() {
@@ -81,8 +81,8 @@ class GameViewController: UIViewController {
         geometryNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         geometryNode.physicsBody?.isAffectedByGravity = false
         // 1
-        let randomX = randRange(lower: -12, upper: -9)
-        let randomY = randRange(lower: -5, upper: 5)
+        let randomX = Float.random(in: -12 ..< -7)
+        let randomY = Float.random(in: -5 ..< 5)
         // 2
         let force = SCNVector3(x: randomX, y: randomY , z: 0)
         // 3
@@ -90,7 +90,8 @@ class GameViewController: UIViewController {
         // 4
         geometryNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
 
-        geometryNode.position = SCNVector3(x: 18, y: 0, z: 0)
+        let randomPosY = Float.random(in: -8 ..< 8)
+        geometryNode.position = SCNVector3(x: 18, y: Float(randomPosY), z: 0)
         scnScene.rootNode.addChildNode(geometryNode)
         
     }
@@ -102,8 +103,9 @@ class GameViewController: UIViewController {
         shipNode.position = SCNVector3(x: -10, y: 0, z: 0)
         scnScene.rootNode.addChildNode(shipNode)
 
-        
     }
+    
+    
     
     func scheduledTimerWithTimeInterval(){
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 1 seconds
@@ -114,8 +116,8 @@ class GameViewController: UIViewController {
         spawnShape()
     }
     
-    func randRange (lower: Float , upper: Float) -> Float {
-        return lower + Float(arc4random_uniform(UInt32(upper - lower + 1)))
+    func randRange (lower: Int , upper: Int) -> Int {
+        return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
     }
     
     
