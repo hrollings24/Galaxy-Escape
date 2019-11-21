@@ -71,6 +71,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         meteorNode.physicsBody?.isAffectedByGravity = false
         meteorNode.physicsBody?.categoryBitMask = CollisionCategory.meteorCategory.rawValue
         meteorNode.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue
+        meteorNode.name = "meteor"
         // 1
         let randomX = Float.random(in: -12 ..< -7)
         let randomY = Float.random(in: -5 ..< 5)
@@ -106,6 +107,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         laserNode.position = SCNVector3(x: -10, y: 0, z: 0)
         laserNode.rotation = SCNVector4Make(1, 0, 0, .pi / 2)
         laserNode.rotation = SCNVector4Make(0, 0, 1, .pi / 2)
+        laserNode.name = "laser"
 
 
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
@@ -135,7 +137,22 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         
-        print("collision")
+    
+        if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
+            //remove meteor and laser
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
+
+
+        }
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
+            //remove meteor and laser
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
+        }
+        else{
+            print("incorrect collision")
+        }
     }
     
     

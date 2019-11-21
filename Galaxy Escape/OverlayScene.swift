@@ -13,6 +13,7 @@ import SpriteKit
 class OverlayScene: SKScene {
     
     var scoreNode: SKLabelNode!
+    var counter = 0
     
     var score = 0 {
         didSet {
@@ -37,10 +38,18 @@ class OverlayScene: SKScene {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touched")
-    }
+     override func update(_ currentTime: TimeInterval) {
+           if counter >= 30 {
+               score += 1
+               counter = 0
+               scoreNode.text = "Score: \(self.score)"
+           } else {
+               counter += 1
+           }
+        
+       }
+    
+    
     
 }
