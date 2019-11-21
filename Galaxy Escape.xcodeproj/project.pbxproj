@@ -17,6 +17,8 @@
 		AF872E222382ED82002B070C /* Galaxy_EscapeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF872E212382ED82002B070C /* Galaxy_EscapeUITests.swift */; };
 		AF872E3023841455002B070C /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF872E2F23841455002B070C /* MainMenuViewController.swift */; };
 		AF872E34238420CE002B070C /* SPACP.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AF872E33238420CE002B070C /* SPACP.TTF */; };
+		AFBC7DCA2386B40100E2C644 /* OverlayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBC7DC92386B40100E2C644 /* OverlayScene.swift */; };
+		AFBC7DCC2386B62A00E2C644 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBC7DCB2386B62A00E2C644 /* GameScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		AF872E232382ED82002B070C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF872E2F23841455002B070C /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		AF872E33238420CE002B070C /* SPACP.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = SPACP.TTF; sourceTree = "<group>"; };
+		AFBC7DC92386B40100E2C644 /* OverlayScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayScene.swift; sourceTree = "<group>"; };
+		AFBC7DCB2386B62A00E2C644 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,7 @@
 		AF872DF32382ED7F002B070C = {
 			isa = PBXGroup;
 			children = (
+				AFBC7DC92386B40100E2C644 /* OverlayScene.swift */,
 				AF872DFE2382ED7F002B070C /* Galaxy Escape */,
 				AF872E152382ED82002B070C /* Galaxy EscapeTests */,
 				AF872E202382ED82002B070C /* Galaxy EscapeUITests */,
@@ -106,6 +111,7 @@
 				AF872DFF2382ED7F002B070C /* AppDelegate.swift */,
 				AF872E012382ED7F002B070C /* art.scnassets */,
 				AF872E032382ED7F002B070C /* GameViewController.swift */,
+				AFBC7DCB2386B62A00E2C644 /* GameScene.swift */,
 				AF872E052382ED7F002B070C /* Main.storyboard */,
 				AF872E2F23841455002B070C /* MainMenuViewController.swift */,
 				AF872E082382ED82002B070C /* Assets.xcassets */,
@@ -267,9 +273,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFBC7DCC2386B62A00E2C644 /* GameScene.swift in Sources */,
 				AF872E3023841455002B070C /* MainMenuViewController.swift in Sources */,
 				AF872E042382ED7F002B070C /* GameViewController.swift in Sources */,
 				AF872E002382ED7F002B070C /* AppDelegate.swift in Sources */,
+				AFBC7DCA2386B40100E2C644 /* OverlayScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
