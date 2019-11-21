@@ -16,7 +16,7 @@ class OverlayScene: SKScene {
     
     var score = 0 {
         didSet {
-            self.scoreNode.text = "Score: \(self.score)"
+            scoreNode.text = "Score: \(self.score)"
         }
     }
     
@@ -25,16 +25,22 @@ class OverlayScene: SKScene {
         
         self.backgroundColor = UIColor.clear
                 
-        self.scoreNode = SKLabelNode(text: "Score: 0")
-        self.scoreNode.fontName = "DINAlternate-Bold"
-        self.scoreNode.fontColor = UIColor.black
-        self.scoreNode.fontSize = 24
-        self.scoreNode.position = CGPoint(x: 10, y: 10)
+        scoreNode = SKLabelNode(text: "Score: 0")
+        scoreNode.fontName = "DINAlternate-Bold"
+        scoreNode.fontColor = UIColor.white
+        scoreNode.fontSize = 24
+        scoreNode.position = CGPoint(x: scoreNode.frame.width + 5, y: self.frame.height - scoreNode.frame.height - 7)
         
-        self.addChild(self.scoreNode)
+        self.addChild(scoreNode)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+   
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touched")
+    }
+    
 }
