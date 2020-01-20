@@ -19,6 +19,7 @@ struct CollisionCategory: OptionSet {
 class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
     var cameraNode: SCNNode!
+    var shipNode: SCNNode!
     
     var timer = Timer()
     
@@ -73,26 +74,27 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         meteorNode.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue
         meteorNode.name = "meteor"
         // 1
-        let randomX = Float.random(in: -12 ..< -7)
+        let randomX = Float.random(in: -10 ..< 10)
         let randomY = Float.random(in: -5 ..< 5)
         // 2
-        let force = SCNVector3(x: randomX, y: randomY , z: 0)
+        let force = SCNVector3(x: randomX, y: randomY , z: 20)
         // 3
         let position = SCNVector3(x: 0.05, y: 0.05, z: 0.05)
         // 4
         meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
 
         let randomPosY = Float.random(in: -8 ..< 8)
-        meteorNode.position = SCNVector3(x: 18, y: Float(randomPosY), z: 0)
+        meteorNode.position = SCNVector3(x: 0, y: Float(randomPosY), z: -20)
         self.rootNode.addChildNode(meteorNode)
         
     }
     
     func addSpaceship(){
         let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        let shipNode = scene.rootNode.childNode(withName: "ship", recursively: true)!
+        shipNode = scene.rootNode.childNode(withName: "ship", recursively: true)!
 
-        shipNode.position = SCNVector3(x: -10, y: 0, z: 0)
+        shipNode.position = SCNVector3(x: 0, y: 0, z: 0)
+        shipNode.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi));
         self.rootNode.addChildNode(shipNode)
 
     }
@@ -104,14 +106,14 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
-        laserNode.position = SCNVector3(x: -10, y: 0, z: 0)
+        laserNode.position = shipNode.position
         laserNode.rotation = SCNVector4Make(1, 0, 0, .pi / 2)
-        laserNode.rotation = SCNVector4Make(0, 0, 1, .pi / 2)
+        //laserNode.rotation = SCNVector4Make(0, 0, 1, .pi / 2)
         laserNode.name = "laser"
 
 
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        laserNode.physicsBody?.velocity = SCNVector3Make(10, 0, 0)
+        laserNode.physicsBody?.velocity = SCNVector3Make(0, 0, -10)
         laserNode.physicsBody?.isAffectedByGravity = false
         laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
         laserNode.physicsBody?.collisionBitMask = CollisionCategory.meteorCategory.rawValue
@@ -119,7 +121,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         self.rootNode.addChildNode(laserNode)
     }
     
-    
+ 
         
         
     func scheduledTimerWithTimeInterval(){
@@ -154,6 +156,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
             print("incorrect collision")
         }
     }
+    
+    func setShipPosition(pos: SCNVector3){
+        shipNode.position =  pos
+    }
+    
+    func getShipPositionX() -> SCNVector3{
+        return shipNode.position
+    }
+   
     
     
     
