@@ -14,6 +14,7 @@ struct CollisionCategory: OptionSet {
    let rawValue: Int
    static let laserCategory  = CollisionCategory(rawValue: 1 << 0)
    static let meteorCategory = CollisionCategory(rawValue: 1 << 1)
+   static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
 }
 
 class GameScene: SCNScene, SCNPhysicsContactDelegate{
@@ -41,7 +42,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     func setupScene() {
             
         self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = SCNVector3(x: 0, y: 0, z: 0)
+
         self.background.contents = "Comet Clash Background.png"
+        
     }
         
     func setupCamera() {
@@ -71,13 +75,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         meteorNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         meteorNode.physicsBody?.isAffectedByGravity = false
         meteorNode.physicsBody?.categoryBitMask = CollisionCategory.meteorCategory.rawValue
-        meteorNode.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue
+        meteorNode.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue | CollisionCategory.shipCatagory.rawValue
         meteorNode.name = "meteor"
+        meteorNode.physicsBody?.collisionBitMask = 0
+
         // 1
-        let randomX = Float.random(in: -10 ..< 10)
-        let randomY = Float.random(in: -5 ..< 5)
+        let randomX = Float.random(in: -7 ..< 7)
+        let randomY = Float.random(in: -3 ..< 3)
         // 2
-        let force = SCNVector3(x: randomX, y: randomY , z: 20)
+        let force = SCNVector3(x: randomX, y: randomY , z: 10)
         // 3
         let position = SCNVector3(x: 0.05, y: 0.05, z: 0.05)
         // 4
@@ -93,8 +99,17 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         let scene = SCNScene(named: "art.scnassets/ship.scn")!
         shipNode = scene.rootNode.childNode(withName: "ship", recursively: true)!
 
+        shipNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+
         shipNode.position = SCNVector3(x: 0, y: 0, z: 0)
         shipNode.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi));
+        shipNode.physicsBody?.isAffectedByGravity = false
+        shipNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        shipNode.physicsBody?.categoryBitMask = CollisionCategory.shipCatagory.rawValue
+        shipNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+        shipNode.physicsBody?.collisionBitMask = 0
+
+        
         self.rootNode.addChildNode(shipNode)
 
     }
@@ -102,7 +117,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     func spawnLaser(){
         //called when button is pressed
         //create cylinder
-        let laser = SCNCylinder(radius: 0.08, height: 1.5)
+        let laser = SCNCylinder(radius: 0.5, height: 2)
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
@@ -116,7 +131,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         laserNode.physicsBody?.velocity = SCNVector3Make(0, 0, -10)
         laserNode.physicsBody?.isAffectedByGravity = false
         laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
-        laserNode.physicsBody?.collisionBitMask = CollisionCategory.meteorCategory.rawValue
+        laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+        laserNode.physicsBody?.collisionBitMask = 0
+
 
         self.rootNode.addChildNode(laserNode)
     }
@@ -139,16 +156,27 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         
-    
+        print("WARP")
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
-
-
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
+        }
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
+            //collision between ship and meteor
+            print("YAP")
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
+        }
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
+            //collision between meteor and ship
+            print("YARP")
+
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
         }
