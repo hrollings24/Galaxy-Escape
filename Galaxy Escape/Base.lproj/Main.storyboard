@@ -23,6 +23,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="fnd-Gm-VQO"/>
                     </view>
+                    <navigationItem key="navigationItem" id="oqp-6t-Ana"/>
                     <connections>
                         <segue destination="BV1-FR-VrT" kind="show" identifier="playGame" id="J8d-Sl-q4d"/>
                     </connections>
@@ -85,6 +86,7 @@
                                 </state>
                                 <connections>
                                     <action selector="menu:" destination="Cb7-lO-CUf" eventType="touchUpInside" id="oYo-HW-SCB"/>
+                                    <segue destination="5sv-tk-FDj" kind="show" id="Bbb-PN-ogQ"/>
                                 </connections>
                             </button>
                         </subviews>

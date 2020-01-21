@@ -36,8 +36,9 @@ class GameViewController: UIViewController {
         self.view.addSubview(self.sceneView)
         
         self.spriteScene = OverlayScene(size: self.view.bounds.size)
+        self.spriteScene.gameVC = self
         self.sceneView.overlaySKScene = self.spriteScene
-        self.sceneView.overlaySKScene?.isUserInteractionEnabled = false
+        self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
         
     }
     
@@ -70,6 +71,10 @@ class GameViewController: UIViewController {
             self.performSegue(withIdentifier: "endSegue", sender: self)
         }
         
+    }
+    
+    func fire(){
+        sceneGame.spawnLaser()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)

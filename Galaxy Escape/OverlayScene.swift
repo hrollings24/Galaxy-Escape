@@ -14,6 +14,7 @@ class OverlayScene: SKScene {
     
     var scoreNode: SKLabelNode!
     var counter = 0
+    var gameVC: GameViewController!
     
     var score = 0 {
         didSet {
@@ -23,6 +24,8 @@ class OverlayScene: SKScene {
     
     override init(size: CGSize) {
         super.init(size: size)
+                
+        addFireButton()
         
         self.backgroundColor = UIColor.clear
                 
@@ -37,6 +40,34 @@ class OverlayScene: SKScene {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func addFireButton(){
+        let fireBtn = SKSpriteNode(imageNamed: "firebutton")
+        fireBtn.size = CGSize(width: 50, height: 50)
+        fireBtn.position = CGPoint(x: 50, y: 50)
+        fireBtn.name = "fire"
+
+        self.addChild(fireBtn)
+
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch:UITouch = touches.first! as UITouch
+        let positionInScene = touch.location(in: self)
+        let touchedNode = self.atPoint(positionInScene)
+
+        if let name = touchedNode.name
+        {
+            if name == "fire"
+            {
+                print("FIRE")
+                gameVC.fire()
+                
+                
+            }
+        }
+
     }
    
      override func update(_ currentTime: TimeInterval) {
