@@ -30,6 +30,7 @@ class GameViewController: UIViewController {
         
         // add a tap gesture recognizer
         let tapGesture = UIPanGestureRecognizer(target: self, action:#selector(moveSpaceship))
+        tapGesture.maximumNumberOfTouches = 1
         sceneView.addGestureRecognizer(tapGesture)
         
         
