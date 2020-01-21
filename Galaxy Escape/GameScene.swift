@@ -21,13 +21,17 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
     var cameraNode: SCNNode!
     var shipNode: SCNNode!
+    var gameVC: GameViewController!
+
     
     var timer = Timer()
     
     
-    override init(){
+    init(gameViewController: GameViewController){
         super.init()
 
+        gameVC = gameViewController
+        
         setupScene()
         setupCamera()
         addSpaceship()
@@ -156,7 +160,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         
-        print("WARP")
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
             contact.nodeA.removeFromParentNode()
@@ -169,16 +172,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
             //collision between ship and meteor
-            print("YAP")
-            contact.nodeA.removeFromParentNode()
-            contact.nodeB.removeFromParentNode()
+            gameVC.endGame()
+
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
             //collision between meteor and ship
-            print("YARP")
-
-            contact.nodeA.removeFromParentNode()
-            contact.nodeB.removeFromParentNode()
+            gameVC.endGame()
         }
         else{
             print("incorrect collision")
@@ -193,6 +192,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         return shipNode.position
     }
    
+    
     
     
     

@@ -18,20 +18,19 @@ class GameViewController: UIViewController {
     var sceneView: SCNView!
     var sceneGame: GameScene!
     var spriteScene: OverlayScene!
-    var movingNow: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        self.sceneGame = GameScene()
+        self.sceneGame = GameScene(gameViewController: self)
         self.sceneView.scene = sceneGame
         self.sceneView.autoenablesDefaultLighting = true
+
         
         // add a tap gesture recognizer
         let tapGesture = UIPanGestureRecognizer(target: self, action:#selector(moveSpaceship))
         sceneView.addGestureRecognizer(tapGesture)
-        movingNow = false
         
         
         self.view.addSubview(self.sceneView)
@@ -41,6 +40,7 @@ class GameViewController: UIViewController {
         self.sceneView.overlaySKScene?.isUserInteractionEnabled = false
         
     }
+    
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -63,15 +63,29 @@ class GameViewController: UIViewController {
 
 
     }
- 
-  
+    
+    func endGame(){
+        print((UserDefaults.standard.value(forKey: "highscore") as! Int))
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "endSegue", sender: self)
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.destination is EndViewController
+        {
+            let vc = segue.destination as? EndViewController
+            vc?.score = spriteScene.score
+        }
+    }
     
     func CGPointToSCNVector3(view: SCNView, depth: Float, point: CGPoint) -> SCNVector3 {
            let projectedOrigin = view.projectPoint(SCNVector3Make(0, 0, depth))
            let locationWithz   = SCNVector3Make(Float(point.x), Float(point.y), projectedOrigin.z)
            return view.unprojectPoint(locationWithz)
        }
-    
-    
+  
    
 }

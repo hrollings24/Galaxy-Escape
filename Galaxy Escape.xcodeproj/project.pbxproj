@@ -19,6 +19,7 @@
 		AF872E34238420CE002B070C /* SPACP.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AF872E33238420CE002B070C /* SPACP.TTF */; };
 		AFBC7DCC2386B62A00E2C644 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBC7DCB2386B62A00E2C644 /* GameScene.swift */; };
 		AFBC7DD02386BC0B00E2C644 /* OverlayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBC7DCF2386BC0B00E2C644 /* OverlayScene.swift */; };
+		AFF8DD0623D7264100E5E760 /* EndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF8DD0523D7264100E5E760 /* EndViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		AF872E33238420CE002B070C /* SPACP.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = SPACP.TTF; sourceTree = "<group>"; };
 		AFBC7DCB2386B62A00E2C644 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		AFBC7DCF2386BC0B00E2C644 /* OverlayScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayScene.swift; sourceTree = "<group>"; };
+		AFF8DD0523D7264100E5E760 /* EndViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				AF872E032382ED7F002B070C /* GameViewController.swift */,
 				AFBC7DCB2386B62A00E2C644 /* GameScene.swift */,
 				AFBC7DCF2386BC0B00E2C644 /* OverlayScene.swift */,
+				AFF8DD0523D7264100E5E760 /* EndViewController.swift */,
 				AF872E052382ED7F002B070C /* Main.storyboard */,
 				AF872E2F23841455002B070C /* MainMenuViewController.swift */,
 				AF872E082382ED82002B070C /* Assets.xcassets */,
@@ -273,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFF8DD0623D7264100E5E760 /* EndViewController.swift in Sources */,
 				AFBC7DCC2386B62A00E2C644 /* GameScene.swift in Sources */,
 				AFBC7DD02386BC0B00E2C644 /* OverlayScene.swift in Sources */,
 				AF872E3023841455002B070C /* MainMenuViewController.swift in Sources */,
