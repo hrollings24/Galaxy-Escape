@@ -43,6 +43,7 @@ class OverlayScene: SKScene {
     }
     
     func addFireButton(){
+    
         let fireBtn = SKSpriteNode(imageNamed: "firebutton")
         fireBtn.size = CGSize(width: 50, height: 50)
         fireBtn.position = CGPoint(x: 50, y: 50)
@@ -51,24 +52,7 @@ class OverlayScene: SKScene {
         self.addChild(fireBtn)
 
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch:UITouch = touches.first! as UITouch
-        let positionInScene = touch.location(in: self)
-        let touchedNode = self.atPoint(positionInScene)
 
-        if let name = touchedNode.name
-        {
-            if name == "fire"
-            {
-                print("FIRE")
-                gameVC.fire()
-                
-                
-            }
-        }
-
-    }
    
      override func update(_ currentTime: TimeInterval) {
            if counter >= 30 {

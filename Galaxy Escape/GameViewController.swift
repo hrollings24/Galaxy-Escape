@@ -12,12 +12,15 @@ import SpriteKit
 import GameplayKit
 
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, UIGestureRecognizerDelegate {
 
     
     var sceneView: SCNView!
     var sceneGame: GameScene!
     var spriteScene: OverlayScene!
+    var panGesture: UIPanGestureRecognizer!
+    var tapGesture: UITapGestureRecognizer!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +32,17 @@ class GameViewController: UIViewController {
 
         
         // add a tap gesture recognizer
-        let tapGesture = UIPanGestureRecognizer(target: self, action:#selector(moveSpaceship))
-        tapGesture.maximumNumberOfTouches = 1
+        panGesture = UIPanGestureRecognizer(target: self, action:#selector(moveSpaceship))
+        panGesture.maximumNumberOfTouches = 1
+        panGesture.delegate = self
+        sceneView.addGestureRecognizer(panGesture)
+        
+        //Add tap recognition
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapCalled))
+        tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
         
-        
+    
         self.view.addSubview(self.sceneView)
         
         self.spriteScene = OverlayScene(size: self.view.bounds.size)
@@ -43,11 +52,6 @@ class GameViewController: UIViewController {
         
     }
     
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        sceneGame.spawnLaser()
-    }
     
     
     var previousLoc = CGPoint.init(x: 0, y: 0)
@@ -74,6 +78,22 @@ class GameViewController: UIViewController {
         
     }
     
+    @objc func tapCalled(sender:UITapGestureRecognizer){
+    
+        if sender.state == .ended {
+            var touchLocation: CGPoint = sender.location(in: sender.view)
+            touchLocation = spriteScene.convertPoint(fromView: touchLocation)
+            let touchedNode = spriteScene.atPoint(touchLocation)
+
+            if let name = touchedNode.name {
+                if name == "fire"{
+                    fire()
+                }
+            }
+        }
+    }
+
+    
     func fire(){
         sceneGame.spawnLaser()
     }
@@ -85,6 +105,14 @@ class GameViewController: UIViewController {
             let vc = segue.destination as? EndViewController
             vc?.score = spriteScene.score
         }
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+
+        if gestureRecognizer == panGesture && otherGestureRecognizer == tapGesture {
+            return true
+        }
+        return false
     }
     
     func CGPointToSCNVector3(view: SCNView, depth: Float, point: CGPoint) -> SCNVector3 {
