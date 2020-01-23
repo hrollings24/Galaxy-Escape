@@ -48,7 +48,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = SCNVector3(x: 0, y: 0, z: 0)
 
-        self.background.contents = "Comet Clash Background.png"
+        self.background.contents = [UIImage(named: "skybox3_left"),
+                                    UIImage(named: "skybox3_right"),
+                                    UIImage(named: "skybox3_up"),
+                                    UIImage(named: "skybox3_down"),
+                                    UIImage(named: "skybox3_back"),
+                                    UIImage(named: "skybox3_front")]
         
     }
         
@@ -70,8 +75,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         switch ShapeType.random() {
         default:
         // 3
-        geometry = SCNBox(width: 1.0, height: 1.0, length: 1.0,
-          chamferRadius: 0.0)
+        geometry = SCNSphere(radius: 0.5)
         }
         // 4
         let meteorNode = SCNNode(geometry: geometry)
@@ -89,7 +93,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         // 2
         let force = SCNVector3(x: randomX, y: randomY , z: 10)
         // 3
-        let position = SCNVector3(x: 0.05, y: 0.05, z: 0.05)
+        let position = SCNVector3(x: 0.05, y: 0.05, z: -20)
         // 4
         meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
 
