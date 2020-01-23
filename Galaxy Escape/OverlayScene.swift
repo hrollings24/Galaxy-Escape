@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import UIKit
 
 
 class OverlayScene: SKScene {
@@ -52,8 +53,9 @@ class OverlayScene: SKScene {
         self.addChild(fireBtn)
 
     }
-
-   
+    
+    
+    
      override func update(_ currentTime: TimeInterval) {
            if counter >= 30 {
                score += 1

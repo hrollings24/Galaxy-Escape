@@ -71,7 +71,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func endGame(){
-        print((UserDefaults.standard.value(forKey: "highscore") as! Int))
+        
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "endSegue", sender: self)
         }

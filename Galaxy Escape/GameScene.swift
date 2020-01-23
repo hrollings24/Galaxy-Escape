@@ -172,11 +172,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
             //collision between ship and meteor
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
             gameVC.endGame()
 
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
             //collision between meteor and ship
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
             gameVC.endGame()
         }
         else{
@@ -193,7 +197,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     }
    
     
-    
+    func gameEnded(){
+        
+    }
     
     
     
