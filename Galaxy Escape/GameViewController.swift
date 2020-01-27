@@ -18,37 +18,56 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
     var sceneView: SCNView!
     var sceneGame: GameScene!
     var spriteScene: OverlayScene!
+    var menuScene: MenuScene!
     var panGesture: UIPanGestureRecognizer!
     var tapGesture: UITapGestureRecognizer!
+    var tapGestureMenu: UITapGestureRecognizer!
+
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         self.sceneGame = GameScene(gameViewController: self)
         self.sceneView.scene = sceneGame
         self.sceneView.autoenablesDefaultLighting = true
-
         
+        self.view.addSubview(self.sceneView)
+        
+        //Add tap recognition
+        tapGestureMenu = UITapGestureRecognizer(target: self, action: #selector(tapCalledMenu))
+        tapGestureMenu.delegate = self
+        sceneView.addGestureRecognizer(tapGestureMenu)
+
+        self.menuScene = MenuScene(size: self.view.bounds.size)
+        self.menuScene.gameVC = self
+        self.sceneView.overlaySKScene = self.menuScene
+        self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
+        
+    }
+    
+    func setupGame(){
+      
         // add a tap gesture recognizer
         panGesture = UIPanGestureRecognizer(target: self, action:#selector(moveSpaceship))
         panGesture.maximumNumberOfTouches = 1
         panGesture.delegate = self
         sceneView.addGestureRecognizer(panGesture)
         
-        //Add tap recognition
+        sceneView.removeGestureRecognizer(tapGestureMenu)
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapCalled))
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
+
         
-    
-        self.view.addSubview(self.sceneView)
         
         self.spriteScene = OverlayScene(size: self.view.bounds.size)
         self.spriteScene.gameVC = self
         self.sceneView.overlaySKScene = self.spriteScene
         self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
+        
+        self.sceneGame.startGame()
         
     }
     
@@ -92,6 +111,21 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
     }
+    
+    @objc func tapCalledMenu(sender:UITapGestureRecognizer){
+       
+           if sender.state == .ended {
+               var touchLocation: CGPoint = sender.location(in: sender.view)
+               touchLocation = menuScene.convertPoint(fromView: touchLocation)
+               let touchedNode = menuScene.atPoint(touchLocation)
+
+               if let name = touchedNode.name {
+                   if name == "play"{
+                       setupGame()
+                   }
+               }
+           }
+       }
 
     
     func fire(){
@@ -114,12 +148,5 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         return false
     }
-    
-    func CGPointToSCNVector3(view: SCNView, depth: Float, point: CGPoint) -> SCNVector3 {
-           let projectedOrigin = view.projectPoint(SCNVector3Make(0, 0, depth))
-           let locationWithz   = SCNVector3Make(Float(point.x), Float(point.y), projectedOrigin.z)
-           return view.unprojectPoint(locationWithz)
-       }
-  
    
 }

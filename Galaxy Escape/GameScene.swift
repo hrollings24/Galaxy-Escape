@@ -35,7 +35,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         setupScene()
         setupCamera()
         addSpaceship()
-        scheduledTimerWithTimeInterval()
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -88,17 +87,32 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         meteorNode.physicsBody?.collisionBitMask = 0
 
         // 1
-        let randomX = Float.random(in: -7 ..< 7)
+        let randomX = Float.random(in: -40 ..< 40)
+        print(randomX)
         let randomY = Float.random(in: -3 ..< 3)
+        var randomXForce = Float(0.0)
+        var randomYForce = Float(0.0)
+        
+        if randomX <= 0{
+            randomXForce = Float.random(in: 0 ..< 7)
+        }
+        else{
+            randomXForce = Float.random(in: -7 ..< 0)
+        }
+        if randomY <= 0{
+            randomYForce = Float.random(in: 0 ..< 3)
+        }
+        else{
+            randomYForce = Float.random(in: -3 ..< 0)
+        }
         // 2
-        let force = SCNVector3(x: randomX, y: randomY , z: 10)
+        let force = SCNVector3(x: randomXForce, y: randomYForce , z: 10)
         // 3
-        let position = SCNVector3(x: 0.05, y: 0.05, z: -20)
+        let position = SCNVector3(x: randomX, y: randomY, z: -40)
         // 4
         meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
 
-        let randomPosY = Float.random(in: -8 ..< 8)
-        meteorNode.position = SCNVector3(x: 0, y: Float(randomPosY), z: -20)
+        meteorNode.position = SCNVector3(x: randomX, y: randomY, z: -20)
         self.rootNode.addChildNode(meteorNode)
         
     }
@@ -109,7 +123,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
 
         shipNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
 
-        shipNode.position = SCNVector3(x: 0, y: 0, z: 0)
+        shipNode.position = SCNVector3(x: 0, y: -5, z: 0)
         shipNode.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi));
         shipNode.physicsBody?.isAffectedByGravity = false
         shipNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
@@ -149,9 +163,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
  
         
         
-    func scheduledTimerWithTimeInterval(){
-        // Scheduling timer to Call the function "spawnMeteor" with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+    func startGame(){
+        // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.6 seconds
+        timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
     }
 
     @objc func spawnMeteor1(){
@@ -200,11 +214,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         return shipNode.position
     }
    
-    
-    func gameEnded(){
-        
-    }
-    
     
     
 }
