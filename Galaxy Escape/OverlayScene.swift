@@ -46,8 +46,8 @@ class OverlayScene: SKScene {
     func addFireButton(){
     
         let fireBtn = SKSpriteNode(imageNamed: "firebutton")
-        fireBtn.size = CGSize(width: 50, height: 50)
-        fireBtn.position = CGPoint(x: 50, y: 50)
+        fireBtn.size = CGSize(width: 80, height: 80)
+        fireBtn.position = CGPoint(x: 80, y: 80)
         fireBtn.name = "fire"
 
         self.addChild(fireBtn)

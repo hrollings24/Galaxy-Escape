@@ -9,6 +9,7 @@
 import UIKit
 import SceneKit
 import Foundation
+import AVFoundation
 
 struct CollisionCategory: OptionSet {
    let rawValue: Int
@@ -17,14 +18,22 @@ struct CollisionCategory: OptionSet {
    static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
 }
 
+extension UIDevice {
+    static func vibrate() {
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+}
+
 class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
     var cameraNode: SCNNode!
     var shipNode: SCNNode!
     var gameVC: GameViewController!
+    var meteorArray = [SCNNode]()
 
     
-    var timer = Timer()
+    var meteorTimer = Timer()
+    var checkDistanceTimer = Timer()
     
     
     init(gameViewController: GameViewController){
@@ -111,7 +120,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         let position = SCNVector3(x: randomX, y: randomY, z: -40)
         // 4
         meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
-
+        
+        meteorArray.append(meteorNode)
+                
         meteorNode.position = SCNVector3(x: randomX, y: randomY, z: -20)
         self.rootNode.addChildNode(meteorNode)
         
@@ -165,7 +176,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         
     func startGame(){
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.6 seconds
-        timer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        meteorTimer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
     }
 
     @objc func spawnMeteor1(){
@@ -190,6 +202,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
             //collision between ship and meteor
+            meteorTimer.invalidate()
+            checkDistanceTimer.invalidate()
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
             gameVC.endGame()
@@ -197,6 +211,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
             //collision between meteor and ship
+            meteorTimer.invalidate()
+            checkDistanceTimer.invalidate()
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
             gameVC.endGame()
@@ -213,9 +229,38 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     func getShipPositionX() -> SCNVector3{
         return shipNode.position
     }
-   
     
-    
+    @objc func checkDistances() {
+        //
+        print("kjbdfw")
+        
+        let shipLocation = shipNode.position
+        let xValueMax = shipLocation.x + 5
+        let xValueMin = shipLocation.x - 5
+        let yValueMax = shipLocation.y + 3
+        let yValueMin = shipLocation.y - 3
+        let zValueMax = shipLocation.z + 6
+        let zValueMin = shipLocation.z - 6
+        
+        outerloop: for meteorNode in meteorArray{
+            
+            let realPosition = meteorNode.presentation.worldPosition
+
+            
+            if realPosition.z > 15{
+                let index = meteorArray.firstIndex(of: meteorNode)!
+                meteorArray.remove(at: index)
+                break outerloop
+            }
+            if realPosition.x < xValueMax && realPosition.x > xValueMin {
+                if realPosition.y < yValueMax && realPosition.y > yValueMin {
+                    if realPosition.z < zValueMax && realPosition.z > zValueMin {
+                        UIDevice.vibrate()
+                    }
+                }
+            }
+        }
+    }
 }
 
 enum ShapeType:Int {
