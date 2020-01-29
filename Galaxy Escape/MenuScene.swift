@@ -46,6 +46,7 @@ class MenuScene: SKScene{
         else{
             highscoreLB.text = NSString(format: "HIGHSCORE: %i", UserDefaults.standard.value(forKey: "highscore") as! Int) as String
         }
+        
         self.addChild(highscoreLB)
         
        addButtons()

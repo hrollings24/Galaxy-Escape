@@ -39,8 +39,11 @@ class EndViewController: UIViewController {
     }
 
     @IBAction func replay(_ sender: Any) {
-        let vc : AnyObject! = self.storyboard!.instantiateViewController(withIdentifier: "GameScene")
-        self.show(vc as! UIViewController, sender: vc)
+        let gameScene = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "GameScene") as UIViewController
+        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+        appDelegate.window?.rootViewController = gameScene
+        
+        
     }
     
     @IBAction func menu(_ sender: Any) {

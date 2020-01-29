@@ -10,41 +10,61 @@ import UIKit
 import SceneKit
 import SpriteKit
 import GameplayKit
+import GameKit
 
 
-class GameViewController: UIViewController, UIGestureRecognizerDelegate {
+class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameCenterControllerDelegate {
 
     
     var sceneView: SCNView!
     var sceneGame: GameScene!
     var spriteScene: OverlayScene!
     var menuScene: MenuScene!
+    var endScene: EndScene!
     var panGesture: UIPanGestureRecognizer!
     var tapGesture: UITapGestureRecognizer!
     var tapGestureMenu: UITapGestureRecognizer!
+    var tapGestureEnd: UITapGestureRecognizer!
+
 
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        GameCenter.shared.authPlayer(presentingVC: self)
+        
         self.sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         self.sceneGame = GameScene(gameViewController: self)
         self.sceneView.scene = sceneGame
         self.sceneView.autoenablesDefaultLighting = true
+        self.sceneView.allowsCameraControl = false
         
         self.view.addSubview(self.sceneView)
         
+       
+        setupMenu()
+        
+        
+    }
+    
+    func setupMenu(){
+        if tapGestureEnd != nil {
+            sceneView.removeGestureRecognizer(tapGestureEnd)
+            }
         //Add tap recognition
         tapGestureMenu = UITapGestureRecognizer(target: self, action: #selector(tapCalledMenu))
         tapGestureMenu.delegate = self
         sceneView.addGestureRecognizer(tapGestureMenu)
+        
+        if self.sceneGame.shipOnScreen == false{
+            self.sceneGame.addSpaceship()
+        }
 
         self.menuScene = MenuScene(size: self.view.bounds.size)
         self.menuScene.gameVC = self
         self.sceneView.overlaySKScene = self.menuScene
         self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
-        
     }
     
     func setupGame(){
@@ -56,11 +76,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
         sceneView.addGestureRecognizer(panGesture)
         
         sceneView.removeGestureRecognizer(tapGestureMenu)
+        if tapGestureEnd != nil{
+            sceneView.removeGestureRecognizer(tapGestureEnd)
+        }
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapCalled))
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
 
-        
         
         self.spriteScene = OverlayScene(size: self.view.bounds.size)
         self.spriteScene.gameVC = self
@@ -92,7 +114,16 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
     func endGame(){
         
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "endSegue", sender: self)
+            
+            self.sceneView.removeGestureRecognizer(self.tapGesture)
+            self.tapGestureEnd = UITapGestureRecognizer(target: self, action: #selector(self.tapCalledEnd))
+            self.tapGestureEnd.delegate = self
+            self.sceneView.addGestureRecognizer(self.tapGestureEnd)
+            
+            self.endScene = EndScene(size: self.view.bounds.size)
+            self.endScene.gameVC = self
+            self.sceneView.overlaySKScene = self.endScene
+            self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
         }
         
     }
@@ -112,6 +143,25 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    @objc func tapCalledEnd(sender:UITapGestureRecognizer){
+       
+           if sender.state == .ended {
+               var touchLocation: CGPoint = sender.location(in: sender.view)
+               touchLocation = endScene.convertPoint(fromView: touchLocation)
+               let touchedNode = endScene.atPoint(touchLocation)
+
+               if let name = touchedNode.name {
+                   print(name)
+                   if name == "replay"{
+                       setupGame()
+                   }
+                   else if name == "menu"{
+                       setupMenu()
+                   }
+               }
+           }
+       }
+    
     @objc func tapCalledMenu(sender:UITapGestureRecognizer){
        
            if sender.state == .ended {
@@ -122,6 +172,15 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
                if let name = touchedNode.name {
                    if name == "play"{
                        setupGame()
+                   }
+                   if name == "stats"{
+                       showGameCenter()
+                   }
+                   if name == "replay"{
+                       setupGame()
+                   }
+                   if name == "menu"{
+                       setupMenu()
                    }
                }
            }
@@ -139,6 +198,25 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate {
             let vc = segue.destination as? EndViewController
             vc?.score = spriteScene.score
         }
+    }
+    
+    func showGameCenter(){
+        showLeaderboard()
+        
+    }
+    
+    
+    func showLeaderboard(){
+        let viewController = self.view.window?.rootViewController
+        let gcvc = GKGameCenterViewController()
+        
+        gcvc.gameCenterDelegate = self
+        
+        viewController!.present(gcvc, animated: true, completion: nil)
+    }
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {

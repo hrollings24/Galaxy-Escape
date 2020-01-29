@@ -20,7 +20,7 @@ struct CollisionCategory: OptionSet {
 
 extension UIDevice {
     static func vibrate() {
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        //AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 }
 
@@ -30,6 +30,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     var shipNode: SCNNode!
     var gameVC: GameViewController!
     var meteorArray = [SCNNode]()
+    var meteorNodeMain: SCNNode!
+    var shipOnScreen: Bool!
+    
 
     
     var meteorTimer = Timer()
@@ -44,6 +47,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         setupScene()
         setupCamera()
         addSpaceship()
+        shipOnScreen = true
+
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -66,27 +71,21 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     }
         
     func setupCamera() {
-      // 1
-      cameraNode = SCNNode()
-      // 2
-      cameraNode.camera = SCNCamera()
-      // 3
-      cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
-      // 4
-      self.rootNode.addChildNode(cameraNode)
+        // 1
+        cameraNode = SCNNode()
+        // 2
+        cameraNode.camera = SCNCamera()
+        // 3
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
+        // 4
+        self.rootNode.addChildNode(cameraNode)
+
     }
         
     func spawnMeteor() {
         // 1
-        var geometry:SCNGeometry
-        // 2
-        switch ShapeType.random() {
-        default:
-        // 3
-        geometry = SCNSphere(radius: 0.5)
-        }
-        // 4
-        let meteorNode = SCNNode(geometry: geometry)
+        let meteorNode = meteorNodeMain.clone()
+        
         // 5
         meteorNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         meteorNode.physicsBody?.isAffectedByGravity = false
@@ -97,7 +96,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
 
         // 1
         let randomX = Float.random(in: -40 ..< 40)
-        print(randomX)
         let randomY = Float.random(in: -3 ..< 3)
         var randomXForce = Float(0.0)
         var randomYForce = Float(0.0)
@@ -115,15 +113,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
             randomYForce = Float.random(in: -3 ..< 0)
         }
         // 2
-        let force = SCNVector3(x: randomXForce, y: randomYForce , z: 10)
+        let force = SCNVector3(x: randomXForce, y: randomYForce , z: 15)
         // 3
-        let position = SCNVector3(x: randomX, y: randomY, z: -40)
+        let position = SCNVector3(x: 0, y: 0, z: 0)
         // 4
         meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
         
         meteorArray.append(meteorNode)
                 
-        meteorNode.position = SCNVector3(x: randomX, y: randomY, z: -20)
+        meteorNode.position = SCNVector3(x: randomX, y: randomY, z: -50)
         self.rootNode.addChildNode(meteorNode)
         
     }
@@ -141,8 +139,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         shipNode.physicsBody?.categoryBitMask = CollisionCategory.shipCatagory.rawValue
         shipNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         shipNode.physicsBody?.collisionBitMask = 0
+        shipOnScreen = true
 
-        
         self.rootNode.addChildNode(shipNode)
 
     }
@@ -175,8 +173,16 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         
         
     func startGame(){
+        
+        let meteorScene = SCNScene(named: "art.scnassets/meteor.scn")!
+        meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
+        if shipOnScreen == false{
+            addSpaceship()
+        }
+        
+        
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.6 seconds
-        meteorTimer = Timer.scheduledTimer(timeInterval: 0.6, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
         checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
     }
 
@@ -204,8 +210,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
             //collision between ship and meteor
             meteorTimer.invalidate()
             checkDistanceTimer.invalidate()
-            contact.nodeA.removeFromParentNode()
-            contact.nodeB.removeFromParentNode()
+            self.rootNode.enumerateChildNodes { (node, stop) in
+                node.removeFromParentNode()
+            }
+            shipOnScreen = false
             gameVC.endGame()
 
         }
@@ -213,8 +221,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
             //collision between meteor and ship
             meteorTimer.invalidate()
             checkDistanceTimer.invalidate()
-            contact.nodeA.removeFromParentNode()
-            contact.nodeB.removeFromParentNode()
+            self.rootNode.enumerateChildNodes { (node, stop) in
+                node.removeFromParentNode()
+            }
+            shipOnScreen = false
             gameVC.endGame()
         }
         else{
@@ -232,7 +242,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
     @objc func checkDistances() {
         //
-        print("kjbdfw")
         
         let shipLocation = shipNode.position
         let xValueMax = shipLocation.x + 5
