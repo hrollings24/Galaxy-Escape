@@ -27,7 +27,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     var tapGestureEnd: UITapGestureRecognizer!
 
 
-
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +47,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         
         
     }
+    
+    func getLeaderboard(){
+        
+        
+        
+    }
+    
     
     func setupMenu(){
         if tapGestureEnd != nil {
@@ -122,8 +129,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
             
             self.endScene = EndScene(size: self.view.bounds.size)
             self.endScene.gameVC = self
+            self.endScene.score = self.spriteScene.score
+            self.endScene.setupScene()
             self.sceneView.overlaySKScene = self.endScene
             self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
+            
+            GameCenter.shared.saveHighScore(numberToSave: self.spriteScene.score)
         }
         
     }
@@ -191,14 +202,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         sceneGame.spawnLaser()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        if segue.destination is EndViewController
-        {
-            let vc = segue.destination as? EndViewController
-            vc?.score = spriteScene.score
-        }
-    }
     
     func showGameCenter(){
         showLeaderboard()

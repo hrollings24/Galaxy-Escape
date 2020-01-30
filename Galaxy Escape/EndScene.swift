@@ -16,11 +16,11 @@ import UIKit
 class EndScene: SKScene {
     
     var gameVC: UIViewController!
+    var score: Int!
     
     override init(size: CGSize) {
         super.init(size: size)
         
-        setupScene()
         
     }
     
@@ -29,16 +29,22 @@ class EndScene: SKScene {
     }
     
     func setupScene(){
-        let logo = SKSpriteNode(imageNamed: "temp_logo")
-        logo.size = CGSize(width: self.frame.width/2 -  self.frame.width/12, height: ((self.frame.width/2 -  self.frame.width/12)*1025)/1949)
-        logo.position = CGPoint(x: self.frame.width/24 + logo.size.width/2, y: self.frame.height/3*2)
-        self.addChild(logo)
         
-        var highscoreLB = SKLabelNode()
-        highscoreLB = SKLabelNode()
+        let scoreLB = SKLabelNode()
+        scoreLB.fontColor = UIColor.red
+        scoreLB.fontName = "SpacePatrol"
+        scoreLB.fontSize = 48
+        scoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: self.frame.height - 70)
+        scoreLB.text = "\(String(describing: score!))"
+        self.addChild(scoreLB)
+        
+        let highscoreLB = SKLabelNode()
         highscoreLB.fontName = "SpacePatrol"
         highscoreLB.fontColor = UIColor.red
-        highscoreLB.fontSize = 24
+        highscoreLB.fontSize = 34
+        highscoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (self.frame.height - 70) - scoreLB.frame.height - 30)
+        highscoreLB.text = highScoreText()
+        self.addChild(highscoreLB)
         
        addButtons()
     }
@@ -62,6 +68,20 @@ class EndScene: SKScene {
         storeButton.name = "menu"
         self.addChild(storeButton)
         
+    }
+    
+    func highScoreText() -> String{
+        if UserDefaults.standard.value(forKey: "highscore") == nil{
+            UserDefaults.standard.set(score, forKey: "highscore")
+            return "NEW HIGHSCORE!"
+        }
+        else if (UserDefaults.standard.value(forKey: "highscore") as! Int) < score{
+            UserDefaults.standard.set(score, forKey: "highscore")
+            return "NEW HIGHSCORE!"
+        }
+        else{
+            return NSString(format: "HIGHSCORE: %i", UserDefaults.standard.value(forKey: "highscore") as! Int) as String
+        }
     }
 
 }

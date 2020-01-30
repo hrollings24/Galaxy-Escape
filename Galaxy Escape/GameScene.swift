@@ -43,6 +43,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         super.init()
 
         gameVC = gameViewController
+   
+        
         
         setupScene()
         setupCamera()

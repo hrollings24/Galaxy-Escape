@@ -22,7 +22,6 @@
 		AF872E34238420CE002B070C /* SPACP.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AF872E33238420CE002B070C /* SPACP.TTF */; };
 		AFBC7DD02386BC0B00E2C644 /* OverlayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBC7DCF2386BC0B00E2C644 /* OverlayScene.swift */; };
 		AFE3B03323DF300A0062BEEA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3B03223DF300A0062BEEA /* GameScene.swift */; };
-		AFF8DD0623D7264100E5E760 /* EndViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF8DD0523D7264100E5E760 /* EndViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +63,6 @@
 		AF872E33238420CE002B070C /* SPACP.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = SPACP.TTF; sourceTree = "<group>"; };
 		AFBC7DCF2386BC0B00E2C644 /* OverlayScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayScene.swift; sourceTree = "<group>"; };
 		AFE3B03223DF300A0062BEEA /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		AFF8DD0523D7264100E5E760 /* EndViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,7 +131,6 @@
 				AF2A351C23E194B7002EE6B8 /* GameCenter.swift */,
 				AF2A351A23E18A00002EE6B8 /* EndScene.swift */,
 				AFBC7DCF2386BC0B00E2C644 /* OverlayScene.swift */,
-				AFF8DD0523D7264100E5E760 /* EndViewController.swift */,
 				AF872E052382ED7F002B070C /* Main.storyboard */,
 				AF872E082382ED82002B070C /* Assets.xcassets */,
 				AF872E0A2382ED82002B070C /* LaunchScreen.storyboard */,
@@ -296,7 +293,6 @@
 			files = (
 				AFE3B03323DF300A0062BEEA /* GameScene.swift in Sources */,
 				AF2A351B23E18A00002EE6B8 /* EndScene.swift in Sources */,
-				AFF8DD0623D7264100E5E760 /* EndViewController.swift in Sources */,
 				AFBC7DD02386BC0B00E2C644 /* OverlayScene.swift in Sources */,
 				AF83B03A23DDF8570055EF9C /* MenuScene.swift in Sources */,
 				AF872E042382ED7F002B070C /* GameViewController.swift in Sources */,
