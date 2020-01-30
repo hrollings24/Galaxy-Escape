@@ -54,4 +54,19 @@ class GameCenter{
         return 0
     }
     
+    func checkAchievements(){
+        var gamesPlayed = 0
+        if UserDefaults.standard.value(forKey: "gamesplayed") != nil{
+            gamesPlayed = UserDefaults.standard.value(forKey: "gamesplayed") as! Int
+        }
+        let play100 = GKAchievement(identifier: "play100games")
+        play100.percentComplete = Double(gamesPlayed/100)
+        play100.showsCompletionBanner = true
+        
+        let play200 = GKAchievement(identifier: "play100games")
+        play200.percentComplete = Double(gamesPlayed/200)
+        play200.showsCompletionBanner = true
+        GKAchievement.report([play100, play200], withCompletionHandler: nil)
+    }
+    
 }
