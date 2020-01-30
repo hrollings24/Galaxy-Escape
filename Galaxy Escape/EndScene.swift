@@ -46,7 +46,8 @@ class EndScene: SKScene {
         highscoreLB.text = highScoreText()
         self.addChild(highscoreLB)
         
-       addButtons()
+        addButtons()
+        incrementStats()
     }
     
     func addButtons(){
@@ -81,6 +82,19 @@ class EndScene: SKScene {
         }
         else{
             return NSString(format: "HIGHSCORE: %i", UserDefaults.standard.value(forKey: "highscore") as! Int) as String
+        }
+    }
+    
+    
+    func incrementStats(){
+        
+        //increment amount of games played
+        if UserDefaults.standard.value(forKey: "gamesplayed") == nil{
+            UserDefaults.standard.set(1, forKey: "gamesplayed")
+        }
+        else{
+            let gamesPlayed = (UserDefaults.standard.value(forKey: "gamesplayed") as! Int) + 1
+            UserDefaults.standard.set(gamesPlayed, forKey: "gamesplayed")
         }
     }
 

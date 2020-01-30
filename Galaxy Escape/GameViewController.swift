@@ -18,7 +18,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     
     var sceneView: SCNView!
     var sceneGame: GameScene!
-    var spriteScene: OverlayScene!
+    var spriteScene: GameOverlayScene!
     var menuScene: MenuScene!
     var endScene: EndScene!
     var panGesture: UIPanGestureRecognizer!
@@ -33,6 +33,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         super.viewDidLoad()
         
         GameCenter.shared.authPlayer(presentingVC: self)
+        GameCenter.shared.checkAchievements()
         
         self.sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         self.sceneGame = GameScene(gameViewController: self)
@@ -91,7 +92,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         sceneView.addGestureRecognizer(tapGesture)
 
         
-        self.spriteScene = OverlayScene(size: self.view.bounds.size)
+        self.spriteScene = GameOverlayScene(size: self.view.bounds.size)
         self.spriteScene.gameVC = self
         self.sceneView.overlaySKScene = self.spriteScene
         self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
@@ -204,6 +205,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     
     
     func showGameCenter(){
+        GameCenter.shared.checkAchievements()
         showLeaderboard()
         
     }

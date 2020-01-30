@@ -11,7 +11,7 @@ import SpriteKit
 import UIKit
 
 
-class OverlayScene: SKScene {
+class GameOverlayScene: SKScene {
     
     var scoreNode: SKLabelNode!
     var counter = 0

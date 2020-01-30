@@ -161,7 +161,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
 
 
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        laserNode.physicsBody?.velocity = SCNVector3Make(0, 0, -10)
+        laserNode.physicsBody?.velocity = SCNVector3Make(0, 0, -20)
         laserNode.physicsBody?.isAffectedByGravity = false
         laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
         laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
