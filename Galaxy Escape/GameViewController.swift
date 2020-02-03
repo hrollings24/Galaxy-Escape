@@ -114,9 +114,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
             sceneGame.setShipPosition(pos: SCNVector3.init(sceneGame.shipNode.position.x + Float(delta.x * 0.02), sceneGame.shipNode.position.y + Float(-delta.y * (0.02)), 0))
             previousLoc = loc
         }
-    previousLoc = loc
-
-
+        previousLoc = loc
     }
     
     func endGame(){

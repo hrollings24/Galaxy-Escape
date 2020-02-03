@@ -33,6 +33,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     var meteorNodeMain: SCNNode!
     var shipOnScreen: Bool!
     
+    var player: Player!
+    
 
     
     var meteorTimer = Timer()
@@ -44,10 +46,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
 
         gameVC = gameViewController
    
-        
+        player = Player()
+        self.rootNode.addChildNode(player)
         
         setupScene()
-        setupCamera()
+        
         addSpaceship()
         shipOnScreen = true
 
@@ -70,18 +73,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
                                     UIImage(named: "skybox3_back"),
                                     UIImage(named: "skybox3_front")]
         
-    }
-        
-    func setupCamera() {
-        // 1
-        cameraNode = SCNNode()
-        // 2
-        cameraNode.camera = SCNCamera()
-        // 3
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
-        // 4
-        self.rootNode.addChildNode(cameraNode)
-
     }
         
     func spawnMeteor() {
