@@ -79,6 +79,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="4JK-up-IlM"/>
                     <connections>
+                        <outlet property="friendSV" destination="OH4-4M-eZd" id="q01-0U-GVJ"/>
                         <outlet property="worldSV" destination="1zU-8z-Ty8" id="rEU-eG-wt8"/>
                     </connections>
                 </viewController>
