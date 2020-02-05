@@ -138,6 +138,14 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
 
     }
     
+    func removeSpaceship(){
+        if shipOnScreen{
+            shipNode.removeFromParentNode()
+            shipOnScreen = false
+        }
+    }
+  
+    
     func spawnLaser(){
         //called when button is pressed
         //create cylinder

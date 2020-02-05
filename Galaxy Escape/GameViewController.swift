@@ -20,7 +20,9 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     var sceneGame: GameScene!
     var spriteScene: GameOverlayScene!
     var menuScene: MenuScene!
+    var modeOverlayScene: ModeOverlayScene!
     var endScene: EndScene!
+    var modesScene: Modes!
     var panGesture: UIPanGestureRecognizer!
     var tapGesture: UITapGestureRecognizer!
     var tapGestureMenu: UITapGestureRecognizer!
@@ -186,16 +188,33 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                    if name == "stats"{
                        showGameCenter()
                    }
-                   if name == "replay"{
-                       setupGame()
-                   }
-                   if name == "menu"{
-                       setupMenu()
+                   if name == "modes"{
+                       setupModes()
                    }
                }
            }
        }
 
+    func setupModes(){
+        
+        self.view.willRemoveSubview(sceneView)
+        self.sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        self.modesScene = Modes(gameViewController: self)
+        self.sceneView.scene = modesScene
+        self.sceneView.autoenablesDefaultLighting = true
+        self.sceneView.allowsCameraControl = false
+        
+        self.view.addSubview(self.sceneView)
+        
+        self.modeOverlayScene = ModeOverlayScene(size: self.view.bounds.size)
+        self.modeOverlayScene.gameVC = self
+        self.sceneView.overlaySKScene = self.modeOverlayScene
+        self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
+        
+        self.modeOverlayScene.setupScene()
+        
+        
+    }
     
     func fire(){
         sceneGame.spawnLaser()
@@ -204,8 +223,22 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     
     func showGameCenter(){
         GameCenter.shared.checkAchievements()
-        showLeaderboard()
+        //showLeaderboard()
+        print("yay")
         
+        
+        sceneGame.removeSpaceship()
+        self.sceneView.overlaySKScene = nil
+        
+        
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "leaderboard") as! LeaderboardViewController
+        viewController.gameVC = self
+        viewController.providesPresentationContextTransitionStyle = true
+        viewController.definesPresentationContext = true
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true, completion: nil)
     }
     
     
@@ -214,6 +247,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         let gcvc = GKGameCenterViewController()
         
         gcvc.gameCenterDelegate = self
+        
         
         viewController!.present(gcvc, animated: true, completion: nil)
     }
