@@ -13,9 +13,9 @@ class AchievementsViewController: UIViewController{
 
     var gameVC: GameViewController!
     var achievementList = [GKAchievement]()
-    weak var collectionView: UICollectionView!
 
-        
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -31,22 +31,16 @@ class AchievementsViewController: UIViewController{
 
         self.collectionView.register(MyCell.self, forCellWithReuseIdentifier: "MyCell")
         
+        self.collectionView.reloadData()
+        
     }
     
     override func loadView() {
         super.loadView()
 
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.sizeThatFits(CGSize(width: self.view.frame.width - 64, height: self.view.frame.height - 20))
         self.view.addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-        ])
-        self.collectionView = collectionView
+        self.collectionView.reloadData()
+
     }
     
     @IBAction func back(_ sender: Any) {
@@ -80,6 +74,7 @@ extension AchievementsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! MyCell
         cell.achievementName.text = String(achievementList[indexPath.item].identifier)
+        cell.achievementProgress.text = String(achievementList[indexPath.item].percentComplete)
         return cell
     }
 }
@@ -87,7 +82,10 @@ extension AchievementsViewController: UICollectionViewDataSource {
 extension AchievementsViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row + 1)
+        
+        //get cell tapped on
+        let cell = collectionView.cellForItem(at: indexPath) as! MyCell
+        print(cell.achievementName.text!)
     }
 }
 
@@ -97,7 +95,7 @@ extension AchievementsViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return CGSize(width: collectionView.bounds.size.width/4 - 10, height: collectionView.bounds.size.width/4 - 10)
+        return CGSize(width: collectionView.frame.size.width/4 - 10, height: collectionView.frame.size.width/4 - 10)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -109,7 +107,7 @@ extension AchievementsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 10
     }
 
     func collectionView(_ collectionView: UICollectionView,
