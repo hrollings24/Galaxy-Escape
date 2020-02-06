@@ -191,6 +191,9 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                    if name == "modes"{
                        setupModes()
                    }
+                   if name == "achievements"{
+                       showAchievements()
+                   }
                }
            }
        }
@@ -220,16 +223,29 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         sceneGame.spawnLaser()
     }
     
-    
-    func showGameCenter(){
+    func showAchievements(){
         GameCenter.shared.checkAchievements()
         //showLeaderboard()
-        print("yay")
-        
         
         sceneGame.removeSpaceship()
         self.sceneView.overlaySKScene = nil
         
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "achievements") as! AchievementsViewController
+        viewController.gameVC = self
+        viewController.providesPresentationContextTransitionStyle = true
+        viewController.definesPresentationContext = true
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    func showGameCenter(){
+        GameCenter.shared.checkAchievements()
+        //showLeaderboard()
+        
+        sceneGame.removeSpaceship()
+        self.sceneView.overlaySKScene = nil
         
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "leaderboard") as! LeaderboardViewController

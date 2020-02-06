@@ -72,22 +72,7 @@ class LeaderboardViewController: UIViewController, GKGameCenterControllerDelegat
             self.worldSV.contentSize.height = yPositionFriend
         }
     }
-    
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        setupScene()
-    }
 
-    func setupScene(){
-        
-       
-    }
-    
-    func getFriendScores(){
-        
-    }
-    
     func getWorldwideScores(){
         
         let leaderboard = GKLeaderboard()
@@ -121,6 +106,7 @@ class LeaderboardViewController: UIViewController, GKGameCenterControllerDelegat
                 newView.addSubview(nameLabel)
                 //scoreLabel.translatesAutoresizingMaskIntoConstraints = false
                 //scoreLabel.rightAnchor.constraint(equalTo: newView.rightAnchor, constant: -10).isActive = true
+                print(nameLabel)
                 newView.addSubview(scoreLabel)
                 self.scoreArray.append(newView)
                 if count < 10{
