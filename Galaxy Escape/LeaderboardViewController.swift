@@ -25,64 +25,28 @@ class LeaderboardViewController: UIViewController, GKGameCenterControllerDelegat
     var scoreArray = [UIView]()
     var friendArray = [UIView]()
 
-    let worldGroup = DispatchGroup()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.clear
         self.view.isOpaque = false
-        
-        worldGroup.enter()
-                
-        DispatchQueue.main.async {
-            self.getWorldwideScores()
-            self.getFriendsScores()
-        }
-
-        worldGroup.notify(queue: .main) {
-            var yPosition: CGFloat = 0.0
-            var yPositionFriend: CGFloat = 0.0
-
-            print("BOO")
-            print(self.scoreArray.count)
-            print(self.friendArray.count)
-
-
-            for view in self.scoreArray{
-
-                view.frame.origin.x = 0
-                view.frame.origin.y = yPosition
-
-                //add to scroll view
-                self.worldSV.addSubview(view)
-                yPosition += 50
-            }
-            self.worldSV.contentSize.height = yPosition
-            
-            for view in self.friendArray{
-
-                view.frame.origin.x = 0
-                view.frame.origin.y = yPositionFriend
-
-                //add to scroll view
-                self.friendSV.addSubview(view)
-                yPositionFriend += 50
-            }
-            self.worldSV.contentSize.height = yPositionFriend
-        }
+                        
+        self.getScores(limit: .global)
+        self.getScores(limit: .friendsOnly)
+    
     }
 
-    func getWorldwideScores(){
+    func getScores(limit: GKLeaderboard.PlayerScope){
         
         let leaderboard = GKLeaderboard()
-        leaderboard.playerScope = .global
+        leaderboard.playerScope = limit
         leaderboard.timeScope = .allTime
         leaderboard.identifier = "scoreLeaderboard"
 
         leaderboard.loadScores { scores, error in
             guard let scores = scores else { return }
             var count = 0
+            var array = [UIView]()
             outerloop: for score in scores {
                 let nameLabel = UILabel()
                 nameLabel.text = score.player.alias
@@ -106,9 +70,8 @@ class LeaderboardViewController: UIViewController, GKGameCenterControllerDelegat
                 newView.addSubview(nameLabel)
                 //scoreLabel.translatesAutoresizingMaskIntoConstraints = false
                 //scoreLabel.rightAnchor.constraint(equalTo: newView.rightAnchor, constant: -10).isActive = true
-                print(nameLabel)
                 newView.addSubview(scoreLabel)
-                self.scoreArray.append(newView)
+                array.append(newView)
                 if count < 10{
                     count += 1
                 }
@@ -116,51 +79,32 @@ class LeaderboardViewController: UIViewController, GKGameCenterControllerDelegat
                     break outerloop
                 }
             }
+            self.addToScreen(limit: limit, array: array)
         }
     }
     
-    func getFriendsScores(){
-        let leaderboard = GKLeaderboard()
-        leaderboard.playerScope = .friendsOnly
-        leaderboard.timeScope = .allTime
-        leaderboard.identifier = "scoreLeaderboard"
+    func addToScreen(limit: GKLeaderboard.PlayerScope, array: [UIView]) {
+        var yPosition: CGFloat = 0.0
+        
+        for view in array{
 
-        leaderboard.loadScores { scores, error in
-            guard let scores = scores else { return }
-            var count = 0
-            outerloop: for score in scores {
-                let nameLabel = UILabel()
-                nameLabel.text = score.player.alias
-                nameLabel.textColor = .white
-                nameLabel.frame.size = CGSize(width: self.worldSV.frame.width/2, height: 40)
-                nameLabel.adjustsFontSizeToFitWidth = true
-                nameLabel.numberOfLines = 0
-                nameLabel.font = nameLabel.font.withSize(48)
-                let scoreLabel = UILabel()
-                scoreLabel.text = String(score.value)
-                scoreLabel.adjustsFontSizeToFitWidth = true
-                scoreLabel.numberOfLines = 0
-                scoreLabel.textColor = .white
-                scoreLabel.font = scoreLabel.font.withSize(48)
-                scoreLabel.textAlignment = .right
-                scoreLabel.frame.size = CGSize(width: self.worldSV.frame.width/2, height: 40)
-                let newView = UIView()
-                newView.backgroundColor = UIColor.red
-                scoreLabel.frame.origin.x = self.worldSV.frame.width/2
-                newView.sizeThatFits(CGSize(width: self.worldSV.frame.width, height: 40))
-                newView.addSubview(nameLabel)
-                //scoreLabel.translatesAutoresizingMaskIntoConstraints = false
-                //scoreLabel.rightAnchor.constraint(equalTo: newView.rightAnchor, constant: -10).isActive = true
-                newView.addSubview(scoreLabel)
-                self.friendArray.append(newView)
-                if count < 10{
-                    count += 1
-                }
-                else{
-                    break outerloop
-                }
+            view.frame.origin.x = 0
+            view.frame.origin.y = yPosition
+
+            //add to scroll view
+            if limit == .global{
+                self.worldSV.addSubview(view)
             }
-            self.worldGroup.leave()
+            else{
+                self.friendSV.addSubview(view)
+            }
+            yPosition += 50
+        }
+        if limit == .global{
+            self.worldSV.contentSize.height = yPosition
+        }
+        else{
+            self.friendSV.contentSize.height = yPosition
         }
     }
     
