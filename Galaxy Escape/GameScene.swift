@@ -12,10 +12,12 @@ import Foundation
 import AVFoundation
 
 struct CollisionCategory: OptionSet {
-   let rawValue: Int
-   static let laserCategory  = CollisionCategory(rawValue: 1 << 0)
-   static let meteorCategory = CollisionCategory(rawValue: 1 << 1)
-   static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
+    let rawValue: Int
+    static let laserCategory  = CollisionCategory(rawValue: 1 << 0)
+    static let meteorCategory = CollisionCategory(rawValue: 1 << 1)
+    static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
+    static let terrainCatagory = CollisionCategory(rawValue: 1 << 3)
+
 }
 
 extension UIDevice {
@@ -27,15 +29,13 @@ extension UIDevice {
 class GameScene: SCNScene, SCNPhysicsContactDelegate{
     
     var cameraNode: SCNNode!
-    var shipNode: SCNNode!
     var gameVC: GameViewController!
     var meteorArray = [SCNNode]()
     var meteorNodeMain: SCNNode!
-    var shipOnScreen: Bool!
     
     var player: Player!
-    
-
+    var ship: SCNNode!
+    var shipOnScreen: Bool!
     
     var meteorTimer = Timer()
     var checkDistanceTimer = Timer()
@@ -46,14 +46,26 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
 
         gameVC = gameViewController
    
+        //define player
         player = Player()
         self.rootNode.addChildNode(player)
         
+        //define ship
+        addShip()
+    
+        //define scene
         setupScene()
-        
-        addSpaceship()
+    }
+    
+    func addShip(){
+        ship = Ship()
         shipOnScreen = true
-
+        self.rootNode.addChildNode(ship)
+    }
+    
+    func removeShip(){
+        ship.removeFromParentNode()
+        shipOnScreen = false
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -76,75 +88,35 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     }
         
     func spawnMeteor() {
-        // 1
-        let meteorNode = meteorNodeMain.clone()
         
-        // 5
-        meteorNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        meteorNode.physicsBody?.isAffectedByGravity = false
-        meteorNode.physicsBody?.categoryBitMask = CollisionCategory.meteorCategory.rawValue
-        meteorNode.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue | CollisionCategory.shipCatagory.rawValue
-        meteorNode.name = "meteor"
-        meteorNode.physicsBody?.collisionBitMask = 0
-
-        // 1
+        let meteor = Meteor()
         let randomX = Float.random(in: -40 ..< 40)
         let randomY = Float.random(in: -3 ..< 3)
         var randomXForce = Float(0.0)
         var randomYForce = Float(0.0)
-        
+
         if randomX <= 0{
-            randomXForce = Float.random(in: 0 ..< 7)
+           randomXForce = Float.random(in: 0 ..< 7)
         }
         else{
-            randomXForce = Float.random(in: -7 ..< 0)
+           randomXForce = Float.random(in: -7 ..< 0)
         }
         if randomY <= 0{
-            randomYForce = Float.random(in: 0 ..< 3)
+           randomYForce = Float.random(in: 0 ..< 3)
         }
         else{
-            randomYForce = Float.random(in: -3 ..< 0)
+           randomYForce = Float.random(in: -3 ..< 0)
         }
-        // 2
+        
         let force = SCNVector3(x: randomXForce, y: randomYForce , z: 15)
-        // 3
         let position = SCNVector3(x: 0, y: 0, z: 0)
-        // 4
-        meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
+        meteor.meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
+
+        meteor.position = SCNVector3(x: randomX, y: randomY, z: -50)
         
-        meteorArray.append(meteorNode)
-                
-        meteorNode.position = SCNVector3(x: randomX, y: randomY, z: -50)
-        self.rootNode.addChildNode(meteorNode)
+        self.rootNode.addChildNode(meteor)
         
     }
-    
-    func addSpaceship(){
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        shipNode = scene.rootNode.childNode(withName: "ship", recursively: true)!
-
-        shipNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-
-        shipNode.position = SCNVector3(x: 0, y: -5, z: 0)
-        shipNode.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi));
-        shipNode.physicsBody?.isAffectedByGravity = false
-        shipNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        shipNode.physicsBody?.categoryBitMask = CollisionCategory.shipCatagory.rawValue
-        shipNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
-        shipNode.physicsBody?.collisionBitMask = 0
-        shipOnScreen = true
-
-        self.rootNode.addChildNode(shipNode)
-
-    }
-    
-    func removeSpaceship(){
-        if shipOnScreen{
-            shipNode.removeFromParentNode()
-            shipOnScreen = false
-        }
-    }
-  
     
     func spawnLaser(){
         //called when button is pressed
@@ -153,14 +125,13 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
-        laserNode.position = shipNode.position
+        laserNode.position = ship.presentation.worldPosition
         laserNode.rotation = SCNVector4Make(1, 0, 0, .pi / 2)
-        //laserNode.rotation = SCNVector4Make(0, 0, 1, .pi / 2)
         laserNode.name = "laser"
 
 
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        laserNode.physicsBody?.velocity = SCNVector3Make(0, 0, -20)
+        laserNode.physicsBody?.velocity = SCNVector3Make(0, 2, -20)
         laserNode.physicsBody?.isAffectedByGravity = false
         laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
         laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
@@ -175,16 +146,37 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         
     func startGame(){
         
-        let meteorScene = SCNScene(named: "art.scnassets/meteor.scn")!
-        meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
-        if shipOnScreen == false{
-            addSpaceship()
+       
+        if !shipOnScreen{
+            addShip()
         }
         
+        //addTerrain()
         
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.6 seconds
         meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
-        checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
+        //checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
+    }
+    
+    func addTerrain(){
+        
+        //add Terrain
+        let terrainClass = Terrain()
+        let terrain = terrainClass.terrainNode
+        
+        terrain.position = SCNVector3(x: -140, y: -10, z: 0)
+        terrain.rotation = SCNVector4Make(0, 1, 0, .pi / 2)
+        
+        terrain.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        terrain.physicsBody?.isAffectedByGravity = false
+        terrain.physicsBody?.categoryBitMask = CollisionCategory.terrainCatagory.rawValue
+        terrain.physicsBody?.contactTestBitMask = CollisionCategory.shipCatagory.rawValue
+        terrain.physicsBody?.collisionBitMask = 0
+        
+        let moveAction = SCNAction.moveBy(x: 0, y: 0, z: 800, duration: 160)
+        terrain.runAction(moveAction)
+
+        self.rootNode.addChildNode(terrain)
     }
 
     @objc func spawnMeteor1(){
@@ -214,7 +206,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
             self.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
             }
-            shipOnScreen = false
+            self.shipOnScreen = false
             gameVC.endGame()
 
         }
@@ -225,7 +217,28 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
             self.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
             }
-            shipOnScreen = false
+            self.shipOnScreen = false
+            gameVC.endGame()
+        }
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.terrainCatagory.rawValue {
+            //collision between ship and terrain
+            meteorTimer.invalidate()
+            checkDistanceTimer.invalidate()
+            self.rootNode.enumerateChildNodes { (node, stop) in
+                node.removeFromParentNode()
+            }
+            self.shipOnScreen = false
+            gameVC.endGame()
+
+        }
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.terrainCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
+            //collision between terrain and ship
+            meteorTimer.invalidate()
+            checkDistanceTimer.invalidate()
+            self.rootNode.enumerateChildNodes { (node, stop) in
+                node.removeFromParentNode()
+            }
+            self.shipOnScreen = false
             gameVC.endGame()
         }
         else{
@@ -233,18 +246,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         }
     }
     
-    func setShipPosition(pos: SCNVector3){
-        shipNode.position =  pos
-    }
-    
-    func getShipPositionX() -> SCNVector3{
-        return shipNode.position
-    }
-    
     @objc func checkDistances() {
         //
         
-        let shipLocation = shipNode.position
+        let shipLocation = ship.position
         let xValueMax = shipLocation.x + 5
         let xValueMin = shipLocation.x - 5
         let yValueMax = shipLocation.y + 3

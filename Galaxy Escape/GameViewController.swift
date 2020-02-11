@@ -13,6 +13,7 @@ import GameplayKit
 import GameKit
 
 
+
 class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameCenterControllerDelegate {
 
     
@@ -27,8 +28,9 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     var tapGesture: UITapGestureRecognizer!
     var tapGestureMenu: UITapGestureRecognizer!
     var tapGestureEnd: UITapGestureRecognizer!
+    var currentAngleY: Float = 0.0
 
-
+    
    
     
     override func viewDidLoad() {
@@ -51,13 +53,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         
     }
     
-    func getLeaderboard(){
-        
-        
-        
-    }
-    
-    
     func setupMenu(){
         if tapGestureEnd != nil {
             sceneView.removeGestureRecognizer(tapGestureEnd)
@@ -68,7 +63,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         sceneView.addGestureRecognizer(tapGestureMenu)
         
         if self.sceneGame.shipOnScreen == false{
-            self.sceneGame.addSpaceship()
+            sceneGame.addShip()
         }
 
         self.menuScene = MenuScene(size: self.view.bounds.size)
@@ -80,10 +75,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     func setupGame(){
       
         // add a tap gesture recognizer
-        panGesture = UIPanGestureRecognizer(target: self, action:#selector(moveSpaceship))
+        
+        /*
+        panGesture = UIPanGestureRecognizer(target: self, action:#selector(self.rotateObject))
         panGesture.maximumNumberOfTouches = 1
         panGesture.delegate = self
         sceneView.addGestureRecognizer(panGesture)
+ */
         
         sceneView.removeGestureRecognizer(tapGestureMenu)
         if tapGestureEnd != nil{
@@ -107,6 +105,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     
     var previousLoc = CGPoint.init(x: 0, y: 0)
 
+    /*
     @objc func moveSpaceship(sender: UIPanGestureRecognizer){
         var delta = sender.translation(in: self.view)
         let loc = sender.location(in: self.view)
@@ -118,6 +117,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         }
         previousLoc = loc
     }
+ */
+    
     
     func endGame(){
         
@@ -227,7 +228,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         GameCenter.shared.checkAchievements()
         //showLeaderboard()
         
-        sceneGame.removeSpaceship()
+        sceneGame.removeShip()
         self.sceneView.overlaySKScene = nil
         
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -244,7 +245,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         GameCenter.shared.checkAchievements()
         //showLeaderboard()
         
-        sceneGame.removeSpaceship()
+        sceneGame.removeShip()
         self.sceneView.overlaySKScene = nil
         
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)

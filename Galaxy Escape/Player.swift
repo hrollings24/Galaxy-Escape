@@ -22,8 +22,8 @@ class Player: SCNNode{
         // Look at Node
         lookAtNode = SCNNode()
         lookAtNode!.position = lookAtForwardPosition
-        addChildNode(lookAtNode!)
-
+        self.addChildNode(lookAtNode!)
+        
         // Camera Node
         cameraNode = SCNNode()
         cameraNode!.camera = SCNCamera()
@@ -36,7 +36,6 @@ class Player: SCNNode{
         let constraint1 = SCNLookAtConstraint(target: lookAtNode)
         constraint1.isGimbalLockEnabled = true
         cameraNode!.constraints = [constraint1]
-        
     }
     
     required init?(coder: NSCoder) {
