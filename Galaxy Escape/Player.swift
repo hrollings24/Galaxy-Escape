@@ -10,7 +10,7 @@ import SceneKit
 
 class Player: SCNNode{
     
-    private let lookAtForwardPosition = SCNVector3Make(0.0, 1, 0)
+    private let lookAtForwardPosition = SCNVector3Make(0.0, 1, -20)
     private let cameraFowardPosition = SCNVector3(x: 0.0, y: 1, z: 15)
 
     private var lookAtNode: SCNNode?

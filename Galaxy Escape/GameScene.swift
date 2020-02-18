@@ -10,6 +10,7 @@ import UIKit
 import SceneKit
 import Foundation
 import AVFoundation
+import CoreMotion
 
 struct CollisionCategory: OptionSet {
     let rawValue: Int
@@ -26,16 +27,21 @@ extension UIDevice {
     }
 }
 
-class GameScene: SCNScene, SCNPhysicsContactDelegate{
+class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     var cameraNode: SCNNode!
+    var cameraConstraint: SCNNode!
+    var player: SCNNode!
+    
     var gameVC: GameViewController!
     var meteorArray = [SCNNode]()
     var meteorNodeMain: SCNNode!
     
-    var player: Player!
+    //var player: Player!
     var ship: SCNNode!
     var shipOnScreen: Bool!
+    var planetNode: SCNNode!
+    var playing: Bool!
     
     var meteorTimer = Timer()
     var checkDistanceTimer = Timer()
@@ -45,20 +51,35 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
         super.init()
 
         gameVC = gameViewController
+
    
         //define player
-        player = Player()
-        self.rootNode.addChildNode(player)
+        //player = Player()
+        //self.rootNode.addChildNode(player)
+        
+        //define scene
+        setupScene()
         
         //define ship
         addShip()
     
-        //define scene
-        setupScene()
+        
     }
     
     func addShip(){
         ship = Ship()
+        ship.position = SCNVector3(x: 0, y: -5, z: 0)
+        ship.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi))
+        ship.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+
+        //shipNode.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi));
+        ship.physicsBody?.isAffectedByGravity = false
+
+        ship.physicsBody?.categoryBitMask = CollisionCategory.shipCatagory.rawValue
+        ship.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+        ship.physicsBody?.collisionBitMask = 0
+        //ship.physicsBody?.mass = 0
+
         shipOnScreen = true
         self.rootNode.addChildNode(ship)
     }
@@ -76,7 +97,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     func setupScene() {
             
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = SCNVector3(x: 0, y: 0, z: 0)
+        self.physicsWorld.gravity = SCNVector3Zero
 
         self.background.contents = [UIImage(named: "skybox3_left"),
                                     UIImage(named: "skybox3_right"),
@@ -85,10 +106,35 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
                                     UIImage(named: "skybox3_back"),
                                     UIImage(named: "skybox3_front")]
         
+        cameraConstraint = SCNNode()
+        cameraConstraint.position = SCNVector3(0, 0, 0)
+        self.rootNode.addChildNode(cameraConstraint)
+
+        playing = false
+        player = SCNNode()
+        
+        cameraNode = SCNNode()
+        cameraNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        cameraNode.physicsBody?.collisionBitMask = 0
+        cameraNode!.camera = SCNCamera()
+        cameraNode!.position = SCNVector3(x: 0.0, y: 0, z: 15)
+        cameraNode!.camera!.zNear = 0.1
+        cameraNode!.camera!.zFar = 200
+        self.rootNode.addChildNode(cameraNode!)
+
+        // Link them
+        let constraint1 = SCNLookAtConstraint(target: cameraConstraint)
+        constraint1.isGimbalLockEnabled = true
+        cameraNode!.constraints = [constraint1]
+        
+        
+        
+        
     }
         
     func spawnMeteor() {
-        
+        // 1
+    
         let meteor = Meteor()
         let randomX = Float.random(in: -40 ..< 40)
         let randomY = Float.random(in: -3 ..< 3)
@@ -121,41 +167,74 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     func spawnLaser(){
         //called when button is pressed
         //create cylinder
-        let laser = SCNCylinder(radius: 0.5, height: 2)
+        let laser = SCNCylinder(radius: 0.25, height: 3)
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
-        laserNode.position = ship.presentation.worldPosition
-        laserNode.rotation = SCNVector4Make(1, 0, 0, .pi / 2)
+        laserNode.position = ship.worldPosition
+        laserNode.rotation = SCNVector4Make(0, 1, 0, .pi / 2)
         laserNode.name = "laser"
-
-
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        laserNode.physicsBody?.velocity = SCNVector3Make(0, 2, -20)
+        
         laserNode.physicsBody?.isAffectedByGravity = false
         laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
         laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         laserNode.physicsBody?.collisionBitMask = 0
-
-
+        
+        let z = 40 * cos(ship.eulerAngles.y)
+        let x = 40 * sin(ship.eulerAngles.y)
+        laserNode.physicsBody?.velocity = SCNVector3Make(x, 0, -z)
+        
         self.rootNode.addChildNode(laserNode)
     }
     
- 
-        
+    func addBloom() -> [CIFilter]? {
+        let bloomFilter = CIFilter(name:"CIBloom")!
+        bloomFilter.setValue(10.0, forKey: "inputIntensity")
+        bloomFilter.setValue(30.0, forKey: "inputRadius")
+
+        return [bloomFilter]
+    }
         
     func startGame(){
-        
        
+        let meteorScene = SCNScene(named: "art.scnassets/meteor.scn")!
+        meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
+        playing = true
+        
         if !shipOnScreen{
             addShip()
         }
+        planetNode = SCNNode()
+        self.rootNode.addChildNode(planetNode)
+        addPlanets()
+        cameraNode.position = SCNVector3(0, 0, 15)
+        
+        
+        //let moveAction = SCNAction.moveBy(x: 0, y: 0, z: -200, duration: 20)
+        //cameraNode.runAction(moveAction)
+        //ship.runAction(moveAction)
+        //cameraConstraint.runAction(moveAction)
+        //shipConstraint.runAction(moveAction)
+
         
         //addTerrain()
         
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.6 seconds
         meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
-        //checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
+        checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
+    }
+    
+    func addPlanets(){
+        let earthScene = SCNScene(named: "art.scnassets/earth.scn")!
+        let earthNode = earthScene.rootNode.childNode(withName: "earth", recursively: true)!
+        earthNode.position = SCNVector3(-30, 0, -30)
+        earthNode.scale = SCNVector3(1.4, 1.4, 1.4)
+        planetNode.addChildNode(earthNode)
+        
+        let earthNode2 = earthNode.clone()
+        earthNode2.position = SCNVector3(20, 0, -70)
+        planetNode.addChildNode(earthNode2)
     }
     
     func addTerrain(){
@@ -180,11 +259,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
     }
 
     @objc func spawnMeteor1(){
-        spawnMeteor()
-    }
-    
-    func randRange (lower: Int , upper: Int) -> Int {
-        return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
+        DispatchQueue.global(qos: .background).async {
+            self.spawnMeteor()
+        }
     }
     
    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
@@ -276,6 +353,19 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate{
             }
         }
     }
+    
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        //let vec = SCNVector3Make((player.position.distance(vector: SCNVector3(0, 0, 5)).x), player.position.distance(vector: SCNVector3(0, 0, 5)).y, player.position.distance(vector: SCNVector3(0, 0, 5)).z)
+        let z = 10 * cos(ship.eulerAngles.y)
+        let x = 10 * sin(ship.eulerAngles.y)
+        
+        if playing!{
+            //ship.physicsBody?.velocity = SCNVector3Make(x, 0, -z)
+        }
+        print(ship.worldPosition)
+        
+        
+       }
 }
 
 enum ShapeType:Int {
@@ -297,3 +387,19 @@ enum ShapeType:Int {
   }
 }
 
+
+extension SCNVector3{
+    func length() -> Float {
+        return sqrtf(x*x + y*y + z*z)
+    }
+    func distance(vector: SCNVector3) -> SCNVector3 {
+        return (self - vector)
+    }
+}
+
+func - (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
+    return SCNVector3Make(left.x - right.x, left.y - right.y, left.z - right.z)
+}
+func * (vector: SCNVector3, scalar: Float) -> SCNVector3 {
+    return SCNVector3Make(vector.x * scalar, vector.y * scalar, vector.z * scalar)
+}

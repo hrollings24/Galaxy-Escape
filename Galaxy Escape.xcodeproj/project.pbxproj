@@ -16,7 +16,7 @@
 		AF2A351D23E194B7002EE6B8 /* GameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A351C23E194B7002EE6B8 /* GameCenter.swift */; };
 		AF79057D23F182870002B9B0 /* Terrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF79057C23F182870002B9B0 /* Terrain.swift */; };
 		AF79058123F2FD990002B9B0 /* Meteor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF79058023F2FD990002B9B0 /* Meteor.swift */; };
-		AF79058323F300FF0002B9B0 /* Ship.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF79058223F300FF0002B9B0 /* Ship.swift */; };
+		AF79058423F3027F0002B9B0 /* Ship.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF79058223F300FF0002B9B0 /* Ship.swift */; };
 		AF7AF41823E8467F002462A8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7AF41723E8467F002462A8 /* Player.swift */; };
 		AF7AF41A23E85ED3002462A8 /* ModeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7AF41923E85ED3002462A8 /* ModeScene.swift */; };
 		AF83B03A23DDF8570055EF9C /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF83B03923DDF8570055EF9C /* MenuScene.swift */; };
@@ -327,7 +327,7 @@
 				AF83B03A23DDF8570055EF9C /* MenuScene.swift in Sources */,
 				AF7AF41823E8467F002462A8 /* Player.swift in Sources */,
 				AF872E042382ED7F002B070C /* GameViewController.swift in Sources */,
-				AF79058323F300FF0002B9B0 /* Ship.swift in Sources */,
+				AF79058423F3027F0002B9B0 /* Ship.swift in Sources */,
 				AF25E0CE23E874B000020851 /* ModeSpriteScene.swift in Sources */,
 				AF25E0D423EAF06100020851 /* CollectionViewCell.swift in Sources */,
 				AF7AF41A23E85ED3002462A8 /* ModeScene.swift in Sources */,
