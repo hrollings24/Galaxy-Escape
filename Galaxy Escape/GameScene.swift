@@ -17,7 +17,7 @@ struct CollisionCategory: OptionSet {
     static let laserCategory  = CollisionCategory(rawValue: 1 << 0)
     static let meteorCategory = CollisionCategory(rawValue: 1 << 1)
     static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
-    static let terrainCatagory = CollisionCategory(rawValue: 1 << 3)
+    static let earthCatagory = CollisionCategory(rawValue: 1 << 3)
 
 }
 
@@ -129,7 +129,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         
         
         
-        
     }
         
     func spawnMeteor() {
@@ -206,7 +205,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             addShip()
         }
         planetNode = SCNNode()
+
+        //shipNode.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi));
+
+     
         self.rootNode.addChildNode(planetNode)
+
         addPlanets()
         cameraNode.position = SCNVector3(0, 0, 15)
         
@@ -230,32 +234,19 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         let earthNode = earthScene.rootNode.childNode(withName: "earth", recursively: true)!
         earthNode.position = SCNVector3(-30, 0, -30)
         earthNode.scale = SCNVector3(1.4, 1.4, 1.4)
+        earthNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        earthNode.physicsBody?.categoryBitMask = CollisionCategory.earthCatagory.rawValue
+        earthNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+        earthNode.physicsBody?.collisionBitMask = 0
         planetNode.addChildNode(earthNode)
         
         let earthNode2 = earthNode.clone()
         earthNode2.position = SCNVector3(20, 0, -70)
+        earthNode2.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        earthNode2.physicsBody?.categoryBitMask = CollisionCategory.earthCatagory.rawValue
+        earthNode2.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+        earthNode2.physicsBody?.collisionBitMask = 0
         planetNode.addChildNode(earthNode2)
-    }
-    
-    func addTerrain(){
-        
-        //add Terrain
-        let terrainClass = Terrain()
-        let terrain = terrainClass.terrainNode
-        
-        terrain.position = SCNVector3(x: -140, y: -10, z: 0)
-        terrain.rotation = SCNVector4Make(0, 1, 0, .pi / 2)
-        
-        terrain.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        terrain.physicsBody?.isAffectedByGravity = false
-        terrain.physicsBody?.categoryBitMask = CollisionCategory.terrainCatagory.rawValue
-        terrain.physicsBody?.contactTestBitMask = CollisionCategory.shipCatagory.rawValue
-        terrain.physicsBody?.collisionBitMask = 0
-        
-        let moveAction = SCNAction.moveBy(x: 0, y: 0, z: 800, duration: 160)
-        terrain.runAction(moveAction)
-
-        self.rootNode.addChildNode(terrain)
     }
 
     @objc func spawnMeteor1(){
@@ -265,6 +256,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
     
    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+    
+        print("removing...")
+        print(contact.nodeA)
+        print(contact.nodeB)
         
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
@@ -297,7 +292,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             self.shipOnScreen = false
             gameVC.endGame()
         }
-        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.terrainCatagory.rawValue {
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.earthCatagory.rawValue {
             //collision between ship and terrain
             meteorTimer.invalidate()
             checkDistanceTimer.invalidate()
@@ -308,7 +303,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             gameVC.endGame()
 
         }
-        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.terrainCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.earthCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
             //collision between terrain and ship
             meteorTimer.invalidate()
             checkDistanceTimer.invalidate()
@@ -317,6 +312,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             }
             self.shipOnScreen = false
             gameVC.endGame()
+        }
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.earthCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
+            contact.nodeA.removeFromParentNode()
+        }
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.earthCatagory.rawValue {
+            contact.nodeB.removeFromParentNode()
         }
         else{
             print("incorrect collision")
@@ -356,13 +357,14 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         //let vec = SCNVector3Make((player.position.distance(vector: SCNVector3(0, 0, 5)).x), player.position.distance(vector: SCNVector3(0, 0, 5)).y, player.position.distance(vector: SCNVector3(0, 0, 5)).z)
-        let z = 10 * cos(ship.eulerAngles.y)
-        let x = 10 * sin(ship.eulerAngles.y)
+        let z = 5 * cos(ship.eulerAngles.y)
+        let x = 5 * sin(ship.eulerAngles.y)
         
         if playing!{
-            //ship.physicsBody?.velocity = SCNVector3Make(x, 0, -z)
+            planetNode.enumerateChildNodes { (node, stop) in
+                node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
+            }
         }
-        print(ship.worldPosition)
         
         
        }
