@@ -262,25 +262,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func addPlanet(i: Int){
         let radius = CGFloat.random(in: 20..<30)
-        var locMax: Float!
-        var locMin: Float!
 
         if i % 10 == 0{
             min = Float.random(in: -40 ..< 40)
             max = Float.random(in: -40 ..< 40)
-            max = max+Float(radius)+10
-            min = min-Float(radius)-10
-        }
-        else{
-            locMax = Float(radius)+6+max
-            locMin = min-Float(radius)-6
-        }
-        var minmax = 0
-        if i % 2 == 0{
-            minmax = 0
-        }
-        else{
-            minmax = 1
         }
       
         let sphereGeometry = SCNSphere(radius: radius)
@@ -291,22 +276,20 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         sphereNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         sphereNode.physicsBody?.collisionBitMask = 0
 
-        switch minmax {
-            case 0:
-                print(SCNVector3(CGFloat(locMin), 0, planetZ))
-                sphereNode.position = SCNVector3(CGFloat(locMin), 0, planetZ)
-                min = locMin - Float(radius)*2 - 6
-                if Float(radius)*2 + 6 + locMax > max{
-                    max += Float(radius)*2 + 6
-                }
-            default:
-                print(SCNVector3(CGFloat(locMax), 0, planetZ))
-                sphereNode.position = SCNVector3(CGFloat(locMax), 0, planetZ)
-                max = Float(radius)*2 + 6 + locMax
-                if locMin - Float(radius)*2 - 6 < min{
-                    min = locMin - Float(radius)*2 - 6
-                }
-            }
+        if i % 2 == 0{
+            print("min " + String(min))
+            min -= Float(radius*2)
+            print(SCNVector3(CGFloat(min), 0, planetZ))
+            sphereNode.position = SCNVector3(CGFloat(min), 0, planetZ)
+            min -= Float(radius)*2 - 10
+        }
+        else{
+            print("max " + String(max))
+            max += Float(radius*2)
+            print(SCNVector3(CGFloat(max), 0, planetZ))
+            sphereNode.position = SCNVector3(CGFloat(max), 0, planetZ)
+            max += Float(radius)*2 + 10
+        }
         planetZ -= 8
         planetNode.addChildNode(sphereNode)
     }
