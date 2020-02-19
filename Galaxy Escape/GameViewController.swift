@@ -116,6 +116,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         if sender.state == .changed {
             delta = CGPoint.init(x: 2 * (loc.x - previousLoc.x), y: 2 * (loc.y - previousLoc.y))
             sceneGame.ship.position = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y + Float(-delta.y * (0.02)), sceneGame.ship.worldPosition.z)
+            
             previousLoc = loc
 
             newAngleY += currentAngleY

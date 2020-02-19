@@ -45,6 +45,13 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     var meteorTimer = Timer()
     var checkDistanceTimer = Timer()
+    var speed: Float!
+    
+    var min: Float!
+    var max: Float!
+    var planetZ: CGFloat!
+
+
     
     
     init(gameViewController: GameViewController){
@@ -119,12 +126,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         cameraNode!.camera = SCNCamera()
         cameraNode!.position = SCNVector3(x: 0.0, y: 0, z: 15)
         cameraNode!.camera!.zNear = 0.1
-        cameraNode!.camera!.zFar = 200
+        cameraNode!.camera!.zFar = 300
         self.rootNode.addChildNode(cameraNode!)
 
         // Link them
         let constraint1 = SCNLookAtConstraint(target: cameraConstraint)
-        constraint1.isGimbalLockEnabled = true
+        constraint1.isGimbalLockEnabled = false
         cameraNode!.constraints = [constraint1]
         
         
@@ -197,6 +204,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         
     func startGame(){
        
+        speed = 15.0
+        min = 0
+        max = 0
+        planetZ = -30
         let meteorScene = SCNScene(named: "art.scnassets/meteor.scn")!
         meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
         playing = true
@@ -211,7 +222,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
      
         self.rootNode.addChildNode(planetNode)
 
-        addPlanets()
+        addInitialPlanet()
+        for i in 1...100 {
+            addPlanet(i: i)
+        }
         cameraNode.position = SCNVector3(0, 0, 15)
         
         
@@ -229,10 +243,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
     }
     
-    func addPlanets(){
+    func addInitialPlanet(){
         let earthScene = SCNScene(named: "art.scnassets/earth.scn")!
         let earthNode = earthScene.rootNode.childNode(withName: "earth", recursively: true)!
-        earthNode.position = SCNVector3(-30, 0, -30)
+        earthNode.position = SCNVector3(-30, 0, planetZ)
         earthNode.scale = SCNVector3(1.4, 1.4, 1.4)
         earthNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         earthNode.physicsBody?.categoryBitMask = CollisionCategory.earthCatagory.rawValue
@@ -240,13 +254,61 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         earthNode.physicsBody?.collisionBitMask = 0
         planetNode.addChildNode(earthNode)
         
-        let earthNode2 = earthNode.clone()
-        earthNode2.position = SCNVector3(20, 0, -70)
-        earthNode2.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        earthNode2.physicsBody?.categoryBitMask = CollisionCategory.earthCatagory.rawValue
-        earthNode2.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
-        earthNode2.physicsBody?.collisionBitMask = 0
-        planetNode.addChildNode(earthNode2)
+        min = earthNode.position.x - (38)
+        max = earthNode.position.x + (38)
+        planetZ -= 4
+        
+    }
+    
+    func addPlanet(i: Int){
+        let radius = CGFloat.random(in: 20..<30)
+        var locMax: Float!
+        var locMin: Float!
+
+        if i % 10 == 0{
+            min = Float.random(in: -40 ..< 40)
+            max = Float.random(in: -40 ..< 40)
+            max = max+Float(radius)+10
+            min = min-Float(radius)-10
+        }
+        else{
+            locMax = Float(radius)+6+max
+            locMin = min-Float(radius)-6
+        }
+        var minmax = 0
+        if i % 2 == 0{
+            minmax = 0
+        }
+        else{
+            minmax = 1
+        }
+      
+        let sphereGeometry = SCNSphere(radius: radius)
+        sphereGeometry.firstMaterial?.diffuse.contents = UIImage(named: "mars_diffuse")
+        let sphereNode = SCNNode(geometry: sphereGeometry)
+        sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        sphereNode.physicsBody?.categoryBitMask = CollisionCategory.earthCatagory.rawValue
+        sphereNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+        sphereNode.physicsBody?.collisionBitMask = 0
+
+        switch minmax {
+            case 0:
+                print(SCNVector3(CGFloat(locMin), 0, planetZ))
+                sphereNode.position = SCNVector3(CGFloat(locMin), 0, planetZ)
+                min = locMin - Float(radius)*2 - 6
+                if Float(radius)*2 + 6 + locMax > max{
+                    max += Float(radius)*2 + 6
+                }
+            default:
+                print(SCNVector3(CGFloat(locMax), 0, planetZ))
+                sphereNode.position = SCNVector3(CGFloat(locMax), 0, planetZ)
+                max = Float(radius)*2 + 6 + locMax
+                if locMin - Float(radius)*2 - 6 < min{
+                    min = locMin - Float(radius)*2 - 6
+                }
+            }
+        planetZ -= 8
+        planetNode.addChildNode(sphereNode)
     }
 
     @objc func spawnMeteor1(){
@@ -356,18 +418,14 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        //let vec = SCNVector3Make((player.position.distance(vector: SCNVector3(0, 0, 5)).x), player.position.distance(vector: SCNVector3(0, 0, 5)).y, player.position.distance(vector: SCNVector3(0, 0, 5)).z)
-        let z = 5 * cos(ship.eulerAngles.y)
-        let x = 5 * sin(ship.eulerAngles.y)
-        
         if playing!{
+            let z = (speed+0.1) * cos(ship.eulerAngles.y)
+            let x = (speed+0.1) * sin(ship.eulerAngles.y)
             planetNode.enumerateChildNodes { (node, stop) in
                 node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
             }
         }
-        
-        
-       }
+    }
 }
 
 enum ShapeType:Int {
