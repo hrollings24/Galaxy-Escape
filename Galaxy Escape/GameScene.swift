@@ -43,7 +43,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var playing: Bool!
     
     var meteorTimer = Timer()
-    var checkDistanceTimer = Timer()
     var speed: Float!
     
     var min: Float!
@@ -155,22 +154,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         meteor.name = "meteor"
         meteor.physicsBody?.collisionBitMask = 0
         let randomX = Float.random(in: -40 ..< 40)
-        let randomY = Float.random(in: -3 ..< 3)
-        var randomXForce = Float()
-        var randomYForce = Float()
-
-        if randomX <= 0{
-           randomXForce = Float.random(in: 0 ..< 7)
-        }
-        else{
-           randomXForce = Float.random(in: -7 ..< 0)
-        }
-        if randomY <= 0{
-           randomYForce = Float.random(in: 0 ..< 3)
-        }
-        else{
-           randomYForce = Float.random(in: -3 ..< 0)
-        }
+        let randomY = Float.random(in: -8 ..< 8)
         
         meteor.position = SCNVector3(x: randomX, y: randomY, z: -100)
         meteor.name = "meteor"
@@ -186,7 +170,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
-        laserNode.position = ship.worldPosition
+        laserNode.position = ship.presentation.worldPosition
         laserNode.rotation = SCNVector4Make(0, 1, 0, .pi / 2)
         laserNode.name = "laser"
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
@@ -240,7 +224,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
         meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
-        checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
     }
     
     func addInitialPlanet(){
@@ -326,7 +309,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
             //collision between ship and meteor
             meteorTimer.invalidate()
-            checkDistanceTimer.invalidate()
             self.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
             }
@@ -337,7 +319,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
             //collision between meteor and ship
             meteorTimer.invalidate()
-            checkDistanceTimer.invalidate()
             self.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
             }
@@ -347,7 +328,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue {
             //collision between ship and terrain
             meteorTimer.invalidate()
-            checkDistanceTimer.invalidate()
             self.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
             }
@@ -358,7 +338,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
             //collision between terrain and ship
             meteorTimer.invalidate()
-            checkDistanceTimer.invalidate()
             self.rootNode.enumerateChildNodes { (node, stop) in
                 node.removeFromParentNode()
             }
@@ -376,45 +355,24 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         }
     }
     
-    @objc func checkDistances() {
-        //
-        
-        let shipLocation = ship.position
-        let xValueMax = shipLocation.x + 5
-        let xValueMin = shipLocation.x - 5
-        let yValueMax = shipLocation.y + 3
-        let yValueMin = shipLocation.y - 3
-        let zValueMax = shipLocation.z + 6
-        let zValueMin = shipLocation.z - 6
-        
-        outerloop: for meteorNode in meteorArray{
-            
-            let realPosition = meteorNode.presentation.worldPosition
-
-            
-            if realPosition.z > 15{
-                let index = meteorArray.firstIndex(of: meteorNode)!
-                meteorArray.remove(at: index)
-                break outerloop
-            }
-            if realPosition.x < xValueMax && realPosition.x > xValueMin {
-                if realPosition.y < yValueMax && realPosition.y > yValueMin {
-                    if realPosition.z < zValueMax && realPosition.z > zValueMin {
-                        UIDevice.vibrate()
-                    }
-                }
-            }
-        }
-    }
-    
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if playing!{
             let z = (speed+0.1) * cos(ship.eulerAngles.y)
             let x = (speed+0.1) * sin(ship.eulerAngles.y)
             planetNode.enumerateChildNodes { (node, stop) in
                 if node.name == "meteor"{
-                    let vec = ship.worldPosition - node.worldPosition
+                    let vec = ship.presentation.worldPosition - node.presentation.worldPosition
                     node.physicsBody?.velocity = SCNVector3Make(-x, 0, z) + (vec/4)
+                    //VIBRATIONS
+                    
+                    if (ship.presentation.worldPosition.x < node.presentation.worldPosition.x + 5) && (ship.presentation.worldPosition.x > node.presentation.worldPosition.x - 5) {
+                        if (ship.presentation.worldPosition.y < node.presentation.worldPosition.y + 3) && (ship.presentation.worldPosition.y > node.presentation.worldPosition.y - 3) {
+                            if ship.presentation.worldPosition.z < node.presentation.worldPosition.z + 10{
+                                let generator = UIImpactFeedbackGenerator(style: .light)
+                                generator.impactOccurred()
+                            }
+                        }
+                    }
                 }
                 else{
                     node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
