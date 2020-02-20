@@ -17,13 +17,13 @@ struct CollisionCategory: OptionSet {
     static let laserCategory  = CollisionCategory(rawValue: 1 << 0)
     static let meteorCategory = CollisionCategory(rawValue: 1 << 1)
     static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
-    static let earthCatagory = CollisionCategory(rawValue: 1 << 3)
+    static let planetCatagory = CollisionCategory(rawValue: 1 << 3)
 
 }
 
 extension UIDevice {
     static func vibrate() {
-        //AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 }
 
@@ -249,7 +249,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         earthNode.position = SCNVector3(-30, 0, planetZ)
         earthNode.scale = SCNVector3(1.4, 1.4, 1.4)
         earthNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        earthNode.physicsBody?.categoryBitMask = CollisionCategory.earthCatagory.rawValue
+        earthNode.physicsBody?.categoryBitMask = CollisionCategory.planetCatagory.rawValue
         earthNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         earthNode.physicsBody?.collisionBitMask = 0
         planetNode.addChildNode(earthNode)
@@ -273,7 +273,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         sphereGeometry.firstMaterial?.diffuse.contents = planetTextures[texturePointer!]
         let sphereNode = SCNNode(geometry: sphereGeometry)
         sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        sphereNode.physicsBody?.categoryBitMask = CollisionCategory.earthCatagory.rawValue
+        sphereNode.physicsBody?.categoryBitMask = CollisionCategory.planetCatagory.rawValue
         sphereNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         sphereNode.physicsBody?.collisionBitMask = 0
 
@@ -315,6 +315,14 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
         }
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
+                   //planet and laser
+                   contact.nodeA.removeFromParentNode()
+               }
+        else if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
+                   //planet and laser
+                   contact.nodeB.removeFromParentNode()
+               }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
             //collision between ship and meteor
             meteorTimer.invalidate()
@@ -336,7 +344,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             self.shipOnScreen = false
             gameVC.endGame()
         }
-        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.earthCatagory.rawValue {
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue {
             //collision between ship and terrain
             meteorTimer.invalidate()
             checkDistanceTimer.invalidate()
@@ -347,7 +355,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             gameVC.endGame()
 
         }
-        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.earthCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue {
             //collision between terrain and ship
             meteorTimer.invalidate()
             checkDistanceTimer.invalidate()
@@ -357,10 +365,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             self.shipOnScreen = false
             gameVC.endGame()
         }
-        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.earthCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
             contact.nodeA.removeFromParentNode()
         }
-        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.earthCatagory.rawValue {
+        else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue {
             contact.nodeB.removeFromParentNode()
         }
         else{
