@@ -37,7 +37,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var meteorArray = [SCNNode]()
     var meteorNodeMain: SCNNode!
     
-    //var player: Player!
     var ship: SCNNode!
     var shipOnScreen: Bool!
     var planetNode: SCNNode!
@@ -150,20 +149,33 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
         let meteor = Meteor()
         meteor.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        meteor.physicsBody?.isAffectedByGravity = false
+        meteor.physicsBody?.categoryBitMask = CollisionCategory.meteorCategory.rawValue
+        meteor.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue | CollisionCategory.shipCatagory.rawValue
+        meteor.name = "meteor"
         meteor.physicsBody?.collisionBitMask = 0
+        let randomX = Float.random(in: -40 ..< 40)
+        let randomY = Float.random(in: -3 ..< 3)
+        var randomXForce = Float()
+        var randomYForce = Float()
 
-        let randomX = Float.random(in: -100 ..< 100)
-        let randomY = Float.random(in: -3 ..< 20)
+        if randomX <= 0{
+           randomXForce = Float.random(in: 0 ..< 7)
+        }
+        else{
+           randomXForce = Float.random(in: -7 ..< 0)
+        }
+        if randomY <= 0{
+           randomYForce = Float.random(in: 0 ..< 3)
+        }
+        else{
+           randomYForce = Float.random(in: -3 ..< 0)
+        }
         
-        meteor.position = SCNVector3(x: randomX, y: randomY, z: -50)
-        let meteorWorldPosition = meteor.worldPosition
-        let shipWorldPosition = ship.worldPosition
+        meteor.position = SCNVector3(x: randomX, y: randomY, z: -100)
+        meteor.name = "meteor"
         
-        let vel =  shipWorldPosition - meteorWorldPosition
-        print(vel)
-        meteor.physicsBody?.velocity = vel
-        
-        rootNode.addChildNode(meteor)
+        planetNode.addChildNode(meteor)
         
     }
     
@@ -184,8 +196,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         laserNode.physicsBody?.collisionBitMask = 0
         
-        let z = 40 * cos(ship.eulerAngles.y)
-        let x = 40 * sin(ship.eulerAngles.y)
+        let z = 50 * cos(ship.eulerAngles.y)
+        let x = 50 * sin(ship.eulerAngles.y)
         laserNode.physicsBody?.velocity = SCNVector3Make(x, 0, -z)
         
         self.rootNode.addChildNode(laserNode)
@@ -226,8 +238,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         cameraNode.position = SCNVector3(0, 0, 15)
         
         
-        // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.6 seconds
-        meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
+        meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
         checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
     }
     
@@ -258,7 +270,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         }
       
         let sphereGeometry = SCNSphere(radius: radius)
-        print(texturePointer!)
         sphereGeometry.firstMaterial?.diffuse.contents = planetTextures[texturePointer!]
         let sphereNode = SCNNode(geometry: sphereGeometry)
         sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
@@ -267,16 +278,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         sphereNode.physicsBody?.collisionBitMask = 0
 
         if i % 2 == 0{
-            print("min " + String(min))
             min -= Float(radius*2)
-            print(SCNVector3(CGFloat(min), 0, planetZ))
             sphereNode.position = SCNVector3(CGFloat(min), CGFloat.random(in: -4..<4), planetZ)
             min -= Float(radius)*2 - 10
         }
         else{
-            print("max " + String(max))
             max += Float(radius*2)
-            print(SCNVector3(CGFloat(max), 0, planetZ))
             sphereNode.position = SCNVector3(CGFloat(max), CGFloat.random(in: -4..<4), planetZ)
             max += Float(radius)*2 + 10
         }
@@ -297,10 +304,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
     
    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-    
-        print("removing...")
-        print(contact.nodeA)
-        print(contact.nodeB)
         
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
@@ -401,7 +404,13 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             let z = (speed+0.1) * cos(ship.eulerAngles.y)
             let x = (speed+0.1) * sin(ship.eulerAngles.y)
             planetNode.enumerateChildNodes { (node, stop) in
-                node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
+                if node.name == "meteor"{
+                    let vec = ship.worldPosition - node.worldPosition
+                    node.physicsBody?.velocity = SCNVector3Make(-x, 0, z) + (vec/4)
+                }
+                else{
+                    node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
+                }
             }
         }
     }
@@ -441,4 +450,10 @@ func - (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
 }
 func * (vector: SCNVector3, scalar: Float) -> SCNVector3 {
     return SCNVector3Make(vector.x * scalar, vector.y * scalar, vector.z * scalar)
+}
+func + (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
+    return SCNVector3Make(left.x + right.x, left.y + right.y, left.z + right.z)
+}
+func / (left: SCNVector3, right: Float) -> SCNVector3 {
+    return SCNVector3Make(left.x / right, left.y / right, left.z / right)
 }

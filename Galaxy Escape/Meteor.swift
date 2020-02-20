@@ -14,10 +14,13 @@ import SceneKit.ModelIO
 class Meteor: SCNNode{
     
     var meteorNode: SCNNode!
+    var speedChanged: Bool!
        
     override init() {
        super.init()
        
+        speedChanged = false
+        
         let meteorScene = SCNScene(named: "art.scnassets/rock.dae")!
         meteorNode = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
             
