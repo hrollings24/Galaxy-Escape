@@ -50,6 +50,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var min: Float!
     var max: Float!
     var planetZ: CGFloat!
+    var planetTextures = [UIImage]()
+    var texturePointer: Int!
 
 
     
@@ -59,6 +61,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
 
         gameVC = gameViewController
 
+        for i in 1..<13{
+            let string = "planet" + String(i) + "_diffuse"
+            planetTextures.append(UIImage(named: string)!)
+        }
+        texturePointer = 0
    
         //define player
         //player = Player()
@@ -142,31 +149,21 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         // 1
     
         let meteor = Meteor()
-        let randomX = Float.random(in: -40 ..< 40)
-        let randomY = Float.random(in: -3 ..< 3)
-        var randomXForce = Float(0.0)
-        var randomYForce = Float(0.0)
+        meteor.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        meteor.physicsBody?.collisionBitMask = 0
 
-        if randomX <= 0{
-           randomXForce = Float.random(in: 0 ..< 7)
-        }
-        else{
-           randomXForce = Float.random(in: -7 ..< 0)
-        }
-        if randomY <= 0{
-           randomYForce = Float.random(in: 0 ..< 3)
-        }
-        else{
-           randomYForce = Float.random(in: -3 ..< 0)
-        }
+        let randomX = Float.random(in: -100 ..< 100)
+        let randomY = Float.random(in: -3 ..< 20)
         
-        let force = SCNVector3(x: randomXForce, y: randomYForce , z: 15)
-        let position = SCNVector3(x: 0, y: 0, z: 0)
-        meteor.meteorNode.physicsBody?.applyForce(force, at: position, asImpulse: true)
-
         meteor.position = SCNVector3(x: randomX, y: randomY, z: -50)
+        let meteorWorldPosition = meteor.worldPosition
+        let shipWorldPosition = ship.worldPosition
         
-        self.rootNode.addChildNode(meteor)
+        let vel =  shipWorldPosition - meteorWorldPosition
+        print(vel)
+        meteor.physicsBody?.velocity = vel
+        
+        rootNode.addChildNode(meteor)
         
     }
     
@@ -229,15 +226,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         cameraNode.position = SCNVector3(0, 0, 15)
         
         
-        //let moveAction = SCNAction.moveBy(x: 0, y: 0, z: -200, duration: 20)
-        //cameraNode.runAction(moveAction)
-        //ship.runAction(moveAction)
-        //cameraConstraint.runAction(moveAction)
-        //shipConstraint.runAction(moveAction)
-
-        
-        //addTerrain()
-        
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.6 seconds
         meteorTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
         checkDistanceTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkDistances), userInfo: nil, repeats: true)
@@ -257,11 +245,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         min = earthNode.position.x - (38)
         max = earthNode.position.x + (38)
         planetZ -= 4
+        texturePointer += 1
         
     }
     
     func addPlanet(i: Int){
-        let radius = CGFloat.random(in: 20..<30)
+        let radius = CGFloat.random(in: 30..<50)
 
         if i % 10 == 0{
             min = Float.random(in: -40 ..< 40)
@@ -269,7 +258,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         }
       
         let sphereGeometry = SCNSphere(radius: radius)
-        sphereGeometry.firstMaterial?.diffuse.contents = UIImage(named: "mars_diffuse")
+        print(texturePointer!)
+        sphereGeometry.firstMaterial?.diffuse.contents = planetTextures[texturePointer!]
         let sphereNode = SCNNode(geometry: sphereGeometry)
         sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         sphereNode.physicsBody?.categoryBitMask = CollisionCategory.earthCatagory.rawValue
@@ -280,18 +270,24 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             print("min " + String(min))
             min -= Float(radius*2)
             print(SCNVector3(CGFloat(min), 0, planetZ))
-            sphereNode.position = SCNVector3(CGFloat(min), 0, planetZ)
+            sphereNode.position = SCNVector3(CGFloat(min), CGFloat.random(in: -4..<4), planetZ)
             min -= Float(radius)*2 - 10
         }
         else{
             print("max " + String(max))
             max += Float(radius*2)
             print(SCNVector3(CGFloat(max), 0, planetZ))
-            sphereNode.position = SCNVector3(CGFloat(max), 0, planetZ)
+            sphereNode.position = SCNVector3(CGFloat(max), CGFloat.random(in: -4..<4), planetZ)
             max += Float(radius)*2 + 10
         }
         planetZ -= 8
         planetNode.addChildNode(sphereNode)
+        if texturePointer == 11{
+            texturePointer = 0
+        }
+        else{
+            texturePointer += 1
+        }
     }
 
     @objc func spawnMeteor1(){
