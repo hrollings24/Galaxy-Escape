@@ -14,6 +14,7 @@ import GameKit
 
 
 
+
 class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameCenterControllerDelegate {
 
     
@@ -45,7 +46,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         self.sceneView.autoenablesDefaultLighting = true
         self.sceneView.allowsCameraControl = false
         self.sceneView.delegate = sceneGame
-
+        self.sceneView.showsStatistics = true
         
         self.view.addSubview(self.sceneView)
         
@@ -117,13 +118,14 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
             delta = CGPoint.init(x: 2 * (loc.x - previousLoc.x), y: 2 * (loc.y - previousLoc.y))
              sceneGame.ship.position = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y + Float(-delta.y * (0.02)), sceneGame.ship.worldPosition.z)
             /*
-            let cameraPos = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y + Float(-delta.y * (0.02)), sceneGame.cameraNode.worldPosition.z)
+            let cameraPos = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y, sceneGame.cameraNode.worldPosition.z)
+            
             let cameraAction = SCNAction.move(to: cameraPos, duration: 0.5)
             sceneGame.cameraNode.runAction(cameraAction)
-            let cameraConsPos = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y + Float(-delta.y * (0.02)), sceneGame.cameraConstraint.worldPosition.z)
+            let cameraConsPos = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y, sceneGame.cameraConstraint.worldPosition.z)
             let cameraConsAction = SCNAction.move(to: cameraConsPos, duration: 0.5)
             sceneGame.cameraConstraint.runAction(cameraConsAction)
- */
+            */
            
             if Float(delta.x * 0.02) > 0{
                 sceneGame.shipleftrightmovement = .left
