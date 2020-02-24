@@ -27,6 +27,14 @@ extension UIDevice {
     }
 }
 
+enum movement {
+    case left
+    case right
+    case still
+    case up
+    case down
+}
+
 class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     var cameraNode: SCNNode!
@@ -39,6 +47,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     var ship: SCNNode!
     var shipOnScreen: Bool!
+    var shipleftrightmovement: movement!
+    var shipupdownmovement: movement!
+
     var planetNode: SCNNode!
     var playing: Bool!
     
@@ -79,18 +90,23 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
     
     func addShip(){
-        ship = Ship()
+        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        ship = scene.rootNode.childNode(withName: "ship", recursively: true)!
         ship.position = SCNVector3(x: 0, y: -5, z: 0)
-        ship.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi))
+        //ship.rotation = SCNVector4Make(0, 1, 0, Float.pi)
         ship.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
 
-        //shipNode.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi));
         ship.physicsBody?.isAffectedByGravity = false
+        ship.eulerAngles = SCNVector3(0, Float.pi, 0)
 
         ship.physicsBody?.categoryBitMask = CollisionCategory.shipCatagory.rawValue
         ship.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         ship.physicsBody?.collisionBitMask = 0
         //ship.physicsBody?.mass = 0
+        
+        shipleftrightmovement = .still
+        shipupdownmovement = .still
+        //ship.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 3)
 
         shipOnScreen = true
         self.rootNode.addChildNode(ship)
@@ -98,6 +114,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func removeShip(){
         ship.removeFromParentNode()
+        shipleftrightmovement = .still
         shipOnScreen = false
     }
     
@@ -365,11 +382,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     node.physicsBody?.velocity = SCNVector3Make(-x, 0, z) + (vec/4)
                     //VIBRATIONS
                     
-                    if (ship.presentation.worldPosition.x < node.presentation.worldPosition.x + 5) && (ship.presentation.worldPosition.x > node.presentation.worldPosition.x - 5) {
-                        if (ship.presentation.worldPosition.y < node.presentation.worldPosition.y + 3) && (ship.presentation.worldPosition.y > node.presentation.worldPosition.y - 3) {
-                            if ship.presentation.worldPosition.z < node.presentation.worldPosition.z + 10{
+                    if (ship.presentation.worldPosition.x < node.presentation.worldPosition.x + 4) && (ship.presentation.worldPosition.x > node.presentation.worldPosition.x - 4) {
+                        if (ship.presentation.worldPosition.y < node.presentation.worldPosition.y + 2) && (ship.presentation.worldPosition.y > node.presentation.worldPosition.y - 2) {
+                            if ship.presentation.worldPosition.z < node.presentation.worldPosition.z + 8{
                                 let generator = UIImpactFeedbackGenerator(style: .light)
-                                generator.impactOccurred()
+                                //generator.impactOccurred()
                             }
                         }
                     }
@@ -378,6 +395,31 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
                 }
             }
+            var eulerAngledZ = Float()
+            var eulerAngledX = Float()
+
+            if shipleftrightmovement == .right{
+               eulerAngledZ = Float.pi / 6
+            }
+            else if shipleftrightmovement == .left{
+               eulerAngledZ = -(Float.pi / 6)
+            }
+            else{
+               eulerAngledZ = 0
+            }
+            if shipupdownmovement == .up{
+               eulerAngledX = Float.pi / 9
+            }
+            else if shipleftrightmovement == .down{
+               eulerAngledX = -(Float.pi / 9)
+            }
+            else{
+               eulerAngledX = 0
+            }
+
+            let act = SCNAction.rotateTo(x: CGFloat(eulerAngledX), y: CGFloat.pi, z: CGFloat(eulerAngledZ), duration: 0.5, usesShortestUnitArc: true)
+            ship.runAction(act)
+            //ship.eulerAngles = SCNVector3(eulerAngledX, , eulerAngledZ)
         }
     }
 }
