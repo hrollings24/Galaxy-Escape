@@ -66,6 +66,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var planetZ: CGFloat!
     var planetTextures = [UIImage]()
     var texturePointer: Int!
+    var removedPlanets: Int!
     
 
     init(gameViewController: GameViewController){
@@ -208,7 +209,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         
     func startGame(){
        
-        speed = 15.0
+        speed = 20.0
         min = 0
         max = 0
         planetZ = -30
@@ -217,6 +218,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             addShip()
         }
         planetNode = SCNNode()
+        removedPlanets = 0
 
         self.rootNode.addChildNode(planetNode)
 
@@ -441,6 +443,13 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             laserNodeMain.enumerateChildNodes { (node, stop) in
                 if node.presentation.worldPosition.z < -200{
                     node.removeFromParentNode()
+                    removedPlanets += 1
+                    if removedPlanets == 10{
+                        for i in 1...10 {
+                           addPlanet(i: i)
+                        }
+                        removedPlanets = 0
+                    }
                 }
             }
             
