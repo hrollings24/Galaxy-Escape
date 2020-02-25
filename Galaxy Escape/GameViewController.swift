@@ -57,6 +57,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     }
     
     func setupMenu(){
+        sceneGame.resetCamera()
         if tapGestureEnd != nil {
             sceneView.removeGestureRecognizer(tapGestureEnd)
             }
@@ -179,6 +180,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     func endGame(){
         
         DispatchQueue.main.async {
+            
+            self.sceneGame.playing = false
             
             self.sceneView.removeGestureRecognizer(self.tapGesture)
             self.tapGestureEnd = UITapGestureRecognizer(target: self, action: #selector(self.tapCalledEnd))

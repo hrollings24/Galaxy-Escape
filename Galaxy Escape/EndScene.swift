@@ -43,7 +43,7 @@ class EndScene: SKScene {
         destroyedLB.fontName = "SpacePatrol"
         destroyedLB.fontSize = 32
         destroyedLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (self.frame.height - 70) - scoreLB.frame.height - 30)
-        destroyedLB.text = "Meteors Destroyed: " + "\(String(describing: score!))"
+        destroyedLB.text = "Meteors Destroyed: " + "\(String(describing: destroyed!))"
         self.addChild(destroyedLB)
         
         let highscoreLB = SKLabelNode()

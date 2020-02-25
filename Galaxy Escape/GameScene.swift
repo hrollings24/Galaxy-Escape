@@ -12,29 +12,6 @@ import Foundation
 import AVFoundation
 import CoreMotion
 
-struct CollisionCategory: OptionSet {
-    let rawValue: Int
-    static let laserCategory  = CollisionCategory(rawValue: 1 << 0)
-    static let meteorCategory = CollisionCategory(rawValue: 1 << 1)
-    static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
-    static let planetCatagory = CollisionCategory(rawValue: 1 << 3)
-
-}
-
-extension UIDevice {
-    static func vibrate() {
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-    }
-}
-
-enum movement {
-    case left
-    case right
-    case still
-    case up
-    case down
-}
-
 class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     //Camera Fields
@@ -93,7 +70,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     func addShip(){
         let scene = SCNScene(named: "art.scnassets/ship.scn")!
         ship = scene.rootNode.childNode(withName: "ship", recursively: true)!
-        ship.position = SCNVector3(x: 0, y: -2, z: 0)
+        ship.position = SCNVector3(x: 0, y: -2.5, z: 0)
         //ship.rotation = SCNVector4Make(0, 1, 0, Float.pi)
         ship.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
 
@@ -141,8 +118,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         self.rootNode.addChildNode(cameraConstraint)
 
         playing = false
-        laserNodeMain = SCNNode()
-        self.rootNode.addChildNode(laserNodeMain)
         
         cameraNode = SCNNode()
         cameraNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
@@ -207,6 +182,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         laserNodeMain.addChildNode(laserNode)
     }
         
+    func resetCamera(){
+        cameraNode!.position = SCNVector3(x: 0.0, y: 0, z: 15)
+        cameraNode!.eulerAngles = SCNVector3(0, 0, 0)
+    }
+    
     func startGame(){
        
         speed = 20.0
@@ -230,6 +210,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         motionManager = CMMotionManager()
         motionManager.startAccelerometerUpdates()
         playing = true
+        laserNodeMain = SCNNode()
+        self.rootNode.addChildNode(laserNodeMain)
 
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
         meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
@@ -368,7 +350,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        if playing!{
+        if playing{
             
             
             //Move Ship
@@ -440,11 +422,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 //Check to remove node
                 if node.presentation.worldPosition.z > 15 + (node.geometry?.boundingSphere.radius)!{
                     node.removeFromParentNode()
-                }
-            }
-            laserNodeMain.enumerateChildNodes { (node, stop) in
-                if node.presentation.worldPosition.z < -200{
-                    node.removeFromParentNode()
                     removedPlanets += 1
                     if removedPlanets == 10{
                         print("adding")
@@ -453,6 +430,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                         }
                         removedPlanets = 0
                     }
+                }
+            }
+            laserNodeMain.enumerateChildNodes { (node, stop) in
+                if node.presentation.worldPosition.z < -200{
+                    node.removeFromParentNode()
                 }
             }
             
@@ -491,6 +473,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
 }
 
+
+
+
 enum ShapeType:Int {
 
   case box = 0
@@ -509,7 +494,6 @@ enum ShapeType:Int {
     return ShapeType(rawValue: Int(rand))!
   }
 }
-
 
 extension SCNVector3{
     func length() -> Float {
@@ -531,4 +515,21 @@ func + (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
 }
 func / (left: SCNVector3, right: Float) -> SCNVector3 {
     return SCNVector3Make(left.x / right, left.y / right, left.z / right)
+}
+
+struct CollisionCategory: OptionSet {
+    let rawValue: Int
+    static let laserCategory  = CollisionCategory(rawValue: 1 << 0)
+    static let meteorCategory = CollisionCategory(rawValue: 1 << 1)
+    static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
+    static let planetCatagory = CollisionCategory(rawValue: 1 << 3)
+
+}
+
+enum movement {
+    case left
+    case right
+    case still
+    case up
+    case down
 }
