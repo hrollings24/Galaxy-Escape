@@ -20,8 +20,6 @@ class EndScene: SKScene {
     
     override init(size: CGSize) {
         super.init(size: size)
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

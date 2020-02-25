@@ -46,7 +46,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         self.sceneView.autoenablesDefaultLighting = true
         self.sceneView.allowsCameraControl = false
         self.sceneView.delegate = sceneGame
-        self.sceneView.showsStatistics = true
         
         self.view.addSubview(self.sceneView)
         
@@ -58,6 +57,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     
     func setupMenu(){
         sceneGame.resetCamera()
+
         if tapGestureEnd != nil {
             sceneView.removeGestureRecognizer(tapGestureEnd)
             }
@@ -80,12 +80,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
       
         // add a tap gesture recognizer
         
-        
+        /*
         panGesture = UIPanGestureRecognizer(target: self, action:#selector(self.moveSpaceship))
         panGesture.maximumNumberOfTouches = 1
         panGesture.delegate = self
         sceneView.addGestureRecognizer(panGesture)
- 
+        */
         
         sceneView.removeGestureRecognizer(tapGestureMenu)
         if tapGestureEnd != nil{
@@ -127,26 +127,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
             let cameraConsAction = SCNAction.move(to: cameraConsPos, duration: 0.5)
             sceneGame.cameraConstraint.runAction(cameraConsAction)
             */
-           
-            if Float(delta.x * 0.02) > 0{
-                sceneGame.shipleftrightmovement = .left
-            }
-            else if Float(delta.x * 0.02) < 0{
-                sceneGame.shipleftrightmovement = .right
-            }
-            else{
-                sceneGame.shipleftrightmovement = .still
-            }
-            if Float(-delta.y * (0.02)) > 0{
-              sceneGame.shipupdownmovement = .down
-            }
-            else if Float(-delta.y * (0.02)) > 0{
-              sceneGame.shipupdownmovement = .up
-            }
-            else{
-              sceneGame.shipupdownmovement = .still
-            }
-            
             
             previousLoc = loc
 
@@ -156,9 +136,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         previousLoc = loc
         
         if(sender.state == .ended) {
-            //currentAngleY = newAngleY
-            sceneGame.shipleftrightmovement = .still
-            
+            //currentAngleY = newAngleY            
         }
     }
     

@@ -21,8 +21,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     //Ship Fields
     var ship: SCNNode!
     var shipOnScreen: Bool!
-    var shipleftrightmovement: movement!
-    var shipupdownmovement: movement!
 
     //Gameplay Fields
     var meteorNodeMain: SCNNode!
@@ -81,19 +79,13 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         ship.physicsBody?.categoryBitMask = CollisionCategory.shipCatagory.rawValue
         ship.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue | CollisionCategory.planetCatagory.rawValue
         ship.physicsBody?.collisionBitMask = 0
-        //ship.physicsBody?.mass = 0
         
-        shipleftrightmovement = .still
-        shipupdownmovement = .still
-        //ship.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 3)
-
         shipOnScreen = true
         self.rootNode.addChildNode(ship)
     }
     
     func removeShip(){
         ship.removeFromParentNode()
-        shipleftrightmovement = .still
         shipOnScreen = false
     }
     
@@ -149,8 +141,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         meteor.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue | CollisionCategory.shipCatagory.rawValue
         meteor.name = "meteor"
         meteor.physicsBody?.collisionBitMask = 0
-        let randomX = Float.random(in: -40 ..< 40)
-        let randomY = Float.random(in: -8 ..< 8)
+        //CRASH IF SHIP MOVES INTO NEGATIVE X
+        let randomX = Float.random(in: -(ship.presentation.worldPosition.x+40) ..< (ship.presentation.worldPosition.x+40))
+        let randomY = Float.random(in: -(ship.presentation.worldPosition.y+8) ..< (ship.presentation.worldPosition.y+8))
         
         meteor.position = SCNVector3(x: randomX, y: randomY, z: -210)
         planetNode.addChildNode(meteor)
@@ -160,13 +153,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     func spawnLaser(){
         //called when button is pressed
         //create cylinder
-        let laser = SCNCylinder(radius: 0.15, height: 3.5)
+        let laser = SCNCylinder(radius: 0.2, height: 3.5)
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
         laserNode.position = ship.presentation.worldPosition
         let shipAngles = ship.eulerAngles
-        print(shipAngles)
         laserNode.eulerAngles = SCNVector3(Float.pi / 2, -shipAngles.y, 0)
         laserNode.name = "laser"
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
@@ -185,16 +177,17 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         
     func resetCamera(){
         cameraNode!.position = SCNVector3(x: 0.0, y: 0, z: 15)
-        cameraNode!.eulerAngles = SCNVector3(0, 0, 0)
+        cameraNode.eulerAngles = SCNVector3Zero
     }
     
     func startGame(){
        
+        resetCamera()
         vibrationCounter = 0
         speed = 20.0
         min = 0
         max = 0
-        planetZ = -30
+        planetZ = -50
         
         if !shipOnScreen{
             addShip()
@@ -208,7 +201,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         for i in 1...100 {
             addPlanet(i: i)
         }
-        cameraNode.position = SCNVector3(0, 0, 15)
         motionManager = CMMotionManager()
         motionManager.startAccelerometerUpdates()
         playing = true
@@ -309,6 +301,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 node.removeFromParentNode()
             }
             self.shipOnScreen = false
+            cameraNode.removeAllActions()
             gameVC.endGame()
 
         }
@@ -319,6 +312,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 node.removeFromParentNode()
             }
             self.shipOnScreen = false
+            cameraNode.removeAllActions()
+
             gameVC.endGame()
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue {
@@ -328,6 +323,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 node.removeFromParentNode()
             }
             self.shipOnScreen = false
+            cameraNode.removeAllActions()
+
             gameVC.endGame()
 
         }
@@ -338,6 +335,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 node.removeFromParentNode()
             }
             self.shipOnScreen = false
+            cameraNode.removeAllActions()
+
             gameVC.endGame()
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
@@ -354,59 +353,59 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if playing{
             
+            var eulerAngledZ = Float()
+            var eulerAngledX = Float()
+            var eulerAngledY = Float.pi
             
             //Move Ship
             if let accelerometerData = motionManager.accelerometerData {
                 let tilt = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * 50)
-                if tilt.dx > 4{
+                if tilt.dx > 0{
+                    var val = tilt.dx
+                    if val > 18{
+                        val = 18
+                    }
+                    else{
+                        val = tilt.dx
+                    }
                     //left
-                    shipleftrightmovement = .right
-                    ship.position = SCNVector3.init(ship.position.x - 0.08, ship.position.y, ship.position.z)
-                    cameraNode.position = SCNVector3.init(cameraNode.position.x - 0.08, cameraNode.position.y, cameraNode.position.z)
-
+                    ship.position = SCNVector3.init(ship.position.x + Float(val/200), ship.position.y, ship.position.z)
+                    cameraNode.position = SCNVector3.init(cameraNode.position.x + Float(val/200), cameraNode.position.y, cameraNode.position.z)
+                    eulerAngledZ = Float(val / 40)
+                    eulerAngledY = Float.pi + Float(val / 40)
                 }
-                else if tilt.dx < -4{
+                else if tilt.dx < 0{
+                    var val = tilt.dx
+                    if val < -18{
+                        val = -18
+                    }
+                    else{
+                        val = tilt.dx
+                    }
                     //right
-                    shipleftrightmovement = .left
-                    ship.position = SCNVector3.init(ship.position.x + 0.08, ship.position.y, ship.position.z)
-                    cameraNode.position = SCNVector3.init(cameraNode.position.x + 0.08, cameraNode.position.y, cameraNode.position.z)
-
+                    ship.position = SCNVector3.init(ship.position.x - Float(val/200), ship.position.y, ship.position.z)
+                    cameraNode.position = SCNVector3.init(cameraNode.position.x - Float(val/200), cameraNode.position.y, cameraNode.position.z)
+                    eulerAngledZ = Float(val / 40)
+                    eulerAngledY = Float.pi + Float(val / 40)
                 }
                 else{
                     //Stop
-                    shipleftrightmovement = .still
+                    eulerAngledZ = 0
                 }
+                let act = SCNAction.rotateTo(x: CGFloat(eulerAngledX), y: CGFloat(eulerAngledY), z: CGFloat(eulerAngledZ), duration: 0.4, usesShortestUnitArc: true)
+                ship.runAction(act)
+                let actCamera = SCNAction.rotateTo(x: 0, y: CGFloat(eulerAngledY - Float.pi), z: 0, duration: 0.5, usesShortestUnitArc: true)
+                cameraNode.runAction(actCamera)
             }
  
- 
-            
             //Set Velocities
             //let z = (speed+0.1) * cos(ship.eulerAngles.y)
-            //let x = (speed+0.1) * sin(ship.eulerAngles.y)
-            let z = (speed+1)
-            if shipleftrightmovement == .left{
-                if xMovement >= 4{
-                    xMovement = 4
-                }
-                else{
-                    xMovement += 0.1
-                }
-            }
-            else if shipleftrightmovement == .right{
-                 if xMovement <= -4{
-                       xMovement = -4
-                    }
-                    else{
-                       xMovement -= 0.1
-                    }
-            }
-            else{
-                //xMovement = 0
-            }
-
+            let x = (speed+0.1) * sin(ship.eulerAngles.y)
+            let z = (speed+0.1) * cos(ship.eulerAngles.y)
+           
             planetNode.enumerateChildNodes { (node, stop) in
                 if node.name == "meteor"{
-                    node.physicsBody?.velocity = SCNVector3Make(-xMovement, 0, z+10)
+                    node.physicsBody?.velocity = SCNVector3Make(-x, 0, z+10)
                     //VIBRATIONS
                     if vibrationCounter! == 30{
                         if (ship.presentation.worldPosition.x < node.presentation.worldPosition.x + 2) && (ship.presentation.worldPosition.x > node.presentation.worldPosition.x - 2) {
@@ -424,7 +423,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     }
                 }
                 else{
-                    node.physicsBody?.velocity = SCNVector3Make(-xMovement, 0, z)
+                    node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
                 }
                 //Check to remove node
                 if node.presentation.worldPosition.z > 15 + (node.geometry?.boundingSphere.radius)!{
@@ -444,38 +443,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     node.removeFromParentNode()
                 }
             }
-            
-            
-            //Set Angles
-            var eulerAngledZ = Float()
-            var eulerAngledX = Float()
-            var eulerAngledY = Float.pi
-
-            if shipleftrightmovement == .right{
-               eulerAngledZ = Float.pi / 6
-                eulerAngledY = Float.pi + 0.5
-            }
-            else if shipleftrightmovement == .left{
-               eulerAngledZ = -(Float.pi / 6)
-                eulerAngledY = Float.pi - 0.5
-            }
-            else{
-               eulerAngledZ = 0
-            }
-            if shipupdownmovement == .up{
-               eulerAngledX = Float.pi / 9
-            }
-            else if shipleftrightmovement == .down{
-               eulerAngledX = -(Float.pi / 9)
-            }
-            else{
-               eulerAngledX = 0
-            }
-
-            let act = SCNAction.rotateTo(x: CGFloat(eulerAngledX), y: CGFloat(eulerAngledY), z: CGFloat(eulerAngledZ), duration: 1, usesShortestUnitArc: true)
-            ship.runAction(act)
-            let actCamera = SCNAction.rotateTo(x: 0, y: CGFloat(eulerAngledY - Float.pi), z: 0, duration: 1.2, usesShortestUnitArc: true)
-            cameraNode.runAction(actCamera)
         }
     }
 }
@@ -531,12 +498,4 @@ struct CollisionCategory: OptionSet {
     static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
     static let planetCatagory = CollisionCategory(rawValue: 1 << 3)
 
-}
-
-enum movement {
-    case left
-    case right
-    case still
-    case up
-    case down
 }
