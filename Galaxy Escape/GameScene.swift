@@ -101,7 +101,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         ship.eulerAngles = SCNVector3(0, Float.pi, 0)
 
         ship.physicsBody?.categoryBitMask = CollisionCategory.shipCatagory.rawValue
-        ship.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+        ship.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue | CollisionCategory.planetCatagory.rawValue
         ship.physicsBody?.collisionBitMask = 0
         //ship.physicsBody?.mass = 0
         
@@ -266,7 +266,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         let sphereNode = SCNNode(geometry: sphereGeometry)
         sphereNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         sphereNode.physicsBody?.categoryBitMask = CollisionCategory.planetCatagory.rawValue
-        sphereNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+        sphereNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue |  CollisionCategory.shipCatagory.rawValue
         sphereNode.physicsBody?.collisionBitMask = 0
 
         if i % 2 == 0{
