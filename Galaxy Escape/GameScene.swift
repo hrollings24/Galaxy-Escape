@@ -37,39 +37,37 @@ enum movement {
 
 class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
+    //Camera Fields
     var cameraNode: SCNNode!
     var cameraConstraint: SCNNode!
-    var player: SCNNode!
     
-    var gameVC: GameViewController!
-    var meteorArray = [SCNNode]()
-    var meteorNodeMain: SCNNode!
-    
+    //Ship Fields
     var ship: SCNNode!
     var shipOnScreen: Bool!
     var shipleftrightmovement: movement!
     var shipupdownmovement: movement!
 
-    var planetNode: SCNNode!
-    var playing: Bool!
-    
+    //Gameplay Fields
+    var meteorNodeMain: SCNNode!
     var meteorTimer = Timer()
     var speed: Float!
+    var motionManager: CMMotionManager!
+    var xMovement = Float(0)
+    var laserNodeMain: SCNNode!
     
-    var min: Float!
+    //Game Setting Fields
+    var playing: Bool!
+    var gameVC: GameViewController!
+    
+    //Planet Fields
+    var planetNode: SCNNode!
+    var min: Float!     //used for setting position of planets
     var max: Float!
     var planetZ: CGFloat!
     var planetTextures = [UIImage]()
     var texturePointer: Int!
-    var motionManager: CMMotionManager!
     
-    var xMovement = Float(0)
 
-
-
-
-    
-    
     init(gameViewController: GameViewController){
         super.init()
 
@@ -80,18 +78,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             planetTextures.append(UIImage(named: string)!)
         }
         texturePointer = 0
-   
-        //define player
-        //player = Player()
-        //self.rootNode.addChildNode(player)
         
         //define scene
         setupScene()
         
         //define ship
         addShip()
-    
         
+        let meteorScene = SCNScene(named: "art.scnassets/rock.dae")!
+        meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
     }
     
     func addShip(){
@@ -145,7 +140,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         self.rootNode.addChildNode(cameraConstraint)
 
         playing = false
-        player = SCNNode()
+        laserNodeMain = SCNNode()
+        self.rootNode.addChildNode(laserNodeMain)
         
         cameraNode = SCNNode()
         cameraNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
@@ -161,14 +157,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         constraint1.isGimbalLockEnabled = false
         cameraNode!.constraints = [constraint1]
         
-        
-        
     }
         
     func spawnMeteor() {
         // 1
-    
-        let meteor = Meteor()
+        
+        let scaleFactor = Float.random(in: 0.005..<0.03)
+        let meteor = meteorNodeMain.clone()
+        meteor.scale = SCNVector3(x: scaleFactor, y: scaleFactor, z: scaleFactor)
+
         meteor.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         meteor.physicsBody?.isAffectedByGravity = false
         meteor.physicsBody?.categoryBitMask = CollisionCategory.meteorCategory.rawValue
@@ -178,9 +175,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         let randomX = Float.random(in: -40 ..< 40)
         let randomY = Float.random(in: -8 ..< 8)
         
-        meteor.position = SCNVector3(x: randomX, y: randomY, z: -100)
-        meteor.name = "meteor"
-        
+        meteor.position = SCNVector3(x: randomX, y: randomY, z: -210)
         planetNode.addChildNode(meteor)
         
     }
@@ -208,36 +203,21 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         let x = 50 * sin(ship.eulerAngles.y)
         laserNode.physicsBody?.velocity = SCNVector3Make(x, 0, -z)
         
-        self.rootNode.addChildNode(laserNode)
-    }
-    
-    func addBloom() -> [CIFilter]? {
-        let bloomFilter = CIFilter(name:"CIBloom")!
-        bloomFilter.setValue(10.0, forKey: "inputIntensity")
-        bloomFilter.setValue(30.0, forKey: "inputRadius")
-
-        return [bloomFilter]
+        laserNodeMain.addChildNode(laserNode)
     }
         
     func startGame(){
-        
-        
        
         speed = 15.0
         min = 0
         max = 0
         planetZ = -30
-        let meteorScene = SCNScene(named: "art.scnassets/meteor.scn")!
-        meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
         
         if !shipOnScreen{
             addShip()
         }
         planetNode = SCNNode()
 
-        //shipNode.rotation = SCNVector4Make(0, 1, 0, Float(Double.pi));
-
-     
         self.rootNode.addChildNode(planetNode)
 
         addInitialPlanet()
@@ -250,7 +230,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         playing = true
 
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
-        meteorTimer = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
     }
     
     func addInitialPlanet(){
@@ -290,12 +270,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         if i % 2 == 0{
             min -= Float(radius*2)
             sphereNode.position = SCNVector3(CGFloat(min), CGFloat.random(in: -4..<4), planetZ)
-            min -= Float(radius)*2 - 10
+            min -= Float(radius)*2 - 12
         }
         else{
             max += Float(radius*2)
             sphereNode.position = SCNVector3(CGFloat(max), CGFloat.random(in: -4..<4), planetZ)
-            max += Float(radius)*2 + 10
+            max += Float(radius)*2 + 12
         }
         planetZ -= 8
         planetNode.addChildNode(sphereNode)
@@ -438,7 +418,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
 
             planetNode.enumerateChildNodes { (node, stop) in
                 if node.name == "meteor"{
-                    //let vec = ship.presentation.worldPosition - node.presentation.worldPosition
                     node.physicsBody?.velocity = SCNVector3Make(-xMovement, 0, z+10)
                     //VIBRATIONS
                     
@@ -453,6 +432,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 }
                 else{
                     node.physicsBody?.velocity = SCNVector3Make(-xMovement, 0, z)
+                }
+                //Check to remove node
+                if node.presentation.worldPosition.z > 15 + (node.geometry?.boundingSphere.radius)!{
+                    node.removeFromParentNode()
+                }
+            }
+            laserNodeMain.enumerateChildNodes { (node, stop) in
+                if node.presentation.worldPosition.z < -200{
+                    node.removeFromParentNode()
                 }
             }
             
