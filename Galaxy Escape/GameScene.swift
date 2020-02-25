@@ -35,6 +35,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     //Game Setting Fields
     var playing: Bool!
     var gameVC: GameViewController!
+    var vibrationCounter: Int!
     
     //Planet Fields
     var planetNode: SCNNode!
@@ -159,7 +160,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     func spawnLaser(){
         //called when button is pressed
         //create cylinder
-        let laser = SCNCylinder(radius: 0.25, height: 3)
+        let laser = SCNCylinder(radius: 0.15, height: 3.5)
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
@@ -189,6 +190,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func startGame(){
        
+        vibrationCounter = 0
         speed = 20.0
         min = 0
         max = 0
@@ -236,7 +238,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
     
     func addPlanet(i: Int){
-        let radius = CGFloat.random(in: 30..<50)
+        let radius = CGFloat.random(in: 30..<60)
 
         if i % 10 == 0{
             min = Float.random(in: -40 ..< 40)
@@ -252,16 +254,16 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         sphereNode.physicsBody?.collisionBitMask = 0
 
         if i % 2 == 0{
-            min -= Float(radius*2)
+            min -= (Float(radius*2) + 12)
             sphereNode.position = SCNVector3(CGFloat(min), CGFloat.random(in: -4..<4), planetZ)
-            min -= Float(radius)*2 - 12
+            //min -= (Float(radius)*2 + 12)
         }
         else{
-            max += Float(radius*2)
+            max += (Float(radius*2) + 12)
             sphereNode.position = SCNVector3(CGFloat(max), CGFloat.random(in: -4..<4), planetZ)
-            max += Float(radius)*2 + 12
+            //max += (Float(radius)*2 + 12)
         }
-        planetZ -= 8
+        planetZ -= 12
         planetNode.addChildNode(sphereNode)
         if texturePointer == 11{
             texturePointer = 0
@@ -381,7 +383,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             //Set Velocities
             //let z = (speed+0.1) * cos(ship.eulerAngles.y)
             //let x = (speed+0.1) * sin(ship.eulerAngles.y)
-            let z = (speed+0.1)
+            let z = (speed+1)
             if shipleftrightmovement == .left{
                 if xMovement >= 4{
                     xMovement = 4
@@ -406,14 +408,19 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 if node.name == "meteor"{
                     node.physicsBody?.velocity = SCNVector3Make(-xMovement, 0, z+10)
                     //VIBRATIONS
-                    
-                    if (ship.presentation.worldPosition.x < node.presentation.worldPosition.x + 4) && (ship.presentation.worldPosition.x > node.presentation.worldPosition.x - 4) {
-                        if (ship.presentation.worldPosition.y < node.presentation.worldPosition.y + 2) && (ship.presentation.worldPosition.y > node.presentation.worldPosition.y - 2) {
-                            if ship.presentation.worldPosition.z < node.presentation.worldPosition.z + 8{
-                                let generator = UIImpactFeedbackGenerator(style: .light)
-                                //generator.impactOccurred()
+                    if vibrationCounter! == 30{
+                        if (ship.presentation.worldPosition.x < node.presentation.worldPosition.x + 2) && (ship.presentation.worldPosition.x > node.presentation.worldPosition.x - 2) {
+                            if (ship.presentation.worldPosition.y < node.presentation.worldPosition.y + 4) && (ship.presentation.worldPosition.y > node.presentation.worldPosition.y - 4) {
+                                if ship.presentation.worldPosition.z < node.presentation.worldPosition.z + 10{
+                                    let generator = UIImpactFeedbackGenerator(style: .medium)
+                                    generator.impactOccurred()
+                                }
                             }
                         }
+                        vibrationCounter = 0
+                    }
+                    else{
+                        vibrationCounter += 1
                     }
                 }
                 else{
