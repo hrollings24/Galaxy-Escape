@@ -13,13 +13,19 @@ import UIKit
 
 class GameOverlayScene: SKScene {
     
-    var scoreNode: SKLabelNode!
-    var counter = 0
+    private var scoreNode: SKLabelNode!
+    private var meteorLabel: SKLabelNode!
+    private var counter = 0
     var gameVC: GameViewController!
     
     var score = 0 {
         didSet {
             scoreNode.text = "Score: \(self.score)"
+        }
+    }
+    var meteorsDestroyed = 0 {
+        didSet {
+            meteorLabel.text = "Destroyed: \(self.meteorsDestroyed)"
         }
     }
     
@@ -37,6 +43,15 @@ class GameOverlayScene: SKScene {
         scoreNode.position = CGPoint(x: scoreNode.frame.width + 5, y: self.frame.height - scoreNode.frame.height - 7)
         
         self.addChild(scoreNode)
+        
+        meteorsDestroyed = 0
+        meteorLabel = SKLabelNode(text: "Destroyed: 0")
+        meteorLabel.fontName = "DINAlternate-Bold"
+        meteorLabel.fontColor = UIColor.white
+        meteorLabel.fontSize = 24
+        meteorLabel.position = CGPoint(x: self.frame.width - (scoreNode.frame.width + 5), y: self.frame.height - scoreNode.frame.height - 7)
+        
+        self.addChild(meteorLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,19 +66,18 @@ class GameOverlayScene: SKScene {
         fireBtn.name = "fire"
 
         self.addChild(fireBtn)
-
     }
     
-    
+    func incrementMeteor(){
+        meteorsDestroyed += 1
+    }
     
      override func update(_ currentTime: TimeInterval) {
-           if counter >= 30 {
+           if counter >= 60 {
                score += 1
                counter = 0
-               scoreNode.text = "Score: \(self.score)"
            } else {
                counter += 1
            }
-        
        }
 }

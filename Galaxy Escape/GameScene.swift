@@ -300,11 +300,13 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
+            gameVC.spriteScene.incrementMeteor()
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
+            gameVC.spriteScene.incrementMeteor()
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
         }
