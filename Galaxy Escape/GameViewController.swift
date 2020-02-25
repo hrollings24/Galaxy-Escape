@@ -188,6 +188,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
             self.endScene = EndScene(size: self.view.bounds.size)
             self.endScene.gameVC = self
             self.endScene.score = self.spriteScene.score
+            self.endScene.destroyed = self.spriteScene.meteorsDestroyed
             self.endScene.setupScene()
             self.sceneView.overlaySKScene = self.endScene
             self.sceneView.overlaySKScene?.isUserInteractionEnabled = true

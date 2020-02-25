@@ -447,6 +447,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     node.removeFromParentNode()
                     removedPlanets += 1
                     if removedPlanets == 10{
+                        print("adding")
                         for i in 1...10 {
                            addPlanet(i: i)
                         }

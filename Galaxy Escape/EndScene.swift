@@ -16,6 +16,7 @@ class EndScene: SKScene {
     
     var gameVC: UIViewController!
     var score: Int!
+    var destroyed: Int!
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -34,14 +35,22 @@ class EndScene: SKScene {
         scoreLB.fontName = "SpacePatrol"
         scoreLB.fontSize = 48
         scoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: self.frame.height - 70)
-        scoreLB.text = "\(String(describing: score!))"
+        scoreLB.text = "Score: " + "\(String(describing: score!))"
         self.addChild(scoreLB)
+        
+        let destroyedLB = SKLabelNode()
+        destroyedLB.fontColor = UIColor.red
+        destroyedLB.fontName = "SpacePatrol"
+        destroyedLB.fontSize = 32
+        destroyedLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (self.frame.height - 70) - scoreLB.frame.height - 30)
+        destroyedLB.text = "Meteors Destroyed: " + "\(String(describing: score!))"
+        self.addChild(destroyedLB)
         
         let highscoreLB = SKLabelNode()
         highscoreLB.fontName = "SpacePatrol"
         highscoreLB.fontColor = UIColor.red
         highscoreLB.fontSize = 34
-        highscoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (self.frame.height - 70) - scoreLB.frame.height - 30)
+        highscoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (self.frame.height - 70) - destroyedLB.frame.height*2 - 60)
         highscoreLB.text = highScoreText()
         self.addChild(highscoreLB)
         
@@ -51,20 +60,20 @@ class EndScene: SKScene {
     
     func addButtons(){
         let playButton = SKSpriteNode(imageNamed: "replayButton")
-        playButton.size = CGSize(width: self.frame.width/3 -  self.frame.width/10, height: ((self.frame.width/3 -  self.frame.width/10)*312)/1712)
-        playButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/12, y: self.frame.height/7*6)
+        playButton.size = CGSize(width: self.frame.width/2 -  self.frame.width/10, height: ((self.frame.width/2 -  self.frame.width/10)*312)/1712)
+        playButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/20, y: self.frame.height/7*6)
         playButton.name = "replay"
         self.addChild(playButton)
         
         let modesButton = SKSpriteNode(imageNamed: "continueButton")
-        modesButton.size = CGSize(width: self.frame.width/3 -  self.frame.width/10, height: ((self.frame.width/3 -  self.frame.width/10)*312)/1712)
-        modesButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/12, y: self.frame.height/7*5)
+        modesButton.size = CGSize(width: self.frame.width/2 -  self.frame.width/10, height: ((self.frame.width/2 -  self.frame.width/10)*312)/1712)
+        modesButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/20, y: self.frame.height/7*5)
         modesButton.name = "continue"
         self.addChild(modesButton)
         
         let storeButton = SKSpriteNode(imageNamed: "menuButton")
-        storeButton.size = CGSize(width: self.frame.width/3 -  self.frame.width/10, height: ((self.frame.width/3 -  self.frame.width/10)*312)/1712)
-        storeButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/12, y: self.frame.height/7*4)
+        storeButton.size = CGSize(width: self.frame.width/2 -  self.frame.width/10, height: ((self.frame.width/2 -  self.frame.width/10)*312)/1712)
+        storeButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/20, y: self.frame.height/7*4)
         storeButton.name = "menu"
         self.addChild(storeButton)
         
