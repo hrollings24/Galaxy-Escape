@@ -228,6 +228,9 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                    if name == "replay"{
                        setupGame()
                    }
+                    if name == "continue"{
+                                          continueGame()
+                                      }
                    else if name == "menu"{
                        setupMenu()
                    }
@@ -252,15 +255,26 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                    if name == "modes"{
                        setupModes()
                    }
+                    if name == "store"{
+                        setupStore()
+                    }
                    if name == "achievements"{
                        showAchievements()
                    }
                }
            }
        }
+    
+    func setupStore(){
+        displayAlert(titleString: "Store", messageString: "Check back for future updates!")
+
+    }
 
     func setupModes(){
         
+        displayAlert(titleString: "Modes", messageString: "Check back for future updates!")
+        
+        /*
         self.view.willRemoveSubview(sceneView)
         self.sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         self.modesScene = Modes(gameViewController: self)
@@ -276,12 +290,18 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
         
         self.modeOverlayScene.setupScene()
+ 
+         */
         
         
     }
     
     func fire(){
         sceneGame.spawnLaser()
+    }
+    
+    func continueGame(){
+        displayAlert(titleString: "Continue", messageString: "Check back for future updates!")
     }
     
     func showAchievements(){
@@ -341,4 +361,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         return false
     }
    
+    
+    func displayAlert(titleString: String, messageString: String){
+           let alertController = UIAlertController(title: titleString, message: messageString, preferredStyle: .alert)
+           let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in }
+           
+           alertController.addAction(OKAction)
+           
+           self.present(alertController, animated: true)
+       }
 }
