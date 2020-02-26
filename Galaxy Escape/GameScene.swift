@@ -158,7 +158,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         
         laserNode.position = ship.presentation.worldPosition
         let shipAngles = ship.eulerAngles
-        laserNode.eulerAngles = SCNVector3(Float.pi / 2, -shipAngles.y, 0)
+        laserNode.eulerAngles = SCNVector3((Float.pi / 2) - shipAngles.x, -shipAngles.y, 0)
         laserNode.name = "laser"
         laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         
@@ -169,7 +169,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         
         let z = 50 * cos(ship.eulerAngles.y)
         let x = 50 * sin(ship.eulerAngles.y)
-        laserNode.physicsBody?.velocity = SCNVector3Make(x, 0, -z)
+        let y = 50 * sin(ship.eulerAngles.x)
+        print(y)
+        laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
         
         laserNodeMain.addChildNode(laserNode)
     }
@@ -392,6 +394,25 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 else{
                     //Stop
                     eulerAngledZ = 0
+                }
+                if tilt.dy < 25{
+                    let shipDown = (25 - tilt.dy) + tilt.dy
+                    //tilt ship downwards
+                    if tilt.dy < 5{
+                        eulerAngledX = 0.20
+                    }
+                    else{
+                        eulerAngledX = Float(shipDown/80)
+                    }
+                }
+                else if tilt.dy > 45{
+                    //tilt ship upwards
+                    if tilt.dy > 60{
+                        eulerAngledX = -Float(60/180)
+                    }
+                    else{
+                        eulerAngledX = -Float(tilt.dy/180)
+                    }
                 }
                 let act = SCNAction.rotateTo(x: CGFloat(eulerAngledX), y: CGFloat(eulerAngledY), z: CGFloat(eulerAngledZ), duration: 0.4, usesShortestUnitArc: true)
                 ship.runAction(act)

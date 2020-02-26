@@ -29,7 +29,7 @@ class EndScene: SKScene {
     
     func setupScene(){
         
-        totalScore = score + (destroyed*5)
+        totalScore = score + (destroyed*2)
 
         let scoreLB = SKLabelNode()
         scoreLB.fontColor = UIColor.red
