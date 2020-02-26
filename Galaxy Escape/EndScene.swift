@@ -10,13 +10,14 @@ import Foundation
 
 import SpriteKit
 import UIKit
-
+import EFCountingLabel
 
 class EndScene: SKScene {
     
     var gameVC: UIViewController!
     var score: Int!
     var destroyed: Int!
+    var totalScore: Int!
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -28,27 +29,31 @@ class EndScene: SKScene {
     
     func setupScene(){
         
+        totalScore = score + (destroyed*5)
+
         let scoreLB = SKLabelNode()
         scoreLB.fontColor = UIColor.red
         scoreLB.fontName = "SpacePatrol"
-        scoreLB.fontSize = 48
+        scoreLB.fontSize = 42
         scoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: self.frame.height - 70)
-        scoreLB.text = "Score: " + "\(String(describing: score!))"
+        scoreLB.text = "Timed Score: " + "\(String(describing: score!))"
         self.addChild(scoreLB)
         
         let destroyedLB = SKLabelNode()
         destroyedLB.fontColor = UIColor.red
         destroyedLB.fontName = "SpacePatrol"
         destroyedLB.fontSize = 32
-        destroyedLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (self.frame.height - 70) - scoreLB.frame.height - 30)
+        destroyedLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (scoreLB.position.y) - scoreLB.frame.height)
         destroyedLB.text = "Meteors Destroyed: " + "\(String(describing: destroyed!))"
         self.addChild(destroyedLB)
+        
         
         let highscoreLB = SKLabelNode()
         highscoreLB.fontName = "SpacePatrol"
         highscoreLB.fontColor = UIColor.red
         highscoreLB.fontSize = 34
-        highscoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (self.frame.height - 70) - destroyedLB.frame.height*2 - 60)
+        let y = destroyedLB.position.y - destroyedLB.frame.height*2 - 70
+        highscoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: y)
         highscoreLB.text = highScoreText()
         self.addChild(highscoreLB)
         
@@ -79,11 +84,11 @@ class EndScene: SKScene {
     
     func highScoreText() -> String{
         if UserDefaults.standard.value(forKey: "highscore") == nil{
-            UserDefaults.standard.set(score, forKey: "highscore")
+            UserDefaults.standard.set(totalScore, forKey: "highscore")
             return "NEW HIGHSCORE!"
         }
-        else if (UserDefaults.standard.value(forKey: "highscore") as! Int) < score{
-            UserDefaults.standard.set(score, forKey: "highscore")
+        else if (UserDefaults.standard.value(forKey: "highscore") as! Int) < totalScore{
+            UserDefaults.standard.set(totalScore, forKey: "highscore")
             return "NEW HIGHSCORE!"
         }
         else{
@@ -103,5 +108,21 @@ class EndScene: SKScene {
             UserDefaults.standard.set(gamesPlayed, forKey: "gamesplayed")
         }
     }
-
+    
+    func addCounterNode() -> EFCountingLabel{
+        
+        let finalScoreLB = EFCountingLabel(frame: CGRect(x: self.frame.width/3 - (self.frame.width/2 -  self.frame.width/10)/2, y: self.frame.height/2 - 20, width: self.frame.width/2 -  self.frame.width/10, height: 40))
+        finalScoreLB.font = UIFont(name: "SpacePatrol", size: 48)
+        finalScoreLB.backgroundColor = UIColor.clear
+        finalScoreLB.textAlignment = .center
+        finalScoreLB.textColor = UIColor.red
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        finalScoreLB.setUpdateBlock { value, label in
+            label.text = "Final Score: " + (formatter.string(from: NSNumber(value: Int(value))) ?? "")
+        }
+        finalScoreLB.counter.timingFunction = EFTimingFunction.easeInOut(easingRate: 3)
+        finalScoreLB.countFrom(CGFloat(score), to: CGFloat(totalScore))
+        return finalScoreLB
+    }
 }

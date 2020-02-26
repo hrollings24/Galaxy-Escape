@@ -30,6 +30,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     var tapGestureMenu: UITapGestureRecognizer!
     var tapGestureEnd: UITapGestureRecognizer!
     var currentAngleY: Float = 0.0
+    var endView: UIView!
 
     
    
@@ -37,6 +38,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        endView = UIView()
         GameCenter.shared.authPlayer(presentingVC: self)
         GameCenter.shared.checkAchievements()
         
@@ -70,6 +72,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
             sceneGame.addShip()
         }
 
+        self.endView.removeFromSuperview()
         self.menuScene = MenuScene(size: self.view.bounds.size)
         self.menuScene.gameVC = self
         self.sceneView.overlaySKScene = self.menuScene
@@ -78,6 +81,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     
     func setupGame(){
       
+        
         // add a tap gesture recognizer
         
         /*
@@ -101,7 +105,9 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         self.sceneView.overlaySKScene = self.spriteScene
         self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
         
+        self.endView.removeFromSuperview()
         self.sceneGame.startGame()
+        
         
     }
     
@@ -173,8 +179,11 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
             self.endScene.setupScene()
             self.sceneView.overlaySKScene = self.endScene
             self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
+            let cn = self.endScene.addCounterNode()
+            self.endView.addSubview(cn)
+            self.sceneView.addSubview(self.endView)
             
-            GameCenter.shared.saveHighScore(numberToSave: self.spriteScene.score)
+            GameCenter.shared.saveHighScore(numberToSave: self.endScene.totalScore)
         }
 
     }
@@ -204,12 +213,18 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                if let name = touchedNode.name {
                    print(name)
                    if name == "replay"{
+                        for view in self.endView.subviews{
+                            view.removeFromSuperview()
+                        }
                        setupGame()
                    }
                     if name == "continue"{
                                           continueGame()
                                       }
                    else if name == "menu"{
+                        for view in self.endView.subviews{
+                            view.removeFromSuperview()
+                        }
                        setupMenu()
                    }
                }

@@ -54,7 +54,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             let string = "planet" + String(i) + "_diffuse"
             planetTextures.append(UIImage(named: string)!)
         }
-        texturePointer = 0
         
         //define scene
         setupScene()
@@ -182,6 +181,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func startGame(){
        
+        texturePointer = 0
+
         resetCamera()
         vibrationCounter = 0
         speed = 20.0

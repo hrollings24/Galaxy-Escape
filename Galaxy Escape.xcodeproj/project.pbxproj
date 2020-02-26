@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4EA2526864382291C33EA7FC /* Pods_Galaxy_Escape.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D40018144A2458392B58C8 /* Pods_Galaxy_Escape.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		81377213FCE4AE2FE0AD2116 /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DC0B4096935CF7F4F3F39D /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework */; };
+		8BEDE34F7C069520852F4A90 /* Pods_Galaxy_EscapeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87FD9AB6FA7AAC649790E8D /* Pods_Galaxy_EscapeTests.framework */; };
 		AF25E0CE23E874B000020851 /* ModeSpriteScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0CD23E874B000020851 /* ModeSpriteScene.swift */; };
 		AF25E0D023E9CD0600020851 /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0CF23E9CD0600020851 /* LeaderboardViewController.swift */; };
 		AF25E0D223EAEAD100020851 /* AchievementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0D123EAEAD100020851 /* AchievementsViewController.swift */; };
@@ -47,6 +50,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		48D40018144A2458392B58C8 /* Pods_Galaxy_Escape.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Galaxy_Escape.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DDEDC27584B9E656674654A /* Pods-Galaxy Escape.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy Escape.debug.xcconfig"; path = "Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape.debug.xcconfig"; sourceTree = "<group>"; };
+		85DC0B4096935CF7F4F3F39D /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EEEFE8F868BA1EB63BDBB8C /* Pods-Galaxy EscapeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy EscapeTests.release.xcconfig"; path = "Target Support Files/Pods-Galaxy EscapeTests/Pods-Galaxy EscapeTests.release.xcconfig"; sourceTree = "<group>"; };
+		A0E2318BB52C7B84C629F61A /* Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig"; path = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AF25E0CD23E874B000020851 /* ModeSpriteScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSpriteScene.swift; sourceTree = "<group>"; };
 		AF25E0CF23E9CD0600020851 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
 		AF25E0D123EAEAD100020851 /* AchievementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +81,10 @@
 		AF872E33238420CE002B070C /* SPACP.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = SPACP.TTF; sourceTree = "<group>"; };
 		AFBC7DCF2386BC0B00E2C644 /* GameOverlayScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverlayScene.swift; sourceTree = "<group>"; };
 		AFE3B03223DF300A0062BEEA /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		D14209FB8B7BE79D4264D8B5 /* Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E2A9BE2F6628EC644DE8633A /* Pods-Galaxy EscapeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy EscapeTests.debug.xcconfig"; path = "Target Support Files/Pods-Galaxy EscapeTests/Pods-Galaxy EscapeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F87FD9AB6FA7AAC649790E8D /* Pods_Galaxy_EscapeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Galaxy_EscapeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCAA094D7DC84BD071EFC22D /* Pods-Galaxy Escape.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy Escape.release.xcconfig"; path = "Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF2A351923E0F199002EE6B8 /* GameKit.framework in Frameworks */,
+				4EA2526864382291C33EA7FC /* Pods_Galaxy_Escape.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BEDE34F7C069520852F4A90 /* Pods_Galaxy_EscapeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,16 +109,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81377213FCE4AE2FE0AD2116 /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D799A232F260643FC16A6D4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6DDEDC27584B9E656674654A /* Pods-Galaxy Escape.debug.xcconfig */,
+				FCAA094D7DC84BD071EFC22D /* Pods-Galaxy Escape.release.xcconfig */,
+				D14209FB8B7BE79D4264D8B5 /* Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig */,
+				A0E2318BB52C7B84C629F61A /* Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig */,
+				E2A9BE2F6628EC644DE8633A /* Pods-Galaxy EscapeTests.debug.xcconfig */,
+				8EEEFE8F868BA1EB63BDBB8C /* Pods-Galaxy EscapeTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		AF2A351723E0F199002EE6B8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				AF2A351823E0F199002EE6B8 /* GameKit.framework */,
+				48D40018144A2458392B58C8 /* Pods_Galaxy_Escape.framework */,
+				85DC0B4096935CF7F4F3F39D /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework */,
+				F87FD9AB6FA7AAC649790E8D /* Pods_Galaxy_EscapeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -117,6 +148,7 @@
 				AF872E202382ED82002B070C /* Galaxy EscapeUITests */,
 				AF872DFD2382ED7F002B070C /* Products */,
 				AF2A351723E0F199002EE6B8 /* Frameworks */,
+				3D799A232F260643FC16A6D4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -180,9 +212,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF872E262382ED82002B070C /* Build configuration list for PBXNativeTarget "Galaxy Escape" */;
 			buildPhases = (
+				CE84B312A45CB5E2DA6F3BB2 /* [CP] Check Pods Manifest.lock */,
 				AF872DF82382ED7F002B070C /* Sources */,
 				AF872DF92382ED7F002B070C /* Frameworks */,
 				AF872DFA2382ED7F002B070C /* Resources */,
+				E6BB9FDA65FBF831BD8987AF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -197,6 +231,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF872E292382ED82002B070C /* Build configuration list for PBXNativeTarget "Galaxy EscapeTests" */;
 			buildPhases = (
+				29C8CE2AF8F8EB02EFE65168 /* [CP] Check Pods Manifest.lock */,
 				AF872E0E2382ED82002B070C /* Sources */,
 				AF872E0F2382ED82002B070C /* Frameworks */,
 				AF872E102382ED82002B070C /* Resources */,
@@ -215,9 +250,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF872E2C2382ED82002B070C /* Build configuration list for PBXNativeTarget "Galaxy EscapeUITests" */;
 			buildPhases = (
+				A90C833787CB4ED3D89F4502 /* [CP] Check Pods Manifest.lock */,
 				AF872E192382ED82002B070C /* Sources */,
 				AF872E1A2382ED82002B070C /* Frameworks */,
 				AF872E1B2382ED82002B070C /* Resources */,
+				B81A5EDA472FEC929D6D9E7E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -300,6 +337,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		29C8CE2AF8F8EB02EFE65168 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Galaxy EscapeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A90C833787CB4ED3D89F4502 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Galaxy Escape-Galaxy EscapeUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B81A5EDA472FEC929D6D9E7E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE84B312A45CB5E2DA6F3BB2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Galaxy Escape-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6BB9FDA65FBF831BD8987AF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AF872DF82382ED7F002B070C /* Sources */ = {
@@ -488,6 +628,7 @@
 		};
 		AF872E272382ED82002B070C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DDEDC27584B9E656674654A /* Pods-Galaxy Escape.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -509,6 +650,7 @@
 		};
 		AF872E282382ED82002B070C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FCAA094D7DC84BD071EFC22D /* Pods-Galaxy Escape.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -530,6 +672,7 @@
 		};
 		AF872E2A2382ED82002B070C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2A9BE2F6628EC644DE8633A /* Pods-Galaxy EscapeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -552,6 +695,7 @@
 		};
 		AF872E2B2382ED82002B070C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EEEFE8F868BA1EB63BDBB8C /* Pods-Galaxy EscapeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -574,6 +718,7 @@
 		};
 		AF872E2D2382ED82002B070C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D14209FB8B7BE79D4264D8B5 /* Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -594,6 +739,7 @@
 		};
 		AF872E2E2382ED82002B070C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0E2318BB52C7B84C629F61A /* Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
