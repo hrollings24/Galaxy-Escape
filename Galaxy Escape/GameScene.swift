@@ -395,24 +395,14 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     //Stop
                     eulerAngledZ = 0
                 }
-                if tilt.dy < 25{
-                    let shipDown = (25 - tilt.dy) + tilt.dy
+                print(tilt.dy)
+                let tiltAngle = tilt.dy - 35
+                if tiltAngle < 0{
                     //tilt ship downwards
-                    if tilt.dy < 5{
-                        eulerAngledX = 0.20
-                    }
-                    else{
-                        eulerAngledX = Float(shipDown/80)
-                    }
+                    eulerAngledX = -Float(tiltAngle/80)
                 }
-                else if tilt.dy > 45{
-                    //tilt ship upwards
-                    if tilt.dy > 60{
-                        eulerAngledX = -Float(60/180)
-                    }
-                    else{
-                        eulerAngledX = -Float(tilt.dy/180)
-                    }
+                else if tilt.dy > 0{
+                    eulerAngledX = -Float(tiltAngle/80)
                 }
                 let act = SCNAction.rotateTo(x: CGFloat(eulerAngledX), y: CGFloat(eulerAngledY), z: CGFloat(eulerAngledZ), duration: 0.4, usesShortestUnitArc: true)
                 ship.runAction(act)

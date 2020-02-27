@@ -111,8 +111,9 @@ class EndScene: SKScene {
     
     func addCounterNode() -> EFCountingLabel{
         
-        let finalScoreLB = EFCountingLabel(frame: CGRect(x: self.frame.width/3 - (self.frame.width/2 -  self.frame.width/10)/2, y: self.frame.height/2 - 20, width: self.frame.width/2 -  self.frame.width/10, height: 40))
+        let finalScoreLB = EFCountingLabel(frame: CGRect(x: self.frame.width/3 - (self.frame.width/2 -  self.frame.width/10)/2, y: self.frame.height/2 - 20, width: self.frame.width/2 -  self.frame.width/8, height: 40))
         finalScoreLB.font = UIFont(name: "SpacePatrol", size: 48)
+        finalScoreLB.adjustsFontSizeToFitWidth = true
         finalScoreLB.backgroundColor = UIColor.clear
         finalScoreLB.textAlignment = .center
         finalScoreLB.textColor = UIColor.red
