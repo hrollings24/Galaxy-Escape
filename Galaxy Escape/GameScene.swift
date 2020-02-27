@@ -166,13 +166,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
         laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         laserNode.physicsBody?.collisionBitMask = 0
-        
+
         let z = 50 * cos(ship.eulerAngles.y)
         let x = 50 * sin(ship.eulerAngles.y)
         let y = 50 * sin(ship.eulerAngles.x)
-        print(y)
         laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
-        
         laserNodeMain.addChildNode(laserNode)
     }
         
@@ -251,10 +249,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         if i % 2 == 0{
             min -= (Float(radius*2) + 12)
             sphereNode.position = SCNVector3(CGFloat(min), CGFloat.random(in: -4..<4), planetZ)
+            print(SCNVector3(CGFloat(min), CGFloat.random(in: -4..<4), planetZ))
             //min -= (Float(radius)*2 + 12)
         }
         else{
             max += (Float(radius*2) + 12)
+            print(SCNVector3(CGFloat(max), CGFloat.random(in: -4..<4), planetZ))
             sphereNode.position = SCNVector3(CGFloat(max), CGFloat.random(in: -4..<4), planetZ)
             //max += (Float(radius)*2 + 12)
         }
@@ -295,7 +295,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                }
         else if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
                    //planet and laser
-                   contact.nodeB.removeFromParentNode()
+                    contact.nodeB.removeFromParentNode()
                }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.shipCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue {
             //collision between ship and meteor
@@ -356,6 +356,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if playing{
             
+            speed += 0.02
             var eulerAngledZ = Float()
             var eulerAngledX = Float()
             var eulerAngledY = Float.pi
@@ -395,7 +396,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     //Stop
                     eulerAngledZ = 0
                 }
-                print(tilt.dy)
                 let tiltAngle = tilt.dy - 35
                 if tiltAngle < 0{
                     //tilt ship downwards
@@ -411,9 +411,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             }
  
             //Set Velocities
-            //let z = (speed+0.1) * cos(ship.eulerAngles.y)
-            let x = (speed+0.1) * sin(ship.eulerAngles.y)
-            let z = (speed+0.1) * cos(ship.eulerAngles.y)
+            let x = (speed) * sin(ship.eulerAngles.y)
+            let z = (speed) * cos(ship.eulerAngles.y)
            
             planetNode.enumerateChildNodes { (node, stop) in
                 if node.name == "meteor"{
@@ -438,11 +437,12 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
                 }
                 //Check to remove node
-                if node.presentation.worldPosition.z > 15 + (node.geometry?.boundingSphere.radius)!{
+                if node.presentation.worldPosition.z > (15 + (node.geometry?.boundingSphere.radius)!){
                     node.removeFromParentNode()
                     removedPlanets += 1
                     if removedPlanets == 10{
                         print("adding")
+                        planetZ += 120
                         for i in 1...10 {
                            addPlanet(i: i)
                         }
