@@ -1,0 +1,6 @@
+framework module Pods_Galaxy_Escape_Galaxy_EscapeUITests {
+  umbrella header "Pods-Galaxy Escape-Galaxy EscapeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

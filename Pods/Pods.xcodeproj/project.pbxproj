@@ -1,0 +1,974 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0CC468D5BDEC9EAA4783B2833844C16C /* EFCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA9E154A4787E84444FB3EF2D903404 /* EFCount.swift */; };
+		14C7DF62BA3EB1E5D6D3DAAA72F14C59 /* Pods-Galaxy Escape-Galaxy EscapeUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A753712DD2C50F6770A80993234758D /* Pods-Galaxy Escape-Galaxy EscapeUITests-dummy.m */; };
+		18C107433B7E9AB555E8507A12B3E3D0 /* Pods-Galaxy Escape-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 36746D4F4168688B144EB7E71C5F2DF6 /* Pods-Galaxy Escape-dummy.m */; };
+		1DFE3ED6EEE1967A75742F55546B5DAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		2A2AC199E504660604EDA6DAB86EBF9E /* EFCountingLabel-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A3F7B644EE4412D4D22510FFE220166 /* EFCountingLabel-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		467EFD89DD463B38C77527F4218E6686 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		4DC54E51ECD6D08BC366578BA4E7982A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		4F334D216196E032FB47C2E3A5872704 /* EFCountingLabel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EEED7F3BF8B090A9C9095C910A57B27F /* EFCountingLabel-dummy.m */; };
+		769D8EF6E83F1650832E6F4C59C30C55 /* Pods-Galaxy Escape-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 133CC2C422CC237BB9427442BD6813A4 /* Pods-Galaxy Escape-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7B63D454E95062AB6AB0FA2C856BA194 /* Pods-Galaxy EscapeTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 93276CB4A9C398325F98F2D8AF81ABBE /* Pods-Galaxy EscapeTests-dummy.m */; };
+		80D80F83B6B48AC874579ECAB0AF470A /* EFTimingMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7BD81A0396D803B3D37672BA3E98B4 /* EFTimingMethod.swift */; };
+		ABFCDA68D0A57265329A0C0FA1DB16C8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		B0B01BF9248C17F961CFD2AA033A6CBD /* EFCountAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574FA85E9FD90E41F66A747D8B3F3AF9 /* EFCountAdapter.swift */; };
+		D2C71D3ACE846D47CBF637AC11A3D775 /* Pods-Galaxy EscapeTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A5E425D6B68B798BA6692DC75A0F3310 /* Pods-Galaxy EscapeTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E436B6CB70560D2BC784D2477C3C2284 /* Pods-Galaxy Escape-Galaxy EscapeUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 58DFAF855521BF72AE978250A264B753 /* Pods-Galaxy Escape-Galaxy EscapeUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3D81AAB0FC3B46CA934D9A198CC7D3E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D87E5A9FC1F8F56498963BEA9EDFE7A;
+			remoteInfo = EFCountingLabel;
+		};
+		D51DAFB3971F580E18C32F24CE74F1F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02BA38F2D3D6F74F9EE2CB362E1AAFCD;
+			remoteInfo = "Pods-Galaxy Escape";
+		};
+		F5C48FEA8CBEE8B015E6BB6F55BA5E99 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D87E5A9FC1F8F56498963BEA9EDFE7A;
+			remoteInfo = EFCountingLabel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		133CC2C422CC237BB9427442BD6813A4 /* Pods-Galaxy Escape-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Galaxy Escape-umbrella.h"; sourceTree = "<group>"; };
+		1A3F7B644EE4412D4D22510FFE220166 /* EFCountingLabel-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EFCountingLabel-umbrella.h"; sourceTree = "<group>"; };
+		1AF67BEFAF0433ACDCC4B75AFA7B6D3D /* Pods-Galaxy Escape-Galaxy EscapeUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Galaxy Escape-Galaxy EscapeUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		1E6E035839D45188FD7FD029797ACCAC /* Pods-Galaxy Escape-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Galaxy Escape-acknowledgements.markdown"; sourceTree = "<group>"; };
+		2036DFD5EC9ECC4350B091776224CC0B /* Pods-Galaxy Escape-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Galaxy Escape-Info.plist"; sourceTree = "<group>"; };
+		24D37AE44C44B814F76FF49FE7CECF0D /* Pods_Galaxy_EscapeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Galaxy_EscapeTests.framework; path = "Pods-Galaxy EscapeTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		259B7CE05D8CD1140DC37749B68E950C /* Pods-Galaxy Escape-Galaxy EscapeUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Galaxy Escape-Galaxy EscapeUITests-frameworks.sh"; sourceTree = "<group>"; };
+		2AE1F06664B022FF4A53F887DD7BC4AB /* Pods-Galaxy EscapeTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Galaxy EscapeTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		2B3C527D4855B07032C1C53B0B72C3E7 /* Pods-Galaxy Escape-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Galaxy Escape-acknowledgements.plist"; sourceTree = "<group>"; };
+		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		36746D4F4168688B144EB7E71C5F2DF6 /* Pods-Galaxy Escape-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Galaxy Escape-dummy.m"; sourceTree = "<group>"; };
+		373AD555662D115CE3C08A41B40EDD17 /* Pods-Galaxy Escape-Galaxy EscapeUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Galaxy Escape-Galaxy EscapeUITests.modulemap"; sourceTree = "<group>"; };
+		37EDD548D69ADA5D47123DA8777B036F /* Pods-Galaxy EscapeTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Galaxy EscapeTests.modulemap"; sourceTree = "<group>"; };
+		41B10F51CC35EE475F8E187C0F0C4F4B /* EFCountingLabel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = EFCountingLabel.xcconfig; sourceTree = "<group>"; };
+		469E2F7D9286FD63A3A158E492329678 /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework; path = "Pods-Galaxy Escape-Galaxy EscapeUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49DE5B2EFBB22B9E2E1403A3EF001525 /* Pods-Galaxy EscapeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Galaxy EscapeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		53BA0EC0B22C64BBBEDE310C1EB44DCD /* Pods-Galaxy EscapeTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Galaxy EscapeTests-Info.plist"; sourceTree = "<group>"; };
+		552069E25B8ECFF9253BDB7E7C8BF515 /* EFCountingLabel.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = EFCountingLabel.modulemap; sourceTree = "<group>"; };
+		574FA85E9FD90E41F66A747D8B3F3AF9 /* EFCountAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EFCountAdapter.swift; path = EFCountingLabel/EFCountAdapter.swift; sourceTree = "<group>"; };
+		58DFAF855521BF72AE978250A264B753 /* Pods-Galaxy Escape-Galaxy EscapeUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Galaxy Escape-Galaxy EscapeUITests-umbrella.h"; sourceTree = "<group>"; };
+		5A753712DD2C50F6770A80993234758D /* Pods-Galaxy Escape-Galaxy EscapeUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Galaxy Escape-Galaxy EscapeUITests-dummy.m"; sourceTree = "<group>"; };
+		5EBFFBCF9E56DA4AF71E6A1981521E28 /* EFCountingLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = EFCountingLabel.framework; path = EFCountingLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B2E8030C341A0267B55FD32B9FFE788 /* Pods-Galaxy EscapeTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Galaxy EscapeTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		723ACCE54D8D62A0766585BC568CCD52 /* Pods-Galaxy Escape.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Galaxy Escape.debug.xcconfig"; sourceTree = "<group>"; };
+		728A995AAFE82D102B8DCE075895DDD1 /* Pods-Galaxy Escape-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Galaxy Escape-frameworks.sh"; sourceTree = "<group>"; };
+		79682A21AB81018242C999556926EBE9 /* Pods-Galaxy Escape-Galaxy EscapeUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Galaxy Escape-Galaxy EscapeUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		828FBE49B8462A4348E2DC3E05E7F2D9 /* Pods-Galaxy Escape-Galaxy EscapeUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Galaxy Escape-Galaxy EscapeUITests-Info.plist"; sourceTree = "<group>"; };
+		93276CB4A9C398325F98F2D8AF81ABBE /* Pods-Galaxy EscapeTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Galaxy EscapeTests-dummy.m"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A21E63F43AD2FADB1ABFAF0A53899616 /* EFCountingLabel-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "EFCountingLabel-prefix.pch"; sourceTree = "<group>"; };
+		A5E425D6B68B798BA6692DC75A0F3310 /* Pods-Galaxy EscapeTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Galaxy EscapeTests-umbrella.h"; sourceTree = "<group>"; };
+		A85269E70A233A02FDC9E60319541A1B /* Pods-Galaxy Escape.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Galaxy Escape.release.xcconfig"; sourceTree = "<group>"; };
+		B689C7BD9CAA24CBA7855F3129CE834F /* Pods-Galaxy EscapeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Galaxy EscapeTests.release.xcconfig"; sourceTree = "<group>"; };
+		BBBAC2CAF2746A029578FA699BF1ED2B /* EFCountingLabel-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "EFCountingLabel-Info.plist"; sourceTree = "<group>"; };
+		CA7BD81A0396D803B3D37672BA3E98B4 /* EFTimingMethod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EFTimingMethod.swift; path = EFCountingLabel/EFTimingMethod.swift; sourceTree = "<group>"; };
+		DBC726C50A51992538FBA111DE404E92 /* Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		EA668FFB352A3D4A4809C8EF05C4C7E9 /* Pods-Galaxy Escape.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Galaxy Escape.modulemap"; sourceTree = "<group>"; };
+		EEED7F3BF8B090A9C9095C910A57B27F /* EFCountingLabel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "EFCountingLabel-dummy.m"; sourceTree = "<group>"; };
+		EFA9E154A4787E84444FB3EF2D903404 /* EFCount.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EFCount.swift; path = EFCountingLabel/EFCount.swift; sourceTree = "<group>"; };
+		F20FCD3E64EA3A8256100EE620C7367D /* Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		FF31DD22042B9847F26708081E7E647E /* Pods_Galaxy_Escape.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Galaxy_Escape.framework; path = "Pods-Galaxy Escape.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		21722BD96C407279A9D12FA96089429B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				467EFD89DD463B38C77527F4218E6686 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		35BE96BB4558B20FCC3C815F8941D1CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DFE3ED6EEE1967A75742F55546B5DAD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D322A56C61211C87365644A5233E1DD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABFCDA68D0A57265329A0C0FA1DB16C8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B470023E252E235D6D04AEA2E18530FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC54E51ECD6D08BC366578BA4E7982A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18BEB5C5B7E6298418B8B525DF0F2AE0 /* Pods-Galaxy EscapeTests */ = {
+			isa = PBXGroup;
+			children = (
+				37EDD548D69ADA5D47123DA8777B036F /* Pods-Galaxy EscapeTests.modulemap */,
+				6B2E8030C341A0267B55FD32B9FFE788 /* Pods-Galaxy EscapeTests-acknowledgements.markdown */,
+				2AE1F06664B022FF4A53F887DD7BC4AB /* Pods-Galaxy EscapeTests-acknowledgements.plist */,
+				93276CB4A9C398325F98F2D8AF81ABBE /* Pods-Galaxy EscapeTests-dummy.m */,
+				53BA0EC0B22C64BBBEDE310C1EB44DCD /* Pods-Galaxy EscapeTests-Info.plist */,
+				A5E425D6B68B798BA6692DC75A0F3310 /* Pods-Galaxy EscapeTests-umbrella.h */,
+				49DE5B2EFBB22B9E2E1403A3EF001525 /* Pods-Galaxy EscapeTests.debug.xcconfig */,
+				B689C7BD9CAA24CBA7855F3129CE834F /* Pods-Galaxy EscapeTests.release.xcconfig */,
+			);
+			name = "Pods-Galaxy EscapeTests";
+			path = "Target Support Files/Pods-Galaxy EscapeTests";
+			sourceTree = "<group>";
+		};
+		2646AF1B79093C476357C8F87EA58B6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5EBFFBCF9E56DA4AF71E6A1981521E28 /* EFCountingLabel.framework */,
+				FF31DD22042B9847F26708081E7E647E /* Pods_Galaxy_Escape.framework */,
+				469E2F7D9286FD63A3A158E492329678 /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework */,
+				24D37AE44C44B814F76FF49FE7CECF0D /* Pods_Galaxy_EscapeTests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		31C60F1AF7300C26A6AC3FAC84DBB1BB /* EFCountingLabel */ = {
+			isa = PBXGroup;
+			children = (
+				EFA9E154A4787E84444FB3EF2D903404 /* EFCount.swift */,
+				574FA85E9FD90E41F66A747D8B3F3AF9 /* EFCountAdapter.swift */,
+				CA7BD81A0396D803B3D37672BA3E98B4 /* EFTimingMethod.swift */,
+				F5C168259D3326DE99FA06821CEBD128 /* Support Files */,
+			);
+			name = EFCountingLabel;
+			path = EFCountingLabel;
+			sourceTree = "<group>";
+		};
+		465B2AE181E3D8C7DB22ED57BDA5FADA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				31C60F1AF7300C26A6AC3FAC84DBB1BB /* EFCountingLabel */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8F5685864F7AB7E646593F8EDE2F5498 /* Pods-Galaxy Escape */ = {
+			isa = PBXGroup;
+			children = (
+				EA668FFB352A3D4A4809C8EF05C4C7E9 /* Pods-Galaxy Escape.modulemap */,
+				1E6E035839D45188FD7FD029797ACCAC /* Pods-Galaxy Escape-acknowledgements.markdown */,
+				2B3C527D4855B07032C1C53B0B72C3E7 /* Pods-Galaxy Escape-acknowledgements.plist */,
+				36746D4F4168688B144EB7E71C5F2DF6 /* Pods-Galaxy Escape-dummy.m */,
+				728A995AAFE82D102B8DCE075895DDD1 /* Pods-Galaxy Escape-frameworks.sh */,
+				2036DFD5EC9ECC4350B091776224CC0B /* Pods-Galaxy Escape-Info.plist */,
+				133CC2C422CC237BB9427442BD6813A4 /* Pods-Galaxy Escape-umbrella.h */,
+				723ACCE54D8D62A0766585BC568CCD52 /* Pods-Galaxy Escape.debug.xcconfig */,
+				A85269E70A233A02FDC9E60319541A1B /* Pods-Galaxy Escape.release.xcconfig */,
+			);
+			name = "Pods-Galaxy Escape";
+			path = "Target Support Files/Pods-Galaxy Escape";
+			sourceTree = "<group>";
+		};
+		BF96F781A948153F610C19A50FA9419C /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8F5685864F7AB7E646593F8EDE2F5498 /* Pods-Galaxy Escape */,
+				F2B09FAFFEF4B5D4C3B762E983172046 /* Pods-Galaxy Escape-Galaxy EscapeUITests */,
+				18BEB5C5B7E6298418B8B525DF0F2AE0 /* Pods-Galaxy EscapeTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		C0834CEBB1379A84116EF29F93051C60 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				465B2AE181E3D8C7DB22ED57BDA5FADA /* Pods */,
+				2646AF1B79093C476357C8F87EA58B6B /* Products */,
+				BF96F781A948153F610C19A50FA9419C /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0834CEBB1379A84116EF29F93051C60 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F2B09FAFFEF4B5D4C3B762E983172046 /* Pods-Galaxy Escape-Galaxy EscapeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				373AD555662D115CE3C08A41B40EDD17 /* Pods-Galaxy Escape-Galaxy EscapeUITests.modulemap */,
+				1AF67BEFAF0433ACDCC4B75AFA7B6D3D /* Pods-Galaxy Escape-Galaxy EscapeUITests-acknowledgements.markdown */,
+				79682A21AB81018242C999556926EBE9 /* Pods-Galaxy Escape-Galaxy EscapeUITests-acknowledgements.plist */,
+				5A753712DD2C50F6770A80993234758D /* Pods-Galaxy Escape-Galaxy EscapeUITests-dummy.m */,
+				259B7CE05D8CD1140DC37749B68E950C /* Pods-Galaxy Escape-Galaxy EscapeUITests-frameworks.sh */,
+				828FBE49B8462A4348E2DC3E05E7F2D9 /* Pods-Galaxy Escape-Galaxy EscapeUITests-Info.plist */,
+				58DFAF855521BF72AE978250A264B753 /* Pods-Galaxy Escape-Galaxy EscapeUITests-umbrella.h */,
+				F20FCD3E64EA3A8256100EE620C7367D /* Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig */,
+				DBC726C50A51992538FBA111DE404E92 /* Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig */,
+			);
+			name = "Pods-Galaxy Escape-Galaxy EscapeUITests";
+			path = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests";
+			sourceTree = "<group>";
+		};
+		F5C168259D3326DE99FA06821CEBD128 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				552069E25B8ECFF9253BDB7E7C8BF515 /* EFCountingLabel.modulemap */,
+				41B10F51CC35EE475F8E187C0F0C4F4B /* EFCountingLabel.xcconfig */,
+				EEED7F3BF8B090A9C9095C910A57B27F /* EFCountingLabel-dummy.m */,
+				BBBAC2CAF2746A029578FA699BF1ED2B /* EFCountingLabel-Info.plist */,
+				A21E63F43AD2FADB1ABFAF0A53899616 /* EFCountingLabel-prefix.pch */,
+				1A3F7B644EE4412D4D22510FFE220166 /* EFCountingLabel-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/EFCountingLabel";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1C6B97ECFE5D5D28BBC9542CEBA9D902 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A2AC199E504660604EDA6DAB86EBF9E /* EFCountingLabel-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C7CC084345B4B3CDB5C606EFD483062 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				769D8EF6E83F1650832E6F4C59C30C55 /* Pods-Galaxy Escape-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1CBB98910121A05B7D52DCEC402B9FC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2C71D3ACE846D47CBF637AC11A3D775 /* Pods-Galaxy EscapeTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6BD7736D79B722BD38A6D3FD847E484 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E436B6CB70560D2BC784D2477C3C2284 /* Pods-Galaxy Escape-Galaxy EscapeUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		02BA38F2D3D6F74F9EE2CB362E1AAFCD /* Pods-Galaxy Escape */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE51C5F971E9769BD69036C7D95A39E3 /* Build configuration list for PBXNativeTarget "Pods-Galaxy Escape" */;
+			buildPhases = (
+				5C7CC084345B4B3CDB5C606EFD483062 /* Headers */,
+				1001708FAC377EB76699CB2C90F00851 /* Sources */,
+				3D322A56C61211C87365644A5233E1DD /* Frameworks */,
+				9834586A2F1B478CA2F2CBCBD43BF6DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C0F20F6FEFA9FD467C45D9FA24A8972D /* PBXTargetDependency */,
+			);
+			name = "Pods-Galaxy Escape";
+			productName = "Pods-Galaxy Escape";
+			productReference = FF31DD22042B9847F26708081E7E647E /* Pods_Galaxy_Escape.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8D87E5A9FC1F8F56498963BEA9EDFE7A /* EFCountingLabel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 14114E04A57A6E889A8AB768089F3FF2 /* Build configuration list for PBXNativeTarget "EFCountingLabel" */;
+			buildPhases = (
+				1C6B97ECFE5D5D28BBC9542CEBA9D902 /* Headers */,
+				FF4C03218B39446A6E0B97C35A28345F /* Sources */,
+				B470023E252E235D6D04AEA2E18530FF /* Frameworks */,
+				504078AF28E44AC7EC62FB7174169BA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EFCountingLabel;
+			productName = EFCountingLabel;
+			productReference = 5EBFFBCF9E56DA4AF71E6A1981521E28 /* EFCountingLabel.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		DD901090BF44D7343EBAEF1A56B9326C /* Pods-Galaxy EscapeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F0372A6DA80D1F6AEC247D12A698124 /* Build configuration list for PBXNativeTarget "Pods-Galaxy EscapeTests" */;
+			buildPhases = (
+				B1CBB98910121A05B7D52DCEC402B9FC /* Headers */,
+				883E59D3B2F2F41716295F4FDDDCE48E /* Sources */,
+				21722BD96C407279A9D12FA96089429B /* Frameworks */,
+				1BF53DBD2374BB268AB1BFB395747165 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9237B7022D23827B8CB1F58467ED89DD /* PBXTargetDependency */,
+			);
+			name = "Pods-Galaxy EscapeTests";
+			productName = "Pods-Galaxy EscapeTests";
+			productReference = 24D37AE44C44B814F76FF49FE7CECF0D /* Pods_Galaxy_EscapeTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F687C8F89114D13DF5D1CECE934A5549 /* Pods-Galaxy Escape-Galaxy EscapeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E9C329344A6FCCA0E7D4023E0E380766 /* Build configuration list for PBXNativeTarget "Pods-Galaxy Escape-Galaxy EscapeUITests" */;
+			buildPhases = (
+				C6BD7736D79B722BD38A6D3FD847E484 /* Headers */,
+				7F78345789D931E12779087DF6252C8C /* Sources */,
+				35BE96BB4558B20FCC3C815F8941D1CE /* Frameworks */,
+				294A6CECB04ED7EEF279F33C029EA490 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				71854C342C644CBD7CB60D0765F657DE /* PBXTargetDependency */,
+			);
+			name = "Pods-Galaxy Escape-Galaxy EscapeUITests";
+			productName = "Pods-Galaxy Escape-Galaxy EscapeUITests";
+			productReference = 469E2F7D9286FD63A3A158E492329678 /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 2646AF1B79093C476357C8F87EA58B6B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D87E5A9FC1F8F56498963BEA9EDFE7A /* EFCountingLabel */,
+				02BA38F2D3D6F74F9EE2CB362E1AAFCD /* Pods-Galaxy Escape */,
+				F687C8F89114D13DF5D1CECE934A5549 /* Pods-Galaxy Escape-Galaxy EscapeUITests */,
+				DD901090BF44D7343EBAEF1A56B9326C /* Pods-Galaxy EscapeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1BF53DBD2374BB268AB1BFB395747165 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		294A6CECB04ED7EEF279F33C029EA490 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		504078AF28E44AC7EC62FB7174169BA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9834586A2F1B478CA2F2CBCBD43BF6DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1001708FAC377EB76699CB2C90F00851 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18C107433B7E9AB555E8507A12B3E3D0 /* Pods-Galaxy Escape-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F78345789D931E12779087DF6252C8C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14C7DF62BA3EB1E5D6D3DAAA72F14C59 /* Pods-Galaxy Escape-Galaxy EscapeUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		883E59D3B2F2F41716295F4FDDDCE48E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B63D454E95062AB6AB0FA2C856BA194 /* Pods-Galaxy EscapeTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF4C03218B39446A6E0B97C35A28345F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0CC468D5BDEC9EAA4783B2833844C16C /* EFCount.swift in Sources */,
+				B0B01BF9248C17F961CFD2AA033A6CBD /* EFCountAdapter.swift in Sources */,
+				4F334D216196E032FB47C2E3A5872704 /* EFCountingLabel-dummy.m in Sources */,
+				80D80F83B6B48AC874579ECAB0AF470A /* EFTimingMethod.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		71854C342C644CBD7CB60D0765F657DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = EFCountingLabel;
+			target = 8D87E5A9FC1F8F56498963BEA9EDFE7A /* EFCountingLabel */;
+			targetProxy = 3D81AAB0FC3B46CA934D9A198CC7D3E2 /* PBXContainerItemProxy */;
+		};
+		9237B7022D23827B8CB1F58467ED89DD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-Galaxy Escape";
+			target = 02BA38F2D3D6F74F9EE2CB362E1AAFCD /* Pods-Galaxy Escape */;
+			targetProxy = D51DAFB3971F580E18C32F24CE74F1F3 /* PBXContainerItemProxy */;
+		};
+		C0F20F6FEFA9FD467C45D9FA24A8972D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = EFCountingLabel;
+			target = 8D87E5A9FC1F8F56498963BEA9EDFE7A /* EFCountingLabel */;
+			targetProxy = F5C48FEA8CBEE8B015E6BB6F55BA5E99 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		08C6A6C51BA72396BCE40B3D42B709AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B689C7BD9CAA24CBA7855F3129CE834F /* Pods-Galaxy EscapeTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Galaxy EscapeTests/Pods-Galaxy EscapeTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Galaxy EscapeTests/Pods-Galaxy EscapeTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		131356BE54884448CA49C07BEDF4BB2A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		34CD44A45FE5FF75CC87B07E587968AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBC726C50A51992538FBA111DE404E92 /* Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5B6AE7934AA7703C22D6063E908621D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A85269E70A233A02FDC9E60319541A1B /* Pods-Galaxy Escape.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		7D91F06BB64DE78C4ECDB94ED32F1DF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41B10F51CC35EE475F8E187C0F0C4F4B /* EFCountingLabel.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/EFCountingLabel/EFCountingLabel-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/EFCountingLabel/EFCountingLabel-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/EFCountingLabel/EFCountingLabel.modulemap";
+				PRODUCT_MODULE_NAME = EFCountingLabel;
+				PRODUCT_NAME = EFCountingLabel;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8862993EEE7D23BF8B70881F621138FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 723ACCE54D8D62A0766585BC568CCD52 /* Pods-Galaxy Escape.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Galaxy Escape/Pods-Galaxy Escape.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		88D65B9B25203EA22E2727FBECB79B06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F20FCD3E64EA3A8256100EE620C7367D /* Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		94957A2431A1D7D744531E3FF27D9DF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49DE5B2EFBB22B9E2E1403A3EF001525 /* Pods-Galaxy EscapeTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Galaxy EscapeTests/Pods-Galaxy EscapeTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Galaxy EscapeTests/Pods-Galaxy EscapeTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E1855C02B62E07FAD9C2F20A5EE66EA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41B10F51CC35EE475F8E187C0F0C4F4B /* EFCountingLabel.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/EFCountingLabel/EFCountingLabel-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/EFCountingLabel/EFCountingLabel-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/EFCountingLabel/EFCountingLabel.modulemap";
+				PRODUCT_MODULE_NAME = EFCountingLabel;
+				PRODUCT_NAME = EFCountingLabel;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F090CD07A80273D5A73C8EA19224ADDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		14114E04A57A6E889A8AB768089F3FF2 /* Build configuration list for PBXNativeTarget "EFCountingLabel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1855C02B62E07FAD9C2F20A5EE66EA3 /* Debug */,
+				7D91F06BB64DE78C4ECDB94ED32F1DF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				131356BE54884448CA49C07BEDF4BB2A /* Debug */,
+				F090CD07A80273D5A73C8EA19224ADDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6F0372A6DA80D1F6AEC247D12A698124 /* Build configuration list for PBXNativeTarget "Pods-Galaxy EscapeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94957A2431A1D7D744531E3FF27D9DF4 /* Debug */,
+				08C6A6C51BA72396BCE40B3D42B709AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CE51C5F971E9769BD69036C7D95A39E3 /* Build configuration list for PBXNativeTarget "Pods-Galaxy Escape" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8862993EEE7D23BF8B70881F621138FC /* Debug */,
+				5B6AE7934AA7703C22D6063E908621D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E9C329344A6FCCA0E7D4023E0E380766 /* Build configuration list for PBXNativeTarget "Pods-Galaxy Escape-Galaxy EscapeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88D65B9B25203EA22E2727FBECB79B06 /* Debug */,
+				34CD44A45FE5FF75CC87B07E587968AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}
