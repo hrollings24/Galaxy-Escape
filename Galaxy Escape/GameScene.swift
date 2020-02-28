@@ -11,6 +11,7 @@ import SceneKit
 import Foundation
 import AVFoundation
 import CoreMotion
+import AudioToolbox
 
 class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
@@ -29,6 +30,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var motionManager: CMMotionManager!
     var xMovement = Float(0)
     var laserNodeMain: SCNNode!
+    var vibrationTimer = Timer()
+    var canVibrate: Bool!
+
     
     //Game Setting Fields
     var playing: Bool!
@@ -141,12 +145,13 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         meteor.name = "meteor"
         meteor.physicsBody?.collisionBitMask = 0
         //CRASH IF SHIP MOVES INTO NEGATIVE X
-        let randomX = Float.random(in: -(ship.presentation.worldPosition.x+40) ..< (ship.presentation.worldPosition.x+40))
-        let randomY = Float.random(in: -(ship.presentation.worldPosition.y+8) ..< (ship.presentation.worldPosition.y+8))
+     
+        let randomX = Float.random(in: (ship.position.x-40) ..< (ship.position.x+40))
+        let randomY = Float.random(in: -(ship.position.y+8) ..< (ship.position.y+8))
         
         meteor.position = SCNVector3(x: randomX, y: randomY, z: -210)
         planetNode.addChildNode(meteor)
-        
+                
     }
     
     func spawnLaser(){
@@ -156,7 +161,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         laser.materials.first?.diffuse.contents = UIColor.red
         let laserNode = SCNNode(geometry: laser)
         
-        laserNode.position = ship.presentation.worldPosition
+        laserNode.position = ship.position
         let shipAngles = ship.eulerAngles
         laserNode.eulerAngles = SCNVector3((Float.pi / 2) - shipAngles.x, -shipAngles.y, 0)
         laserNode.name = "laser"
@@ -183,6 +188,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
        
         texturePointer = 0
 
+        canVibrate = true
+        
         resetCamera()
         vibrationCounter = 0
         speed = 20.0
@@ -249,12 +256,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         if i % 2 == 0{
             min -= (Float(radius*2) + 12)
             sphereNode.position = SCNVector3(CGFloat(min), CGFloat.random(in: -4..<4), planetZ)
-            print(SCNVector3(CGFloat(min), CGFloat.random(in: -4..<4), planetZ))
             //min -= (Float(radius)*2 + 12)
         }
         else{
             max += (Float(radius*2) + 12)
-            print(SCNVector3(CGFloat(max), CGFloat.random(in: -4..<4), planetZ))
             sphereNode.position = SCNVector3(CGFloat(max), CGFloat.random(in: -4..<4), planetZ)
             //max += (Float(radius)*2 + 12)
         }
@@ -416,21 +421,21 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
            
             planetNode.enumerateChildNodes { (node, stop) in
                 if node.name == "meteor"{
-                    node.physicsBody?.velocity = SCNVector3Make(-x, 0, z+10)
+                    node.physicsBody?.velocity = SCNVector3Make(-x, 0, z+Float.random(in: 4..<12))
                     //VIBRATIONS
-                    if vibrationCounter! == 30{
-                        if (ship.presentation.worldPosition.x < node.presentation.worldPosition.x + 2) && (ship.presentation.worldPosition.x > node.presentation.worldPosition.x - 2) {
-                            if (ship.presentation.worldPosition.y < node.presentation.worldPosition.y + 4) && (ship.presentation.worldPosition.y > node.presentation.worldPosition.y - 4) {
-                                if ship.presentation.worldPosition.z < node.presentation.worldPosition.z + 10{
-                                    let generator = UIImpactFeedbackGenerator(style: .medium)
-                                    generator.impactOccurred()
-                                }
+                    if canVibrate!{
+                             
+                            
+                        if (checkDistanceBetween(node1: node)) != .medium{
+                            let generator = UIImpactFeedbackGenerator(style: checkDistanceBetween(node1: node))
+                            generator.impactOccurred()
+                            canVibrate = false
+                            vibrationTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false) { timer in
+                                //timer fired
+                                self.canVibrate = true
+                                self.vibrationTimer.invalidate()
                             }
                         }
-                        vibrationCounter = 0
-                    }
-                    else{
-                        vibrationCounter += 1
                     }
                 }
                 else{
@@ -441,7 +446,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     node.removeFromParentNode()
                     removedPlanets += 1
                     if removedPlanets == 10{
-                        print("adding")
                         planetZ += 120
                         for i in 1...10 {
                            addPlanet(i: i)
@@ -456,6 +460,29 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 }
             }
         }
+    }
+    
+    
+    func checkDistanceBetween(node1: SCNNode) -> UIImpactFeedbackGenerator.FeedbackStyle{
+        let node1Pos = node1.presentation.worldPosition
+        if node1Pos.z == 0 && node1Pos.x == 0 && node1Pos.y == 0{
+            return .medium
+        }
+        let node2Pos = ship.position
+        let distance = SCNVector3(
+            node2Pos.x - node1Pos.x,
+            node2Pos.y - node1Pos.y,
+            node2Pos.z - node1Pos.z
+        )
+        print(distance)
+        if distance.z < 18 && abs(distance.y) < 3 && abs(distance.x) < 7{
+            print("Strong")
+            return .heavy
+        }
+        else if distance.z < 30 && abs(distance.y) < 3 && abs(distance.x) < 7{
+            return .light
+        }
+        return .medium
     }
 }
 
@@ -510,4 +537,10 @@ struct CollisionCategory: OptionSet {
     static let shipCatagory = CollisionCategory(rawValue: 1 << 2)
     static let planetCatagory = CollisionCategory(rawValue: 1 << 3)
 
+}
+
+enum Strength{
+    case light
+    case strong
+    case none
 }
