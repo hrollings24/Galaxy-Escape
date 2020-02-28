@@ -51,6 +51,16 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
 
     init(gameViewController: GameViewController){
         super.init()
+        
+        
+        let meteorScene = SCNScene(named: "art.scnassets/ar2.dae")!
+        meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
+    
+        //define scene
+        setupScene()
+        
+        
+       
 
         gameVC = gameViewController
 
@@ -59,14 +69,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             planetTextures.append(UIImage(named: string)!)
         }
         
-        //define scene
-        setupScene()
+       
         
         //define ship
         addShip()
         
-        let meteorScene = SCNScene(named: "art.scnassets/rock.dae")!
-        meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
     }
     
     func addShip(){
@@ -134,7 +141,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     func spawnMeteor() {
         // 1
         
-        let scaleFactor = Float.random(in: 0.005..<0.03)
+        let scaleFactor = Float.random(in: 0.01..<0.03)
         let meteor = meteorNodeMain.clone()
         meteor.scale = SCNVector3(x: scaleFactor, y: scaleFactor, z: scaleFactor)
 
@@ -186,8 +193,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func startGame(){
        
+        // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
+        meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        
         texturePointer = 0
-
         canVibrate = true
         
         resetCamera()
@@ -215,8 +224,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         laserNodeMain = SCNNode()
         self.rootNode.addChildNode(laserNodeMain)
 
-        // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
-        meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+       
     }
     
     func addInitialPlanet(){
@@ -274,9 +282,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
 
     @objc func spawnMeteor1(){
-        DispatchQueue.global(qos: .background).async {
             self.spawnMeteor()
-        }
+        
     }
     
    //Collisions
@@ -475,11 +482,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             node2Pos.z - node1Pos.z
         )
         print(distance)
-        if distance.z < 18 && abs(distance.y) < 3 && abs(distance.x) < 7{
+        if distance.z < 18 && abs(distance.y) < 4 && abs(distance.x) < 7{
             print("Strong")
             return .heavy
         }
-        else if distance.z < 30 && abs(distance.y) < 3 && abs(distance.x) < 7{
+        else if distance.z < 30 && abs(distance.y) < 4 && abs(distance.x) < 7{
             return .light
         }
         return .medium
