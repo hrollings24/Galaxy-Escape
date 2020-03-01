@@ -92,7 +92,7 @@ class MenuScene: SKScene{
         achArray.append((id: 1, name: "Beginner Player", barrier: 100, Progress: 0, description: "Play 100 games to unlock this achievement", percentage: 0))
         achArray.append((id: 2, name: "Commited Player", barrier: 200, Progress: 0, description: "Play 200 games to unlock this achievement", percentage: 0))
         achArray.append((id: 3, name: "Meteor Destroyer", barrier: 200, Progress: 0, description: "Destroy 200 meteors to unlock this achievement", percentage: 0))
-        achArray.append((id: 4, name: "Pro Meteor Destroyer", barrier: 400, Progress: 0, description: "Destroy 500 meteors to unlock this achievement", percentage: 0))
+        achArray.append((id: 4, name: "Pro Meteor Destroyer", barrier: 500, Progress: 0, description: "Destroy 500 meteors to unlock this achievement", percentage: 0))
         achArray.append((id: 5, name: "Learning Player", barrier: 100, Progress: 0, description: "Score over 100 playing the game", percentage: 0))
         achArray.append((id: 6, name: "Advanced Player", barrier: 200, Progress: 0, description: "Score over 200 playing the game", percentage: 0))
         achArray.append((id: 7, name: "Pro Player", barrier: 300, Progress: 0, description: "Score over 300 playing the game", percentage: 0))

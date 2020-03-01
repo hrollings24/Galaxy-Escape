@@ -84,13 +84,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         
         // add a tap gesture recognizer
         
-        /*
-        panGesture = UIPanGestureRecognizer(target: self, action:#selector(self.moveSpaceship))
-        panGesture.maximumNumberOfTouches = 1
-        panGesture.delegate = self
-        sceneView.addGestureRecognizer(panGesture)
-        */
-        
         sceneView.removeGestureRecognizer(tapGestureMenu)
         if tapGestureEnd != nil{
             sceneView.removeGestureRecognizer(tapGestureEnd)
@@ -115,50 +108,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     
     var previousLoc = CGPoint.init(x: 0, y: 0)
  
-    @objc func moveSpaceship(sender: UIPanGestureRecognizer){
-        
-        var delta = sender.translation(in: self.view)
-        let loc = sender.location(in: self.view)
-        //var newAngleY = (Float)(delta.x)*(Float)(Double.pi)/360.0
-
-        if sender.state == .changed {
-            delta = CGPoint.init(x: 2 * (loc.x - previousLoc.x), y: 2 * (loc.y - previousLoc.y))
-             sceneGame.ship.position = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y + Float(-delta.y * (0.02)), sceneGame.ship.worldPosition.z)
-            /*
-            let cameraPos = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y, sceneGame.cameraNode.worldPosition.z)
-            
-            let cameraAction = SCNAction.move(to: cameraPos, duration: 0.5)
-            sceneGame.cameraNode.runAction(cameraAction)
-            let cameraConsPos = SCNVector3.init(sceneGame.ship.worldPosition.x + Float(delta.x * 0.02), sceneGame.ship.worldPosition.y, sceneGame.cameraConstraint.worldPosition.z)
-            let cameraConsAction = SCNAction.move(to: cameraConsPos, duration: 0.5)
-            sceneGame.cameraConstraint.runAction(cameraConsAction)
-            */
-            
-            previousLoc = loc
-
-            //newAngleY += currentAngleY
-            //sceneGame.ship.eulerAngles.y = newAngleY
-        }
-        previousLoc = loc
-        
-        if(sender.state == .ended) {
-            //currentAngleY = newAngleY            
-        }
-    }
-    
-    /*
-    @objc func moveSpaceship(sender: UIPanGestureRecognizer){
-        
-        let translation = sender.translation(in: sender.view!)
-        var newAngleY = (Float)(translation.x)*(Float)(Double.pi)/180.0
-        newAngleY += currentAngleY
-
-        sceneGame.ship.eulerAngles.y = newAngleY
-
-        if(sender.state == .ended) { currentAngleY = newAngleY }
-    }
- */
-    
     
     
     func endGame(){

@@ -32,8 +32,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var laserNodeMain: SCNNode!
     var vibrationTimer = Timer()
     var canVibrate: Bool!
+    
+    //Lasers
     var laserCount: Int!
     var laserNodeOnScreen: Bool!
+    var laserLimit: Int!
 
     
     //Game Setting Fields
@@ -130,7 +133,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         cameraNode!.camera = SCNCamera()
         cameraNode!.position = SCNVector3(x: 0.0, y: 0, z: 15)
         cameraNode!.camera!.zNear = 0.1
-        cameraNode!.camera!.zFar = 300
+        cameraNode!.camera!.zFar = 400
         self.rootNode.addChildNode(cameraNode!)
 
         // Link them
@@ -165,11 +168,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func spawnLaser(){
         
-        if (laserCount! >= 5) && !laserNodeOnScreen{
+        if (laserCount! >= laserLimit) && !laserNodeOnScreen{
             laserNodeOnScreen = true
             gameVC.spriteScene.addLaserNode()
         }
-        else if (laserCount! < 5){
+        else if (laserCount! < laserLimit){
             print(laserCount!)
 
             //called when button is pressed
@@ -199,7 +202,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { timer in
                 //timer fired
                 self.laserCount -= 1
-                if self.laserCount == 4{
+                if self.laserCount >= self.laserLimit-1{
                     self.laserNodeOnScreen = false
                     self.gameVC.spriteScene.removeLaserNode()
                 }
@@ -222,6 +225,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
 
         texturePointer = 0
         canVibrate = true
+        laserLimit = 5
         
         resetCamera()
         vibrationCounter = 0
