@@ -32,6 +32,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var laserNodeMain: SCNNode!
     var vibrationTimer = Timer()
     var canVibrate: Bool!
+    var laserCount: Int!
+    var laserNodeOnScreen: Bool!
 
     
     //Game Setting Fields
@@ -162,28 +164,49 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
     
     func spawnLaser(){
-        //called when button is pressed
-        //create cylinder
-        let laser = SCNCylinder(radius: 0.2, height: 3.5)
-        laser.materials.first?.diffuse.contents = UIColor.red
-        let laserNode = SCNNode(geometry: laser)
         
-        laserNode.position = ship.position
-        let shipAngles = ship.eulerAngles
-        laserNode.eulerAngles = SCNVector3((Float.pi / 2) - shipAngles.x, -shipAngles.y, 0)
-        laserNode.name = "laser"
-        laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        
-        laserNode.physicsBody?.isAffectedByGravity = false
-        laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
-        laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
-        laserNode.physicsBody?.collisionBitMask = 0
+        if (laserCount! >= 5) && !laserNodeOnScreen{
+            laserNodeOnScreen = true
+            gameVC.spriteScene.addLaserNode()
+        }
+        else if (laserCount! < 5){
+            print(laserCount!)
 
-        let z = 50 * cos(ship.eulerAngles.y)
-        let x = 50 * sin(ship.eulerAngles.y)
-        let y = 50 * sin(ship.eulerAngles.x)
-        laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
-        laserNodeMain.addChildNode(laserNode)
+            //called when button is pressed
+            //create cylinder
+            let laser = SCNCylinder(radius: 0.2, height: 3.5)
+            laser.materials.first?.diffuse.contents = UIColor.red
+            let laserNode = SCNNode(geometry: laser)
+            
+            laserNode.position = ship.position
+            let shipAngles = ship.eulerAngles
+            laserNode.eulerAngles = SCNVector3((Float.pi / 2) - shipAngles.x, -shipAngles.y, 0)
+            laserNode.name = "laser"
+            laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+            
+            laserNode.physicsBody?.isAffectedByGravity = false
+            laserNode.physicsBody?.categoryBitMask = CollisionCategory.laserCategory.rawValue
+            laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
+            laserNode.physicsBody?.collisionBitMask = 0
+
+            let z = 50 * cos(ship.eulerAngles.y)
+            let x = 50 * sin(ship.eulerAngles.y)
+            let y = 50 * sin(ship.eulerAngles.x)
+            laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
+            
+            laserCount += 1
+            
+            Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { timer in
+                //timer fired
+                self.laserCount -= 1
+                if self.laserCount == 4{
+                    self.laserNodeOnScreen = false
+                    self.gameVC.spriteScene.removeLaserNode()
+                }
+
+            }
+            laserNodeMain.addChildNode(laserNode)
+        }
     }
         
     func resetCamera(){
@@ -195,12 +218,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
        
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
         meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
-        
+        self.rootNode.addChildNode(cameraNode!)
+
         texturePointer = 0
         canVibrate = true
         
         resetCamera()
         vibrationCounter = 0
+        laserNodeOnScreen = false
+        laserCount = 0
         speed = 20.0
         min = 0
         max = 0
@@ -481,7 +507,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             node2Pos.y - node1Pos.y,
             node2Pos.z - node1Pos.z
         )
-        print(distance)
         if distance.z < 18 && abs(distance.y) < 4 && abs(distance.x) < 7{
             print("Strong")
             return .heavy

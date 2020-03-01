@@ -15,6 +15,7 @@ class GameOverlayScene: SKScene {
     
     private var scoreNode: SKLabelNode!
     private var meteorLabel: SKLabelNode!
+    private var laserNode: SKLabelNode!
     private var counter = 0
     var gameVC: GameViewController!
     
@@ -70,6 +71,22 @@ class GameOverlayScene: SKScene {
     
     func incrementMeteor(){
         meteorsDestroyed += 1
+    }
+    
+    func addLaserNode(){
+        print("adding laser node")
+        laserNode = SKLabelNode(text: "Reloading Lasers!")
+        laserNode.fontName = "DINAlternate-Bold"
+        laserNode.fontColor = UIColor.white
+        laserNode.fontSize = 24
+        laserNode.position = CGPoint(x: self.frame.width / 2, y: self.frame.height - laserNode.frame.height - 7)
+        
+        self.addChild(laserNode)
+    }
+    
+    func removeLaserNode(){
+        print("removing laser node")
+        laserNode.removeFromParent()
     }
     
      override func update(_ currentTime: TimeInterval) {
