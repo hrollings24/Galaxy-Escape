@@ -57,7 +57,7 @@ class DBHelper
     
     func insert(id:Int, name:String, barrier:Int, progress:Int, description: String)
     {
-        let achievements = read()
+        let achievements = read(statement: "SELECT * FROM achievement;")
         for a in achievements
         {
             if a.id == id
@@ -85,9 +85,8 @@ class DBHelper
         sqlite3_finalize(insertStatement)
     }
     
-    func read() -> [Achievement] {
-        print("READING!!!")
-        let queryStatementString = "SELECT * FROM achievement;"
+    func read(statement: String) -> [Achievement] {
+        let queryStatementString = statement
         var queryStatement: OpaquePointer? = nil
         var achvs : [Achievement] = []
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
@@ -107,5 +106,20 @@ class DBHelper
         }
         sqlite3_finalize(queryStatement)
         return achvs
+    }
+    
+    func update(updateStatementString: String) {
+      var updateStatement: OpaquePointer?
+      if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) ==
+          SQLITE_OK {
+        if sqlite3_step(updateStatement) == SQLITE_DONE {
+          print("\nSuccessfully updated row.")
+        } else {
+          print("\nCould not update row.")
+        }
+      } else {
+        print("\nUPDATE statement is not prepared")
+      }
+      sqlite3_finalize(updateStatement)
     }
 }

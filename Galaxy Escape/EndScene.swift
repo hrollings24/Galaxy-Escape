@@ -98,14 +98,53 @@ class EndScene: SKScene {
     
     
     func incrementStats(){
+        print("UPDATING")
         
-        //increment amount of games played
-        if UserDefaults.standard.value(forKey: "gamesplayed") == nil{
-            UserDefaults.standard.set(1, forKey: "gamesplayed")
-        }
-        else{
-            let gamesPlayed = (UserDefaults.standard.value(forKey: "gamesplayed") as! Int) + 1
-            UserDefaults.standard.set(gamesPlayed, forKey: "gamesplayed")
+        let db = DBHelper()
+        let achievementsList: [Achievement] = db.read(statement: "SELECT * FROM achievement;")
+        var updateStatementString: String = ""
+        for ach in achievementsList{
+            print(ach.id)
+            if ach.id == 1 || ach.id == 2{
+                let n: Int = ach.progress + 1
+                updateStatementString = "UPDATE achievement SET progress = \(n) WHERE id = \(ach.id);"
+                db.update(updateStatementString: updateStatementString)
+            }
+            if ach.id == 3 || ach.id == 4{
+                let n: Int = ach.progress + destroyed
+                updateStatementString = "UPDATE achievement SET progress = \(n) WHERE id = \(ach.id);"
+                db.update(updateStatementString: updateStatementString)
+            }
+            if ach.id == 5{
+                if totalScore > 100{
+                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
+                    db.update(updateStatementString: updateStatementString)
+                }
+            }
+            if ach.id == 6{
+                if totalScore > 200{
+                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
+                    db.update(updateStatementString: updateStatementString)
+                }
+            }
+            if ach.id == 7{
+                if totalScore > 300{
+                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
+                    db.update(updateStatementString: updateStatementString)
+                }
+            }
+            if ach.id == 8{
+                if achievementsList[3].progress == 100 && achievementsList[6].progress == 100{
+                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
+                    db.update(updateStatementString: updateStatementString)
+                }
+            }
+            if ach.id == 9{
+                if achievementsList[6].progress == 100 && achievementsList[1].progress == 100{
+                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
+                    db.update(updateStatementString: updateStatementString)
+                }
+            }
         }
     }
     

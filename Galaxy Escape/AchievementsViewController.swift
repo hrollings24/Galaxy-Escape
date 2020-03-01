@@ -52,7 +52,7 @@ class AchievementsViewController: UIViewController{
     
     func fillAchievementArray(){
            
-        achievementList = db.read()
+        achievementList = db.read(statement: "SELECT * FROM achievement;")
         print(achievementList)
         
     }
@@ -75,7 +75,9 @@ extension AchievementsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! MyCell
         cell.achievementName.text = String(achievementList[indexPath.item].name)
-        cell.achievementProgress.text = String(achievementList[indexPath.item].progress)
+        cell.achievementProgress.text = String(String(achievementList[indexPath.item].progress) + "%")
+        cell.achievementDescription.text = String(achievementList[indexPath.item].description)
+
         return cell
     }
 }
