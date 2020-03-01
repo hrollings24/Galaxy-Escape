@@ -10,6 +10,8 @@
 		4EA2526864382291C33EA7FC /* Pods_Galaxy_Escape.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48D40018144A2458392B58C8 /* Pods_Galaxy_Escape.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		81377213FCE4AE2FE0AD2116 /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85DC0B4096935CF7F4F3F39D /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework */; };
 		8BEDE34F7C069520852F4A90 /* Pods_Galaxy_EscapeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87FD9AB6FA7AAC649790E8D /* Pods_Galaxy_EscapeTests.framework */; };
+		AF08742D240BEF350001C352 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF08742C240BEF350001C352 /* Achievement.swift */; };
+		AF08742F240BEFEE0001C352 /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF08742E240BEFEE0001C352 /* DBHelper.swift */; };
 		AF25E0CE23E874B000020851 /* ModeSpriteScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0CD23E874B000020851 /* ModeSpriteScene.swift */; };
 		AF25E0D023E9CD0600020851 /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0CF23E9CD0600020851 /* LeaderboardViewController.swift */; };
 		AF25E0D223EAEAD100020851 /* AchievementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0D123EAEAD100020851 /* AchievementsViewController.swift */; };
@@ -55,6 +57,8 @@
 		85DC0B4096935CF7F4F3F39D /* Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Galaxy_Escape_Galaxy_EscapeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EEEFE8F868BA1EB63BDBB8C /* Pods-Galaxy EscapeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy EscapeTests.release.xcconfig"; path = "Target Support Files/Pods-Galaxy EscapeTests/Pods-Galaxy EscapeTests.release.xcconfig"; sourceTree = "<group>"; };
 		A0E2318BB52C7B84C629F61A /* Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig"; path = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		AF08742C240BEF350001C352 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		AF08742E240BEFEE0001C352 /* DBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHelper.swift; sourceTree = "<group>"; };
 		AF25E0CD23E874B000020851 /* ModeSpriteScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSpriteScene.swift; sourceTree = "<group>"; };
 		AF25E0CF23E9CD0600020851 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
 		AF25E0D123EAEAD100020851 /* AchievementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +181,8 @@
 				AF2A351A23E18A00002EE6B8 /* EndScene.swift */,
 				AFBC7DCF2386BC0B00E2C644 /* GameOverlayScene.swift */,
 				AF25E0D123EAEAD100020851 /* AchievementsViewController.swift */,
+				AF08742C240BEF350001C352 /* Achievement.swift */,
+				AF08742E240BEFEE0001C352 /* DBHelper.swift */,
 				AF872E052382ED7F002B070C /* Main.storyboard */,
 				AF25E0D323EAF06100020851 /* CollectionViewCell.swift */,
 				AF872E082382ED82002B070C /* Assets.xcassets */,
@@ -449,10 +455,12 @@
 				AF25E0D223EAEAD100020851 /* AchievementsViewController.swift in Sources */,
 				AFE3B03323DF300A0062BEEA /* GameScene.swift in Sources */,
 				AF2A351B23E18A00002EE6B8 /* EndScene.swift in Sources */,
+				AF08742F240BEFEE0001C352 /* DBHelper.swift in Sources */,
 				AFBC7DD02386BC0B00E2C644 /* GameOverlayScene.swift in Sources */,
 				AF83B03A23DDF8570055EF9C /* MenuScene.swift in Sources */,
 				AF872E042382ED7F002B070C /* GameViewController.swift in Sources */,
 				AF25E0CE23E874B000020851 /* ModeSpriteScene.swift in Sources */,
+				AF08742D240BEF350001C352 /* Achievement.swift in Sources */,
 				AF25E0D423EAF06100020851 /* CollectionViewCell.swift in Sources */,
 				AF7AF41A23E85ED3002462A8 /* ModeScene.swift in Sources */,
 				AF25E0D023E9CD0600020851 /* LeaderboardViewController.swift in Sources */,

@@ -12,7 +12,8 @@ import GameKit
 class AchievementsViewController: UIViewController{
 
     var gameVC: GameViewController!
-    var achievementList = [GKAchievement]()
+    var achievementList = [Achievement]()
+    var db:DBHelper = DBHelper()
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -51,8 +52,8 @@ class AchievementsViewController: UIViewController{
     
     func fillAchievementArray(){
            
-        achievementList.append(GKAchievement(identifier: "play100games"))
-        achievementList.append(GKAchievement(identifier: "play200games"))
+        achievementList = db.read()
+        print(achievementList)
         
     }
     
@@ -73,8 +74,8 @@ extension AchievementsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! MyCell
-        cell.achievementName.text = String(achievementList[indexPath.item].identifier)
-        cell.achievementProgress.text = String(achievementList[indexPath.item].percentComplete)
+        cell.achievementName.text = String(achievementList[indexPath.item].name)
+        cell.achievementProgress.text = String(achievementList[indexPath.item].progress)
         return cell
     }
 }

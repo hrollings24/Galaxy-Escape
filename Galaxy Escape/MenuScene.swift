@@ -27,6 +27,7 @@ class MenuScene: SKScene{
     }
     
     func setupScene(){
+
         let logo = SKSpriteNode(imageNamed: "temp_logo")
         logo.size = CGSize(width: self.frame.width/2 -  self.frame.width/12, height: ((self.frame.width/2 -  self.frame.width/12)*1025)/1949)
         logo.position = CGPoint(x: self.frame.width/24 + logo.size.width/2, y: self.frame.height/3*2)
@@ -40,6 +41,8 @@ class MenuScene: SKScene{
         
         highscoreLB.position = CGPoint(x: self.frame.width/24 + logo.size.width/2, y: logo.position.y - logo.size.height/2 - 30)
         if UserDefaults.standard.value(forKey: "highscore") == nil{
+            //INITALISE DB
+            initaliseDB()
             UserDefaults.standard.set(0, forKey: "highscore")
             highscoreLB.text = "HIGHSCORE: 0"
         }
@@ -82,6 +85,21 @@ class MenuScene: SKScene{
         statsButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/12, y: self.frame.height/7*2)
         statsButton.name = "stats"
         self.addChild(statsButton)
+    }
+    
+    func initaliseDB(){
+        //let achTuple: [(id: Int, name: String, barrier: Int, Progress: Int, description: String)]
+        var achArray = [(id: Int, name: String, barrier: Int, Progress: Int, description: String)]()
+
+        achArray.append((id: 1, name: "Play 100 Games", barrier: 100, Progress: 0, description: "Play 100 games to unlock this achievement"))
+        achArray.append((id: 2, name: "Play 200 Games", barrier: 200, Progress: 0, description: "Play 200 games to unlock this achievement"))
+        achArray.append((id: 3, name: "Destroy 200 Meteors", barrier: 200, Progress: 0, description: "Destroy 200 meteors to unlock this achievement"))
+        achArray.append((id: 4, name: "Destroy 400 Meteors", barrier: 400, Progress: 0, description: "Play 400 meteors to unlock this achievement"))
+        
+        let db = DBHelper()
+        for element in achArray{
+            db.insert(id: element.id, name: element.name, barrier: element.barrier, progress: element.Progress, description: element.description)
+        }
     }
     
 }
