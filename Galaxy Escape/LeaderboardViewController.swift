@@ -21,7 +21,7 @@ class LeaderboardViewController: UIViewController, GKGameCenterControllerDelegat
         self.dismiss(animated: true, completion: nil)
         gameVC.setupMenu()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

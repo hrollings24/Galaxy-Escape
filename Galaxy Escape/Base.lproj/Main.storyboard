@@ -117,12 +117,16 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="59K-rg-28s"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="6ei-ca-pOD"/>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2b3-xm-GQf">
-                                <rect key="frame" x="24" y="8" width="105" height="54"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="back" image="backbtn"/>
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWB-1t-Yjw">
+                                <rect key="frame" x="0.0" y="38" width="50" height="298"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <state key="normal" title="&lt;">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
-                                    <action selector="back:" destination="bol-Vo-1nT" eventType="touchUpInside" id="oLF-J3-Mpo"/>
+                                    <action selector="back:" destination="bol-Vo-1nT" eventType="touchUpInside" id="kJo-Ys-hcl"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -140,7 +144,4 @@
             <point key="canvasLocation" x="1013.7931034482759" y="-479.19999999999999"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="backbtn" width="460" height="258"/>
-    </resources>
 </document>
