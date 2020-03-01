@@ -20,16 +20,23 @@ class MyCell: UICollectionViewCell {
         let textLabel = UILabel(frame: .zero)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(textLabel)
+        textLabel.font = UIFont(name:"SpacePatrol", size: 24.0)
+        textLabel.textColor = .red
+        textLabel.adjustsFontSizeToFitWidth = true
     
         let progressLB = UILabel(frame: .zero)
         progressLB.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(progressLB)
+        progressLB.font = UIFont(name:"DINAlternate-Bold", size: 24.0)
+        progressLB.adjustsFontSizeToFitWidth = true
     
         let descriptionLB = UILabel(frame: .zero)
         descriptionLB.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(descriptionLB)
         descriptionLB.numberOfLines = 2
         descriptionLB.adjustsFontSizeToFitWidth = true
+        descriptionLB.font = UIFont(name:"DINAlternate-Bold", size: 16.0)
+
     
         NSLayoutConstraint.activate([
             textLabel.widthAnchor.constraint(equalTo: self.contentView.widthAnchor),
@@ -39,7 +46,7 @@ class MyCell: UICollectionViewCell {
             progressLB.widthAnchor.constraint(equalTo: self.contentView.widthAnchor),
             progressLB.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             progressLB.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            progressLB.heightAnchor.constraint(equalToConstant: self.contentView.frame.height),
+            progressLB.heightAnchor.constraint(equalToConstant: self.contentView.frame.height-20),
             descriptionLB.widthAnchor.constraint(equalTo: self.contentView.widthAnchor),
             descriptionLB.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             descriptionLB.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),

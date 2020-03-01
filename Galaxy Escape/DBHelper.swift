@@ -38,7 +38,7 @@ class DBHelper
     }
     
     func createTable() {
-        let createTableString = "CREATE TABLE IF NOT EXISTS achievement(id INTEGER PRIMARY KEY,name TEXT,barrier INTEGER, progress INTEGER, description TEXT);"
+        let createTableString = "CREATE TABLE IF NOT EXISTS achievement(id INTEGER PRIMARY KEY,name TEXT,barrier INTEGER, progress INTEGER, description TEXT, percentage INT);"
         var createTableStatement: OpaquePointer? = nil
         if sqlite3_prepare_v2(db, createTableString, -1, &createTableStatement, nil) == SQLITE_OK
         {
@@ -55,7 +55,7 @@ class DBHelper
     }
     
     
-    func insert(id:Int, name:String, barrier:Int, progress:Int, description: String)
+    func insert(id:Int, name:String, barrier:Int, progress:Int, description: String, percentage: Int)
     {
         let achievements = read(statement: "SELECT * FROM achievement;")
         for a in achievements
@@ -65,15 +65,15 @@ class DBHelper
                 return
             }
         }
-        let insertStatementString = "INSERT INTO achievement (id, name, barrier, progress, description) VALUES (NULL, ?, ?, ?, ?);"
+        let insertStatementString = "INSERT INTO achievement (id, name, barrier, progress, description, percentage) VALUES (NULL, ?, ?, ?, ?, ?);"
         var insertStatement: OpaquePointer? = nil
         if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK {
             sqlite3_bind_text(insertStatement, 1, (name as NSString).utf8String, -1, nil)
             sqlite3_bind_int(insertStatement, 2, Int32(barrier))
             sqlite3_bind_int(insertStatement, 3, Int32(progress))
             sqlite3_bind_text(insertStatement, 4, (description as NSString).utf8String, -1, nil)
+            sqlite3_bind_int(insertStatement, 5, Int32(percentage))
 
-            
             if sqlite3_step(insertStatement) == SQLITE_DONE {
                 print("Successfully inserted row.")
             } else {
@@ -96,8 +96,9 @@ class DBHelper
                 let barrier = sqlite3_column_int(queryStatement, 2)
                 let progress = sqlite3_column_int(queryStatement, 3)
                 let description = String(describing: String(cString: sqlite3_column_text(queryStatement, 4)))
+                let percentage = sqlite3_column_int(queryStatement, 5)
 
-                achvs.append(Achievement(id: Int(id), name: name, barrier: Int(barrier), progress: Int(progress), description: description))
+                achvs.append(Achievement(id: Int(id), name: name, barrier: Int(barrier), progress: Int(progress), description: description, percentage: Int(percentage)))
                 print("Query Result:")
                 print("\(id) | \(name) | \(barrier) | \(progress) | \(description)")
             }

@@ -86,7 +86,7 @@ class GameOverlayScene: SKScene {
     
     func removeLaserNode(){
         print("removing laser node")
-        laserNode.removeFromParent()
+        laserNode?.removeFromParent()
     }
     
      override func update(_ currentTime: TimeInterval) {

@@ -87,22 +87,21 @@ class MenuScene: SKScene{
     }
     
     func initaliseDB(){
-        //let achTuple: [(id: Int, name: String, barrier: Int, Progress: Int, description: String)]
-        var achArray = [(id: Int, name: String, barrier: Int, Progress: Int, description: String)]()
+        var achArray = [(id: Int, name: String, barrier: Int, Progress: Int, description: String, percentage: Int)]()
 
-        achArray.append((id: 1, name: "Beginner Player", barrier: 100, Progress: 0, description: "Play 100 games to unlock this achievement"))
-        achArray.append((id: 2, name: "Commited Player", barrier: 200, Progress: 0, description: "Play 200 games to unlock this achievement"))
-        achArray.append((id: 3, name: "Meteor Destroyer", barrier: 200, Progress: 0, description: "Destroy 200 meteors to unlock this achievement"))
-        achArray.append((id: 4, name: "Pro Meteor Destroyer", barrier: 400, Progress: 0, description: "Destroy 500 meteors to unlock this achievement"))
-        achArray.append((id: 5, name: "Learning Player", barrier: 100, Progress: 0, description: "Score over 100 playing the game"))
-        achArray.append((id: 6, name: "Advanced Player", barrier: 200, Progress: 0, description: "Score over 200 playing the game"))
-        achArray.append((id: 7, name: "Pro Player", barrier: 300, Progress: 0, description: "Score over 300 playing the game"))
-        achArray.append((id: 8, name: "Advances Pro Player", barrier: 100, Progress: 0, description: "Unlock Pro Meteor Destroyer and Pro Player"))
-        achArray.append((id: 9, name: "Expert Player", barrier: 300, Progress: 0, description: "Unlock Pro and Commited players"))
+        achArray.append((id: 1, name: "Beginner Player", barrier: 100, Progress: 0, description: "Play 100 games to unlock this achievement", percentage: 0))
+        achArray.append((id: 2, name: "Commited Player", barrier: 200, Progress: 0, description: "Play 200 games to unlock this achievement", percentage: 0))
+        achArray.append((id: 3, name: "Meteor Destroyer", barrier: 200, Progress: 0, description: "Destroy 200 meteors to unlock this achievement", percentage: 0))
+        achArray.append((id: 4, name: "Pro Meteor Destroyer", barrier: 400, Progress: 0, description: "Destroy 500 meteors to unlock this achievement", percentage: 0))
+        achArray.append((id: 5, name: "Learning Player", barrier: 100, Progress: 0, description: "Score over 100 playing the game", percentage: 0))
+        achArray.append((id: 6, name: "Advanced Player", barrier: 200, Progress: 0, description: "Score over 200 playing the game", percentage: 0))
+        achArray.append((id: 7, name: "Pro Player", barrier: 300, Progress: 0, description: "Score over 300 playing the game", percentage: 0))
+        achArray.append((id: 8, name: "Advanced Pro Player", barrier: 100, Progress: 0, description: "Unlock Pro Meteor Destroyer and Pro Player", percentage: 0))
+        achArray.append((id: 9, name: "Expert Player", barrier: 300, Progress: 0, description: "Unlock Pro and Commited players", percentage: 0))
 
         let db = DBHelper()
         for element in achArray{
-            db.insert(id: element.id, name: element.name, barrier: element.barrier, progress: element.Progress, description: element.description)
+            db.insert(id: element.id, name: element.name, barrier: element.barrier, progress: element.Progress, description: element.description, percentage: element.percentage)
         }
     }
     

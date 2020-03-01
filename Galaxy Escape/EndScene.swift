@@ -102,47 +102,62 @@ class EndScene: SKScene {
         
         let db = DBHelper()
         let achievementsList: [Achievement] = db.read(statement: "SELECT * FROM achievement;")
-        var updateStatementString: String = ""
         for ach in achievementsList{
             print(ach.id)
-            if ach.id == 1 || ach.id == 2{
+            if ach.id == 1{
                 let n: Int = ach.progress + 1
-                updateStatementString = "UPDATE achievement SET progress = \(n) WHERE id = \(ach.id);"
-                db.update(updateStatementString: updateStatementString)
+                db.update(updateStatementString: "UPDATE achievement SET progress = \(n) WHERE id = \(ach.id);")
+                db.update(updateStatementString: "UPDATE achievement SET percentage = \(n) WHERE id = \(ach.id);")
             }
-            if ach.id == 3 || ach.id == 4{
+            else if ach.id == 2{
+                let n: Int = ach.progress + 1
+                let px = (Float(n)/Float(ach.barrier))*100
+                let p = Int(px)
+                db.update(updateStatementString: "UPDATE achievement SET progress = \(n) WHERE id = \(ach.id);")
+                db.update(updateStatementString: "UPDATE achievement SET percentage = \(p) WHERE id = \(ach.id);")
+            }
+            else if ach.id == 3{
                 let n: Int = ach.progress + destroyed
-                updateStatementString = "UPDATE achievement SET progress = \(n) WHERE id = \(ach.id);"
-                db.update(updateStatementString: updateStatementString)
+                db.update(updateStatementString: "UPDATE achievement SET progress = \(n) WHERE id = \(ach.id);")
+                let px = (Float(n)/Float(ach.barrier))*100
+                let p = Int(px)
+                db.update(updateStatementString: "UPDATE achievement SET percentage = \(p) WHERE id = \(ach.id);")
+            }
+            else if ach.id == 4{
+                let n: Int = ach.progress + destroyed
+                db.update(updateStatementString: "UPDATE achievement SET progress = \(n) WHERE id = \(ach.id);")
+                let px = (Float(n)/Float(ach.barrier))*100
+                let p = Int(px)
+                db.update(updateStatementString: "UPDATE achievement SET percentage = \(p) WHERE id = \(ach.id);")
             }
             if ach.id == 5{
                 if totalScore > 100{
-                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
-                    db.update(updateStatementString: updateStatementString)
+                    db.update(updateStatementString: "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);")
+                    db.update(updateStatementString: "UPDATE achievement SET percentage = 100 WHERE id = \(ach.id);")
                 }
             }
             if ach.id == 6{
                 if totalScore > 200{
-                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
-                    db.update(updateStatementString: updateStatementString)
+                    db.update(updateStatementString: "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);")
+                    db.update(updateStatementString: "UPDATE achievement SET percentage = 100 WHERE id = \(ach.id);")
                 }
             }
             if ach.id == 7{
                 if totalScore > 300{
-                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
-                    db.update(updateStatementString: updateStatementString)
+                    db.update(updateStatementString: "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);")
+                    db.update(updateStatementString: "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);")
                 }
             }
             if ach.id == 8{
-                if achievementsList[3].progress == 100 && achievementsList[6].progress == 100{
-                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
-                    db.update(updateStatementString: updateStatementString)
+                if achievementsList[3].percentage == 100 && achievementsList[6].percentage == 100{
+                    db.update(updateStatementString: "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);")
+                    db.update(updateStatementString: "UPDATE achievement SET percentage = 100 WHERE id = \(ach.id);")
                 }
             }
             if ach.id == 9{
-                if achievementsList[6].progress == 100 && achievementsList[1].progress == 100{
-                    updateStatementString = "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);"
-                    db.update(updateStatementString: updateStatementString)
+                if achievementsList[6].percentage == 100 && achievementsList[1].percentage == 100{
+                    db.update(updateStatementString:  "UPDATE achievement SET progress = 100 WHERE id = \(ach.id);")
+                    db.update(updateStatementString:  "UPDATE achievement SET percentage = 100 WHERE id = \(ach.id);")
                 }
             }
         }

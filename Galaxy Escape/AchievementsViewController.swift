@@ -75,7 +75,16 @@ extension AchievementsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! MyCell
         cell.achievementName.text = String(achievementList[indexPath.item].name)
-        cell.achievementProgress.text = String(String(achievementList[indexPath.item].progress) + "%")
+        print(achievementList[indexPath.item].progress)
+        if achievementList[indexPath.item].percentage == 100{
+            cell.achievementProgress.text = "completed!"
+        }
+        else if achievementList[indexPath.item].id == 5 || achievementList[indexPath.item].id == 6 || achievementList[indexPath.item].id == 7 || achievementList[indexPath.item].id == 8 || achievementList[indexPath.item].id == 9{
+            cell.achievementProgress.text = "locked"
+        }
+        else{
+            cell.achievementProgress.text = String(achievementList[indexPath.item].percentage) + "%"
+        }
         cell.achievementDescription.text = String(achievementList[indexPath.item].description)
 
         return cell

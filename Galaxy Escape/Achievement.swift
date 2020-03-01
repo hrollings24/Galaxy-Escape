@@ -15,15 +15,17 @@ class Achievement
     var barrier: Int = 0
     var id: Int = 0
     var progress: Int = 0
+    var percentage: Int = 0
     var description: String = ""
     
-    init(id:Int, name:String, barrier:Int, progress:Int, description: String)
+    init(id:Int, name:String, barrier:Int, progress:Int, description: String, percentage: Int)
     {
         self.id = id
         self.name = name
         self.barrier = barrier
         self.progress = progress
         self.description = description
+        self.percentage = percentage
     }
     
 }
