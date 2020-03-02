@@ -15,7 +15,7 @@ import AudioToolbox
 
 enum Mode{
     case zen
-    case easy
+    case sprint
     case classic
     case dash
 }
@@ -40,6 +40,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var vibrationTimer = Timer()
     var canVibrate: Bool!
     var mode: Mode!
+    var randomX: Int!
     
     //Lasers
     var laserCount: Int!
@@ -224,16 +225,22 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func startGame(modeParameter: Mode){
        
+        randomX = 0
         mode = modeParameter
         if mode == .dash{
             speed = 50.0
+        }
+        else if mode == .sprint{
+            speed = 100.0
         }
         else{
             speed = 20.0
         }        
         
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
-        meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        if mode != .sprint{
+            meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        }
         self.rootNode.addChildNode(cameraNode!)
 
         texturePointer = 0
@@ -278,6 +285,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         earthNode.physicsBody?.categoryBitMask = CollisionCategory.planetCatagory.rawValue
         earthNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
         earthNode.physicsBody?.collisionBitMask = 0
+        earthNode.name = "planet"
         planetNode.addChildNode(earthNode)
         
         min = earthNode.position.x - (38)
@@ -314,6 +322,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             //max += (Float(radius)*2 + 12)
         }
         planetZ -= 12
+        sphereNode.name = "planet"
         planetNode.addChildNode(sphereNode)
         if texturePointer == 11{
             texturePointer = 0
@@ -508,13 +517,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 //Check to remove node
                 if node.presentation.worldPosition.z > (15 + (node.geometry?.boundingSphere.radius ?? 0)){
                     node.removeFromParentNode()
-                    removedPlanets += 1
-                    if removedPlanets == 10{
-                        planetZ += 120
-                        for i in 1...10 {
-                           addPlanet(i: i)
+                    if node.name == "planet"{
+                        removedPlanets += 1
+                        if removedPlanets == 10{
+                            planetZ += 120
+                            for i in 1...10 {
+                               addPlanet(i: i)
+                            }
+                            removedPlanets = 0
                         }
-                        removedPlanets = 0
                     }
                 }
             }

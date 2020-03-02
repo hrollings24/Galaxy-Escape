@@ -53,14 +53,16 @@ class ModeViewController: UIViewController{
         gameVC.setupGame(mode: .zen)
     }
     
-    @IBAction func arcade(_ sender: UIButton) {
+    @IBAction func arcade(_ sender: UIButton){
+        
         if sender.titleLabel?.text == "locked"{
             let String = "Unlock by achieving " + acvs[2].name
             self.present(gameVC.displayAlert(titleString: "Mode Locked", messageString: String), animated: true)
         }
         else{
+ 
             self.dismiss(animated: true, completion: nil)
-            gameVC.setupGame(mode: .easy)
+            gameVC.setupGame(mode: .sprint)
         }
     }
     
@@ -71,7 +73,7 @@ class ModeViewController: UIViewController{
         }
         else{
             self.dismiss(animated: true, completion: nil)
-            gameVC.setupGame(mode: .easy)
+            gameVC.setupGame(mode: .classic)
         }
     }
     
@@ -82,7 +84,7 @@ class ModeViewController: UIViewController{
         }
         else{
             self.dismiss(animated: true, completion: nil)
-            gameVC.setupGame(mode: .easy)
+            gameVC.setupGame(mode: .dash)
         }
     }
     
