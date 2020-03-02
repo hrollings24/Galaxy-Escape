@@ -15,7 +15,7 @@ import AudioToolbox
 
 enum Mode{
     case zen
-    case arcade
+    case easy
     case classic
     case dash
 }
@@ -66,8 +66,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         super.init()
         
         
-        let meteorScene = SCNScene(named: "art.scnassets/ar2.dae")!
-        meteorNodeMain = meteorScene.rootNode.childNode(withName: "meteor", recursively: true)!
+        
     
         //define scene
         setupScene()
@@ -154,18 +153,14 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     func spawnMeteor() {
         // 1
         
-        let scaleFactor = Float.random(in: 0.01..<0.03)
-        let meteor = meteorNodeMain.clone()
-        meteor.scale = SCNVector3(x: scaleFactor, y: scaleFactor, z: scaleFactor)
-
+        let meteor = Meteor()
+        
         meteor.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         meteor.physicsBody?.isAffectedByGravity = false
         meteor.physicsBody?.categoryBitMask = CollisionCategory.meteorCategory.rawValue
         meteor.physicsBody?.contactTestBitMask = CollisionCategory.laserCategory.rawValue | CollisionCategory.shipCatagory.rawValue
-        meteor.name = "meteor"
         meteor.physicsBody?.collisionBitMask = 0
-        //CRASH IF SHIP MOVES INTO NEGATIVE X
-     
+        
         let randomX = Float.random(in: (ship.position.x-40) ..< (ship.position.x+40))
         let randomY = Float.random(in: -(ship.position.y+8) ..< (ship.position.y+8))
         
@@ -200,10 +195,19 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
             laserNode.physicsBody?.collisionBitMask = 0
 
-            let z = 50 * cos(ship.eulerAngles.y)
-            let x = 50 * sin(ship.eulerAngles.y)
-            let y = 50 * sin(ship.eulerAngles.x)
-            laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
+            if mode != .easy{
+                let z = 50 * cos(ship.eulerAngles.y)
+                let x = 50 * sin(ship.eulerAngles.y)
+                let y = 50 * sin(ship.eulerAngles.x)
+                laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
+            }
+            else{
+                let vec = ship.presentation.worldPosition - findClosestMeteor().presentation.worldPosition
+                let vecNormalised = vec.normalized() * 50
+                
+                
+                laserNode.physicsBody?.velocity = SCNVector3Make(vecNormalised.x, vecNormalised.y, -vecNormalised.z)
+            }
             
             laserCount += 1
             
@@ -472,12 +476,10 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             let z = (speed) * cos(ship.eulerAngles.y)
            
             planetNode.enumerateChildNodes { (node, stop) in
-                if node.name == "meteor"{
+                if let meteor = node as? Meteor {
                     node.physicsBody?.velocity = SCNVector3Make(-x, 0, z+Float.random(in: 4..<12))
                     //VIBRATIONS
                     if canVibrate!{
-                             
-                            
                         if (checkDistanceBetween(node1: node)) != .medium{
                             let generator = UIImpactFeedbackGenerator(style: checkDistanceBetween(node1: node))
                             generator.impactOccurred()
@@ -489,12 +491,21 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                             }
                         }
                     }
+                    let node1Pos = meteor.presentation.worldPosition
+                    let node2Pos = ship.position
+                    let distance = SCNVector3(
+                        node2Pos.x - node1Pos.x,
+                        node2Pos.y - node1Pos.y,
+                        node2Pos.z - node1Pos.z
+                    )
+                    let length = sqrt(distance.x * distance.x + distance.y * distance.y + distance.z * distance.z)
+                    meteor.updateDistance(newDistance: length)
                 }
                 else{
                     node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
                 }
                 //Check to remove node
-                if node.presentation.worldPosition.z > (15 + (node.geometry?.boundingSphere.radius)!){
+                if node.presentation.worldPosition.z > (15 + (node.geometry?.boundingSphere.radius ?? 0)){
                     node.removeFromParentNode()
                     removedPlanets += 1
                     if removedPlanets == 10{
@@ -535,6 +546,22 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         }
         return .medium
     }
+    
+    
+    func findClosestMeteor() -> Meteor{
+        var closestNode: Meteor
+        closestNode = Meteor()
+        planetNode.enumerateChildNodes { (node, stop) in
+            if let meteorNode = node as? Meteor {
+                if meteorNode.presentation.worldPosition.z < -2{
+                    if meteorNode.distanceToShip < closestNode.distanceToShip{
+                        closestNode = meteorNode
+                    }
+                }
+            }
+        }
+        return closestNode
+    }
 }
 
 
@@ -565,6 +592,13 @@ extension SCNVector3{
     }
     func distance(vector: SCNVector3) -> SCNVector3 {
         return (self - vector)
+    }
+    /**
+    * Normalizes the vector described by the SCNVector3 to length 1.0 and returns
+    * the result as a new SCNVector3.
+    */
+    func normalized() -> SCNVector3 {
+        return self / length()
     }
 }
 

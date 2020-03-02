@@ -28,7 +28,7 @@ class ModeViewController: UIViewController{
     
     @IBAction func arcade(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        gameVC.setupGame(mode: .arcade)
+        gameVC.setupGame(mode: .easy)
     }
     @IBAction func classic(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
