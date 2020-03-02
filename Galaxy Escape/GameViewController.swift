@@ -24,7 +24,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     var menuScene: MenuScene!
     var modeOverlayScene: ModeOverlayScene!
     var endScene: EndScene!
-    var modesScene: Modes!
     var panGesture: UIPanGestureRecognizer!
     var tapGesture: UITapGestureRecognizer!
     var tapGestureMenu: UITapGestureRecognizer!
@@ -79,7 +78,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
     }
     
-    func setupGame(){
+    func setupGame(mode: Mode){
       
         
         // add a tap gesture recognizer
@@ -99,7 +98,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
         self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
         
         self.endView.removeFromSuperview()
-        self.sceneGame.startGame()
+        self.sceneGame.startGame(modeParameter: mode)
         
         
     }
@@ -165,7 +164,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                         for view in self.endView.subviews{
                             view.removeFromSuperview()
                         }
-                       setupGame()
+                        setupGame(mode: sceneGame.mode)
                    }
                     if name == "continue"{
                                           continueGame()
@@ -189,7 +188,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
 
                if let name = touchedNode.name {
                    if name == "play"{
-                       setupGame()
+                    setupGame(mode: .zen)
                    }
                    if name == "stats"{
                        showGameCenter()
@@ -214,27 +213,20 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
 
     func setupModes(){
         
-        displayAlert(titleString: "Modes", messageString: "Check back for future updates!")
+        //displayAlert(titleString: "Modes", messageString: "Check back for future updates!")
         
-        /*
-        self.view.willRemoveSubview(sceneView)
-        self.sceneView = SCNView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        self.modesScene = Modes(gameViewController: self)
-        self.sceneView.scene = modesScene
-        self.sceneView.autoenablesDefaultLighting = true
-        self.sceneView.allowsCameraControl = false
         
-        self.view.addSubview(self.sceneView)
+        sceneGame.removeShip()
+        self.sceneView.overlaySKScene = nil
         
-        self.modeOverlayScene = ModeOverlayScene(size: self.view.bounds.size)
-        self.modeOverlayScene.gameVC = self
-        self.sceneView.overlaySKScene = self.modeOverlayScene
-        self.sceneView.overlaySKScene?.isUserInteractionEnabled = true
-        
-        self.modeOverlayScene.setupScene()
- 
-         */
-        
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "modes") as! ModeViewController
+        viewController.gameVC = self
+        viewController.providesPresentationContextTransitionStyle = true
+        viewController.definesPresentationContext = true
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true, completion: nil)
         
     }
     

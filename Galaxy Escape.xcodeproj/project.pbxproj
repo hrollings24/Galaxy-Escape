@@ -19,7 +19,7 @@
 		AF2A351923E0F199002EE6B8 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF2A351823E0F199002EE6B8 /* GameKit.framework */; };
 		AF2A351B23E18A00002EE6B8 /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A351A23E18A00002EE6B8 /* EndScene.swift */; };
 		AF2A351D23E194B7002EE6B8 /* GameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2A351C23E194B7002EE6B8 /* GameCenter.swift */; };
-		AF7AF41A23E85ED3002462A8 /* ModeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7AF41923E85ED3002462A8 /* ModeScene.swift */; };
+		AF7AF41A23E85ED3002462A8 /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7AF41923E85ED3002462A8 /* ModeViewController.swift */; };
 		AF83B03A23DDF8570055EF9C /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF83B03923DDF8570055EF9C /* MenuScene.swift */; };
 		AF872E002382ED7F002B070C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF872DFF2382ED7F002B070C /* AppDelegate.swift */; };
 		AF872E022382ED7F002B070C /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = AF872E012382ED7F002B070C /* art.scnassets */; };
@@ -66,7 +66,7 @@
 		AF2A351823E0F199002EE6B8 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		AF2A351A23E18A00002EE6B8 /* EndScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
 		AF2A351C23E194B7002EE6B8 /* GameCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenter.swift; sourceTree = "<group>"; };
-		AF7AF41923E85ED3002462A8 /* ModeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeScene.swift; sourceTree = "<group>"; };
+		AF7AF41923E85ED3002462A8 /* ModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeViewController.swift; sourceTree = "<group>"; };
 		AF83B03923DDF8570055EF9C /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		AF872DFC2382ED7F002B070C /* Galaxy Escape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Galaxy Escape.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF872DFF2382ED7F002B070C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 				AF872E012382ED7F002B070C /* art.scnassets */,
 				AF872E032382ED7F002B070C /* GameViewController.swift */,
 				AF25E0CF23E9CD0600020851 /* LeaderboardViewController.swift */,
-				AF7AF41923E85ED3002462A8 /* ModeScene.swift */,
+				AF7AF41923E85ED3002462A8 /* ModeViewController.swift */,
 				AF25E0CD23E874B000020851 /* ModeSpriteScene.swift */,
 				AF83B03923DDF8570055EF9C /* MenuScene.swift */,
 				AFE3B03223DF300A0062BEEA /* GameScene.swift */,
@@ -462,7 +462,7 @@
 				AF25E0CE23E874B000020851 /* ModeSpriteScene.swift in Sources */,
 				AF08742D240BEF350001C352 /* Achievement.swift in Sources */,
 				AF25E0D423EAF06100020851 /* CollectionViewCell.swift in Sources */,
-				AF7AF41A23E85ED3002462A8 /* ModeScene.swift in Sources */,
+				AF7AF41A23E85ED3002462A8 /* ModeViewController.swift in Sources */,
 				AF25E0D023E9CD0600020851 /* LeaderboardViewController.swift in Sources */,
 				AF2A351D23E194B7002EE6B8 /* GameCenter.swift in Sources */,
 				AF872E002382ED7F002B070C /* AppDelegate.swift in Sources */,

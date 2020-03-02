@@ -13,6 +13,13 @@ import AVFoundation
 import CoreMotion
 import AudioToolbox
 
+enum Mode{
+    case zen
+    case arcade
+    case classic
+    case dash
+}
+
 class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     //Camera Fields
@@ -32,6 +39,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var laserNodeMain: SCNNode!
     var vibrationTimer = Timer()
     var canVibrate: Bool!
+    var mode: Mode!
     
     //Lasers
     var laserCount: Int!
@@ -217,8 +225,16 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         cameraNode.eulerAngles = SCNVector3Zero
     }
     
-    func startGame(){
+    func startGame(modeParameter: Mode){
        
+        mode = modeParameter
+        if mode == .dash{
+            speed = 50.0
+        }
+        else{
+            speed = 20.0
+        }        
+        
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
         meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
         self.rootNode.addChildNode(cameraNode!)
@@ -231,7 +247,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         vibrationCounter = 0
         laserNodeOnScreen = false
         laserCount = 0
-        speed = 20.0
         min = 0
         max = 0
         planetZ = -50

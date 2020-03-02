@@ -29,6 +29,7 @@ class GameOverlayScene: SKScene {
     var gameVC: GameViewController!
     var scoreAdd: Int!
     var powerActive: Bool!
+    var givePowerupAt: Int!
     
     var score = 0 {
         didSet {
@@ -67,6 +68,7 @@ class GameOverlayScene: SKScene {
         meteorLabel.position = CGPoint(x: self.frame.width - (scoreNode.frame.width + 5), y: self.frame.height - scoreNode.frame.height - 7)
         
         self.addChild(meteorLabel)
+        givePowerupAt = 5
         Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.incrementScore), userInfo: nil, repeats: true)
         
     }
@@ -87,7 +89,7 @@ class GameOverlayScene: SKScene {
     
     func incrementMeteor(){
         meteorsDestroyed += 1
-        if meteorsDestroyed == 5{
+        if meteorsDestroyed == givePowerupAt && gameVC.sceneGame.mode != .classic{
             let typed: PowerType = randomPower()
             runPowerup(type: typed)
         }
@@ -125,6 +127,8 @@ class GameOverlayScene: SKScene {
                 self.scoreAdd = 1
                 self.removeLaserNode()
                 self.powerActive = false
+                self.givePowerupAt = self.meteorsDestroyed + 7
+                
             }
         case .slow:
             gameVC.sceneGame.speed = gameVC.sceneGame.speed*0.9
@@ -133,7 +137,7 @@ class GameOverlayScene: SKScene {
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false){ timer in
                 self.removeLaserNode()
                 self.powerActive = false
-
+                self.givePowerupAt = self.meteorsDestroyed + 7
             }
         case .unlimitedLasers:
             gameVC.sceneGame.laserLimit = 100
@@ -142,6 +146,7 @@ class GameOverlayScene: SKScene {
                 self.gameVC.sceneGame.laserLimit = 5
                 self.removeLaserNode()
                 self.powerActive = false
+                self.givePowerupAt = self.meteorsDestroyed + 7
            }
         default:
             //none
