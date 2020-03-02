@@ -180,9 +180,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
 
             //called when button is pressed
             //create cylinder
-            let laser = SCNCylinder(radius: 0.2, height: 3.5)
-            laser.materials.first?.diffuse.contents = UIColor.red
-            let laserNode = SCNNode(geometry: laser)
+           
+            let laserNode = Laser()
             
             laserNode.position = ship.position
             let shipAngles = ship.eulerAngles
@@ -195,19 +194,11 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             laserNode.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue
             laserNode.physicsBody?.collisionBitMask = 0
 
-            if mode != .easy{
-                let z = 50 * cos(ship.eulerAngles.y)
-                let x = 50 * sin(ship.eulerAngles.y)
-                let y = 50 * sin(ship.eulerAngles.x)
-                laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
-            }
-            else{
-                let vec = ship.presentation.worldPosition - findClosestMeteor().presentation.worldPosition
-                let vecNormalised = vec.normalized() * 50
-                
-                
-                laserNode.physicsBody?.velocity = SCNVector3Make(vecNormalised.x, vecNormalised.y, -vecNormalised.z)
-            }
+            let z = 50 * cos(ship.eulerAngles.y)
+            let x = 50 * sin(ship.eulerAngles.y)
+            let y = 50 * sin(ship.eulerAngles.x)
+            laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
+            
             
             laserCount += 1
             
