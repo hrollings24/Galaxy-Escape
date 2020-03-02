@@ -12,7 +12,6 @@
 		8BEDE34F7C069520852F4A90 /* Pods_Galaxy_EscapeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87FD9AB6FA7AAC649790E8D /* Pods_Galaxy_EscapeTests.framework */; };
 		AF08742D240BEF350001C352 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF08742C240BEF350001C352 /* Achievement.swift */; };
 		AF08742F240BEFEE0001C352 /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF08742E240BEFEE0001C352 /* DBHelper.swift */; };
-		AF25E0CE23E874B000020851 /* ModeSpriteScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0CD23E874B000020851 /* ModeSpriteScene.swift */; };
 		AF25E0D023E9CD0600020851 /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0CF23E9CD0600020851 /* LeaderboardViewController.swift */; };
 		AF25E0D223EAEAD100020851 /* AchievementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0D123EAEAD100020851 /* AchievementsViewController.swift */; };
 		AF25E0D423EAF06100020851 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF25E0D323EAF06100020851 /* CollectionViewCell.swift */; };
@@ -61,7 +60,6 @@
 		A0E2318BB52C7B84C629F61A /* Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig"; path = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		AF08742C240BEF350001C352 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		AF08742E240BEFEE0001C352 /* DBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHelper.swift; sourceTree = "<group>"; };
-		AF25E0CD23E874B000020851 /* ModeSpriteScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSpriteScene.swift; sourceTree = "<group>"; };
 		AF25E0CF23E9CD0600020851 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
 		AF25E0D123EAEAD100020851 /* AchievementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsViewController.swift; sourceTree = "<group>"; };
 		AF25E0D323EAF06100020851 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -178,7 +176,6 @@
 				AF872E032382ED7F002B070C /* GameViewController.swift */,
 				AF25E0CF23E9CD0600020851 /* LeaderboardViewController.swift */,
 				AF7AF41923E85ED3002462A8 /* ModeViewController.swift */,
-				AF25E0CD23E874B000020851 /* ModeSpriteScene.swift */,
 				AF7B0B67240D6A8100DBB96B /* Laser.swift */,
 				AF83B03923DDF8570055EF9C /* MenuScene.swift */,
 				AFE3B03223DF300A0062BEEA /* GameScene.swift */,
@@ -465,7 +462,6 @@
 				AFBC7DD02386BC0B00E2C644 /* GameOverlayScene.swift in Sources */,
 				AF83B03A23DDF8570055EF9C /* MenuScene.swift in Sources */,
 				AF872E042382ED7F002B070C /* GameViewController.swift in Sources */,
-				AF25E0CE23E874B000020851 /* ModeSpriteScene.swift in Sources */,
 				AF7B0B64240D431700DBB96B /* Meteor.swift in Sources */,
 				AF08742D240BEF350001C352 /* Achievement.swift in Sources */,
 				AF25E0D423EAF06100020851 /* CollectionViewCell.swift in Sources */,

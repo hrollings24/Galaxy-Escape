@@ -22,7 +22,6 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     var sceneGame: GameScene!
     var spriteScene: GameOverlayScene!
     var menuScene: MenuScene!
-    var modeOverlayScene: ModeOverlayScene!
     var endScene: EndScene!
     var panGesture: UIPanGestureRecognizer!
     var tapGesture: UITapGestureRecognizer!
@@ -207,7 +206,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
        }
     
     func setupStore(){
-        displayAlert(titleString: "Store", messageString: "Check back for future updates!")
+        self.present(displayAlert(titleString: "Store", messageString: "Check back for future updates!"), animated: true)
 
     }
 
@@ -235,7 +234,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     }
     
     func continueGame(){
-        displayAlert(titleString: "Continue", messageString: "Check back for future updates!")
+        self.present(displayAlert(titleString: "Continue", messageString: "Check back for future updates!"), animated: true)
+
     }
     
     func showAchievements(){
@@ -296,12 +296,12 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     }
    
     
-    func displayAlert(titleString: String, messageString: String){
+    func displayAlert(titleString: String, messageString: String) -> UIAlertController{
            let alertController = UIAlertController(title: titleString, message: messageString, preferredStyle: .alert)
            let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in }
            
            alertController.addAction(OKAction)
+           return alertController
            
-           self.present(alertController, animated: true)
        }
 }

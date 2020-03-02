@@ -181,7 +181,9 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             //called when button is pressed
             //create cylinder
            
-            let laserNode = Laser()
+            let laser = SCNCylinder(radius: 0.2, height: 3.5)
+            laser.materials.first?.diffuse.contents = UIColor.red
+            let laserNode = SCNNode(geometry: laser)
             
             laserNode.position = ship.position
             let shipAngles = ship.eulerAngles
@@ -328,18 +330,26 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
    //Collisions
    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        print("Collision")
+        print(contact.nodeA)
+        print(contact.nodeB)
+
         
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
             gameVC.spriteScene.incrementMeteor()
-            contact.nodeA.removeFromParentNode()
+            if let node = contact.nodeA as? Meteor{
+                node.removeFromParentNode()
+            }
             contact.nodeB.removeFromParentNode()
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.meteorCategory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
             //remove meteor and laser
             gameVC.spriteScene.incrementMeteor()
             contact.nodeA.removeFromParentNode()
-            contact.nodeB.removeFromParentNode()
+            if let node = contact.nodeA as? Meteor{
+                node.removeFromParentNode()
+            }
         }
         else if contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.planetCatagory.rawValue && contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.laserCategory.rawValue {
                    //planet and laser

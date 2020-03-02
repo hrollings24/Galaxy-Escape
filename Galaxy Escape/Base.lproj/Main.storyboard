@@ -172,7 +172,10 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DjE-4l-2lA">
                                         <rect key="frame" x="49" y="83" width="213" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button" image="playbutton"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Play">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="arcade:" destination="5fs-Ce-JHO" eventType="touchUpInside" id="PDx-3r-R64"/>
                                         </connections>
@@ -201,7 +204,10 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3IV-Nl-TpD">
                                         <rect key="frame" x="52" y="83" width="213" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button" image="playbutton"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Play">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="dash:" destination="5fs-Ce-JHO" eventType="touchUpInside" id="FWQ-YR-abA"/>
                                         </connections>
@@ -243,7 +249,10 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2XO-zW-FM9">
                                         <rect key="frame" x="44" y="83" width="213" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button" image="playbutton"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                        <state key="normal" title="Play">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="zen:" destination="5fs-Ce-JHO" eventType="touchUpInside" id="dEe-al-hgY"/>
                                         </connections>
@@ -272,7 +281,10 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VJs-TL-BcS">
                                         <rect key="frame" x="46" y="83" width="213" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button" image="playbutton"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Play">
+                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="classic:" destination="5fs-Ce-JHO" eventType="touchUpInside" id="yYv-fl-okF"/>
                                         </connections>
@@ -283,13 +295,16 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="svp-Or-Sh3"/>
                     </view>
+                    <connections>
+                        <outlet property="classicPlay" destination="VJs-TL-BcS" id="0Dn-Sb-6xj"/>
+                        <outlet property="dashPlay" destination="3IV-Nl-TpD" id="jfD-wS-Tb9"/>
+                        <outlet property="easyPlay" destination="DjE-4l-2lA" id="iQ0-do-R5e"/>
+                        <outlet property="zenPlay" destination="2XO-zW-FM9" id="qcT-86-tfv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L09-z6-uDB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="872.66009852216757" y="357.60000000000002"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="playbutton" width="1712" height="535"/>
-    </resources>
 </document>
