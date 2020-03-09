@@ -90,14 +90,15 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     }
     
     func addShip(){
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene(named: "art.scnassets/spaceship.dae")!
         ship = scene.rootNode.childNode(withName: "ship", recursively: true)!
+        ship.scale = SCNVector3Make(1.2, 1.2, 1.2)
         ship.position = SCNVector3(x: 0, y: -2.5, z: 0)
-        //ship.rotation = SCNVector4Make(0, 1, 0, Float.pi)
+        ship.rotation = SCNVector4Make(1, 0, 0, 0.2)
         ship.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
 
         ship.physicsBody?.isAffectedByGravity = false
-        ship.eulerAngles = SCNVector3(0, Float.pi, 0)
+        //ship.eulerAngles = SCNVector3(0, Float.pi, 0)
 
         ship.physicsBody?.categoryBitMask = CollisionCategory.shipCatagory.rawValue
         ship.physicsBody?.contactTestBitMask = CollisionCategory.meteorCategory.rawValue | CollisionCategory.planetCatagory.rawValue
@@ -188,7 +189,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
             
             laserNode.position = ship.position
             let shipAngles = ship.eulerAngles
-            laserNode.eulerAngles = SCNVector3((Float.pi / 2) - shipAngles.x, -shipAngles.y, 0)
+            laserNode.eulerAngles = SCNVector3((Float.pi / 2) + shipAngles.x - 0.2, shipAngles.y, 0)
             laserNode.name = "laser"
             laserNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
             
@@ -199,8 +200,8 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
 
             let z = 50 * cos(ship.eulerAngles.y)
             let x = 50 * sin(ship.eulerAngles.y)
-            let y = 50 * sin(ship.eulerAngles.x)
-            laserNode.physicsBody?.velocity = SCNVector3Make(x, y, -z)
+            let y = 50 * sin(ship.eulerAngles.x-0.2)
+            laserNode.physicsBody?.velocity = SCNVector3Make(-x, y, -z)
             
             
             laserCount += 1
@@ -475,7 +476,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 else if tilt.dy > 0{
                     eulerAngledX = -Float(tiltAngle/80)
                 }
-                let act = SCNAction.rotateTo(x: CGFloat(eulerAngledX), y: CGFloat(eulerAngledY), z: CGFloat(eulerAngledZ), duration: 0.4, usesShortestUnitArc: true)
+                let act = SCNAction.rotateTo(x: -CGFloat(eulerAngledX-0.2), y: CGFloat(eulerAngledY - Float.pi), z: CGFloat(eulerAngledZ), duration: 0.4, usesShortestUnitArc: true)
                 ship.runAction(act)
                 let actCamera = SCNAction.rotateTo(x: 0, y: CGFloat(eulerAngledY - Float.pi), z: 0, duration: 0.5, usesShortestUnitArc: true)
                 cameraNode.runAction(actCamera)
@@ -487,7 +488,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
            
             planetNode.enumerateChildNodes { (node, stop) in
                 if let meteor = node as? Meteor {
-                    node.physicsBody?.velocity = SCNVector3Make(-x, 0, z+Float.random(in: 4..<12))
+                    node.physicsBody?.velocity = SCNVector3Make(x, 0, z+Float.random(in: 4..<12))
                     //VIBRATIONS
                     if canVibrate!{
                         if (checkDistanceBetween(node1: node)) != .medium{
@@ -512,7 +513,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                     meteor.updateDistance(newDistance: length)
                 }
                 else{
-                    node.physicsBody?.velocity = SCNVector3Make(-x, 0, z)
+                    node.physicsBody?.velocity = SCNVector3Make(x, 0, z)
                 }
                 //Check to remove node
                 if node.presentation.worldPosition.z > (15 + (node.geometry?.boundingSphere.radius ?? 0)){
