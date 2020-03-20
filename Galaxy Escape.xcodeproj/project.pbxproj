@@ -31,6 +31,7 @@
 		AF872E172382ED82002B070C /* Galaxy_EscapeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF872E162382ED82002B070C /* Galaxy_EscapeTests.swift */; };
 		AF872E222382ED82002B070C /* Galaxy_EscapeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF872E212382ED82002B070C /* Galaxy_EscapeUITests.swift */; };
 		AF872E34238420CE002B070C /* SPACP.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AF872E33238420CE002B070C /* SPACP.TTF */; };
+		AF9635102424E5F300A47D94 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF96350F2424E5F300A47D94 /* SettingsViewController.swift */; };
 		AFBC7DD02386BC0B00E2C644 /* GameOverlayScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBC7DCF2386BC0B00E2C644 /* GameOverlayScene.swift */; };
 		AFE3B03323DF300A0062BEEA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3B03223DF300A0062BEEA /* GameScene.swift */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		AF872E212382ED82002B070C /* Galaxy_EscapeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Galaxy_EscapeUITests.swift; sourceTree = "<group>"; };
 		AF872E232382ED82002B070C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF872E33238420CE002B070C /* SPACP.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = SPACP.TTF; sourceTree = "<group>"; };
+		AF96350F2424E5F300A47D94 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		AFBC7DCF2386BC0B00E2C644 /* GameOverlayScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverlayScene.swift; sourceTree = "<group>"; };
 		AFE3B03223DF300A0062BEEA /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		D14209FB8B7BE79D4264D8B5 /* Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig"; path = "Target Support Files/Pods-Galaxy Escape-Galaxy EscapeUITests/Pods-Galaxy Escape-Galaxy EscapeUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				AF08742C240BEF350001C352 /* Achievement.swift */,
 				AF08742E240BEFEE0001C352 /* DBHelper.swift */,
 				AF872E052382ED7F002B070C /* Main.storyboard */,
+				AF96350F2424E5F300A47D94 /* SettingsViewController.swift */,
 				AF25E0D323EAF06100020851 /* CollectionViewCell.swift */,
 				AF872E082382ED82002B070C /* Assets.xcassets */,
 				AF872E0A2382ED82002B070C /* LaunchScreen.storyboard */,
@@ -462,6 +465,7 @@
 				AFBC7DD02386BC0B00E2C644 /* GameOverlayScene.swift in Sources */,
 				AF83B03A23DDF8570055EF9C /* MenuScene.swift in Sources */,
 				AF872E042382ED7F002B070C /* GameViewController.swift in Sources */,
+				AF9635102424E5F300A47D94 /* SettingsViewController.swift in Sources */,
 				AF7B0B64240D431700DBB96B /* Meteor.swift in Sources */,
 				AF08742D240BEF350001C352 /* Achievement.swift in Sources */,
 				AF25E0D423EAF06100020851 /* CollectionViewCell.swift in Sources */,

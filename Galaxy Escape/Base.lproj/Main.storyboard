@@ -83,6 +83,52 @@
             </objects>
             <point key="canvasLocation" x="139" y="127"/>
         </scene>
+        <!--settings-->
+        <scene sceneID="3bS-ef-UNZ">
+            <objects>
+                <viewController storyboardIdentifier="settings" title="settings" useStoryboardIdentifierAsRestorationIdentifier="YES" id="uXN-Le-6G5" customClass="SettingsViewController" customModule="Galaxy_Escape" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ceG-iH-4XI">
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7k-3L-PIx">
+                                <rect key="frame" x="0.0" y="38" width="50" height="298"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <state key="normal" title="&lt;">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="5fs-Ce-JHO" eventType="touchUpInside" id="6hb-jh-8c5"/>
+                                    <action selector="back:" destination="uXN-Le-6G5" eventType="touchUpInside" id="TDV-nS-4Ha"/>
+                                    <action selector="back:" destination="bol-Vo-1nT" eventType="touchUpInside" id="pIO-bI-k3h"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="vibrations" translatesAutoresizingMaskIntoConstraints="NO" id="M82-GI-7gO">
+                                <rect key="frame" x="128" y="38" width="290" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n6p-EY-JD2">
+                                <rect key="frame" x="403" y="48" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="vibChanged:" destination="uXN-Le-6G5" eventType="valueChanged" id="mow-hy-22t"/>
+                                    <action selector="vibChangedd:" destination="uXN-Le-6G5" eventType="editingChanged" id="erm-vX-62s"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="ZKE-aa-a6g"/>
+                    </view>
+                    <connections>
+                        <outlet property="vibswitch" destination="n6p-EY-JD2" id="XRT-Qx-ho3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FTZ-iW-rS6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="872.66009852216757" y="-1362.4000000000001"/>
+        </scene>
         <!--leaderboard-->
         <scene sceneID="GkW-6C-f0d">
             <objects>
@@ -307,4 +353,7 @@
             <point key="canvasLocation" x="872.66009852216757" y="357.60000000000002"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="vibrations" width="1712" height="306"/>
+    </resources>
 </document>

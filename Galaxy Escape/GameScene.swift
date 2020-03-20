@@ -31,7 +31,6 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var shipOnScreen: Bool!
 
     //Gameplay Fields
-    var meteorNodeMain: SCNNode!
     var meteorTimer = Timer()
     var speed: Float!
     var motionManager: CMMotionManager!
@@ -490,7 +489,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
                 if let meteor = node as? Meteor {
                     node.physicsBody?.velocity = SCNVector3Make(x, 0, z+Float.random(in: 4..<12))
                     //VIBRATIONS
-                    if canVibrate!{
+                    if canVibrate! && UserDefaults.standard.value(forKey: "vibrations") as! Bool{
                         if (checkDistanceBetween(node1: node)) != .medium{
                             let generator = UIImpactFeedbackGenerator(style: checkDistanceBetween(node1: node))
                             generator.impactOccurred()

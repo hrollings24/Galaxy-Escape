@@ -195,8 +195,8 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                    if name == "modes"{
                        setupModes()
                    }
-                    if name == "store"{
-                        setupStore()
+                    if name == "settings"{
+                        setupSettings()
                     }
                    if name == "achievements"{
                        showAchievements()
@@ -204,6 +204,20 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                }
            }
        }
+    
+    func setupSettings(){
+        sceneGame.removeShip()
+        self.sceneView.overlaySKScene = nil
+
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "settings") as! SettingsViewController
+        viewController.gameVC = self
+        viewController.providesPresentationContextTransitionStyle = true
+        viewController.definesPresentationContext = true
+        viewController.modalPresentationStyle = .overCurrentContext
+        viewController.modalTransitionStyle = .crossDissolve
+        self.present(viewController, animated: true, completion: nil)
+    }
     
     func setupStore(){
         self.present(displayAlert(titleString: "Store", messageString: "Check back for future updates!"), animated: true)

@@ -48,6 +48,9 @@ class MenuScene: SKScene{
         else{
             highscoreLB.text = NSString(format: "HIGHSCORE: %i", UserDefaults.standard.value(forKey: "highscore") as! Int) as String
         }
+        if UserDefaults.standard.value(forKey: "vibrations") == nil{
+           UserDefaults.standard.set(true, forKey: "vibrations")
+        }
         
         self.addChild(highscoreLB)
         
@@ -67,10 +70,10 @@ class MenuScene: SKScene{
         modesButton.name = "modes"
         self.addChild(modesButton)
         
-        let storeButton = SKSpriteNode(imageNamed: "storebutton")
+        let storeButton = SKSpriteNode(imageNamed: "settingsbutton")
         storeButton.size = CGSize(width: self.frame.width/3 -  self.frame.width/10, height: ((self.frame.width/3 -  self.frame.width/10)*535)/1712)
         storeButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/12, y: self.frame.height/7*4)
-        storeButton.name = "store"
+        storeButton.name = "settings"
         self.addChild(storeButton)
         
         let achievementsButton = SKSpriteNode(imageNamed: "achievementsbutton")
