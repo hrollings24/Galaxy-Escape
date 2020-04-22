@@ -40,6 +40,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     var canVibrate: Bool!
     var mode: Mode!
     var randomX: Int!
+    var inverse: Bool!
     
     //Lasers
     var laserCount: Int!
@@ -225,6 +226,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func startGame(modeParameter: Mode){
        
+        inverse = UserDefaults.standard.value(forKey: "inverse") as! Bool
         randomX = 0
         mode = modeParameter
         if mode == .dash{

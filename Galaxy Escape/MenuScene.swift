@@ -27,6 +27,14 @@ class MenuScene: SKScene{
     }
     
     func setupScene(){
+        
+        if UserDefaults.standard.value(forKey: "inverse") == nil{
+            UserDefaults.standard.set(false, forKey: "inverse")
+        }
+        if UserDefaults.standard.value(forKey: "fireBtnPos") == nil{
+            UserDefaults.standard.set("left", forKey: "fireBtnPos")
+        }
+        
         let logo = SKSpriteNode(imageNamed: "temp_logo")
         logo.size = CGSize(width: self.frame.width/2 -  self.frame.width/12, height: ((self.frame.width/2 -  self.frame.width/12)*1025)/1949)
         logo.position = CGPoint(x: self.frame.width/24 + logo.size.width/2, y: self.frame.height/3*2)
@@ -49,7 +57,7 @@ class MenuScene: SKScene{
             highscoreLB.text = NSString(format: "HIGHSCORE: %i", UserDefaults.standard.value(forKey: "highscore") as! Int) as String
         }
         if UserDefaults.standard.value(forKey: "vibrations") == nil{
-           UserDefaults.standard.set(true, forKey: "vibrations")
+           UserDefaults.standard.set(false, forKey: "vibrations")
         }
         
         self.addChild(highscoreLB)

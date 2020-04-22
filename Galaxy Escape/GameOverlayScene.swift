@@ -80,8 +80,23 @@ class GameOverlayScene: SKScene {
     func addFireButton(){
     
         let fireBtn = SKSpriteNode(imageNamed: "firebutton")
+
+
         fireBtn.size = CGSize(width: 80, height: 80)
-        fireBtn.position = CGPoint(x: 80, y: 80)
+        if UserDefaults.standard.value(forKey: "fireBtnPos") as! String == "left"{
+            fireBtn.position = CGPoint(x: 80, y: 80)
+        }
+        else if UserDefaults.standard.value(forKey: "fireBtnPos") as! String == "right"{
+            fireBtn.position = CGPoint(x: self.frame.width - 80, y: 80)
+        }
+        else{
+            fireBtn.position = CGPoint(x: self.frame.width - 80, y: 80)
+            let fireBtnDup = SKSpriteNode(imageNamed: "firebutton")
+            fireBtnDup.size = CGSize(width: 80, height: 80)
+            fireBtnDup.position = CGPoint(x: 80, y: 80)
+            fireBtnDup.name = "fire"
+            self.addChild(fireBtnDup)
+        }
         fireBtn.name = "fire"
 
         self.addChild(fireBtn)
