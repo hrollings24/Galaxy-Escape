@@ -35,7 +35,7 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         endView = UIView()
         GameCenter.shared.authPlayer(presentingVC: self)
         GameCenter.shared.checkAchievements()
@@ -158,14 +158,13 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                let touchedNode = endScene.atPoint(touchLocation)
 
                if let name = touchedNode.name {
-                   print(name)
                    if name == "replay"{
                         for view in self.endView.subviews{
                             view.removeFromSuperview()
                         }
                         setupGame(mode: sceneGame.mode)
                    }
-                    if name == "continue"{
+                   else if name == "continue"{
                                           continueGame()
                                       }
                    else if name == "menu"{
@@ -174,6 +173,24 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
                         }
                        setupMenu()
                    }
+                    else if name == "share"{
+                    let textToShare = "I just achieved a score of \(String(describing: self.endScene.totalScore!)) on Galaxy Escape! Avaliable now on the App Store."
+
+                         let objectsToShare = [textToShare]
+                         let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+
+                    activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop, UIActivity.ActivityType.addToReadingList]
+
+                    let currentViewController:UIViewController=UIApplication.shared.keyWindow!.rootViewController!
+
+                    activityVC.popoverPresentationController?.sourceView = self.view
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        activityVC.popoverPresentationController?.sourceRect = sender.self.accessibilityFrame
+                    }
+
+                    
+                    currentViewController.present(activityVC, animated: true, completion: nil)
+                    }
                }
            }
        }
@@ -318,4 +335,23 @@ class GameViewController: UIViewController, UIGestureRecognizerDelegate, GKGameC
            return alertController
            
        }
+    
+    func pause(){
+        sceneGame.isPaused = true
+        spriteScene.isPaused = true
+        spriteScene.scoreTimer.invalidate()
+        sceneGame.meteorTimer.invalidate()
+    }
+    
+    func unpause(){
+        sceneGame.isPaused = false
+        spriteScene.isPaused = false
+        sceneGame.runMeteorTimer()
+        spriteScene.runScoreTimer()
+        
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }

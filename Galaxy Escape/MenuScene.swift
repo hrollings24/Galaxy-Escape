@@ -44,9 +44,9 @@ class MenuScene: SKScene{
         highscoreLB = SKLabelNode()
         highscoreLB.fontName = "SpacePatrol"
         highscoreLB.fontColor = UIColor.red
-        highscoreLB.fontSize = 24
+        highscoreLB.fontSize = setCustomFont()
         
-        highscoreLB.position = CGPoint(x: self.frame.width/24 + logo.size.width/2, y: logo.position.y - logo.size.height/2 - 30)
+        highscoreLB.position = CGPoint(x: self.frame.width/24 + logo.size.width/2, y: logo.position.y - logo.size.height/2 - 40)
         if UserDefaults.standard.value(forKey: "highscore") == nil{
             //INITALISE DB
             initaliseDB()
@@ -55,6 +55,9 @@ class MenuScene: SKScene{
         }
         else{
             highscoreLB.text = NSString(format: "HIGHSCORE: %i", UserDefaults.standard.value(forKey: "highscore") as! Int) as String
+        }
+        if UserDefaults.standard.value(forKey: "powerup") == nil{
+            UserDefaults.standard.set(false, forKey: "powerup")
         }
         if UserDefaults.standard.value(forKey: "vibrations") == nil{
            UserDefaults.standard.set(false, forKey: "vibrations")
@@ -106,14 +109,29 @@ class MenuScene: SKScene{
         achArray.append((id: 4, name: "Pro Meteor Destroyer", barrier: 1000, Progress: 0, description: "Destroy 1000 meteors to unlock this achievement", percentage: 0))
         achArray.append((id: 5, name: "Learning Player", barrier: 100, Progress: 0, description: "Score over 100 playing the game", percentage: 0))
         achArray.append((id: 6, name: "Advanced Player", barrier: 200, Progress: 0, description: "Score over 200 playing the game", percentage: 0))
-        achArray.append((id: 7, name: "Pro Player", barrier: 300, Progress: 0, description: "Score over 300 playing the game", percentage: 0))
+        achArray.append((id: 7, name: "Pro Player", barrier: 250, Progress: 0, description: "Score over 250 playing the game", percentage: 0))
         achArray.append((id: 8, name: "Advanced Pro Player", barrier: 100, Progress: 0, description: "Unlock Pro Meteor Destroyer and Pro Player", percentage: 0))
-        achArray.append((id: 9, name: "Expert Player", barrier: 300, Progress: 0, description: "Unlock Pro and Commited players", percentage: 0))
+        achArray.append((id: 9, name: "Expert Player", barrier: 250, Progress: 0, description: "Unlock Pro and Commited players", percentage: 0))
 
         let db = DBHelper()
         for element in achArray{
             db.insert(id: element.id, name: element.name, barrier: element.barrier, progress: element.Progress, description: element.description, percentage: element.percentage)
         }
+    }
+    
+    func setCustomFont() -> CGFloat {
+
+        //Current runable device/simulator width find
+        let bounds = UIScreen.main.bounds
+        let width = bounds.size.width
+
+        // basewidth you have set like your base storybord is IPhoneSE this storybord width 320px.
+        let baseWidth: CGFloat = 1194
+
+        // "14" font size is defult font size
+        let fontSize = 48 * (width / baseWidth)
+
+        return fontSize
     }
     
 }

@@ -30,6 +30,7 @@ class GameOverlayScene: SKScene {
     var scoreAdd: Int!
     var powerActive: Bool!
     var givePowerupAt: Int!
+    var scoreTimer: Timer!
     
     var score = 0 {
         didSet {
@@ -69,8 +70,7 @@ class GameOverlayScene: SKScene {
         
         self.addChild(meteorLabel)
         givePowerupAt = 5
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.incrementScore), userInfo: nil, repeats: true)
-        
+        runScoreTimer()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -106,7 +106,24 @@ class GameOverlayScene: SKScene {
         meteorsDestroyed += 1
         if meteorsDestroyed == givePowerupAt && gameVC.sceneGame.mode != .classic{
             let typed: PowerType = randomPower()
-            runPowerup(type: typed)
+            if !(UserDefaults.standard.value(forKey: "powerup") as! Bool) {
+                DispatchQueue.main.async{
+                    //first time recieving a powerup!
+                    //PAUSE GAME
+                    UserDefaults.standard.set(true, forKey: "powerup")
+                    self.gameVC.pause()
+                    let alert = UIAlertController(title: "Powerup!", message: "After destroying meteors, you recieve one of these powerups: Unlimited Lasers, Double Score or a Slowdown", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { action in
+                        //run your function here
+                        self.gameVC.unpause()
+                        self.runPowerup(type: typed)
+                    }))
+                    self.gameVC.present(alert, animated: true, completion: nil)
+                }
+            }
+            else{
+                runPowerup(type: typed)
+            }
         }
     }
     
@@ -157,7 +174,7 @@ class GameOverlayScene: SKScene {
         case .unlimitedLasers:
             gameVC.sceneGame.laserLimit = 100
             addPowerupNode(text: "Unlimited Lasers")
-            Timer.scheduledTimer(withTimeInterval: 3, repeats: false){ timer in
+            Timer.scheduledTimer(withTimeInterval: 4, repeats: false){ timer in
                 self.gameVC.sceneGame.laserLimit = 5
                 self.removeLaserNode()
                 self.powerActive = false
@@ -197,5 +214,10 @@ class GameOverlayScene: SKScene {
 
         self.addChild(laserNode)
         
+    }
+    
+    func runScoreTimer(){
+        scoreTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.incrementScore), userInfo: nil, repeats: true)
+
     }
 }

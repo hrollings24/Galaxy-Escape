@@ -133,6 +133,10 @@ class LeaderboardViewController: UIViewController, GKGameCenterControllerDelegat
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true, completion: nil)
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
 }
 

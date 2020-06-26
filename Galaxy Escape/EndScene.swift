@@ -34,15 +34,15 @@ class EndScene: SKScene {
         let scoreLB = SKLabelNode()
         scoreLB.fontColor = UIColor.red
         scoreLB.fontName = "SpacePatrol"
-        scoreLB.fontSize = 42
-        scoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: self.frame.height - 70)
+        scoreLB.fontSize = setCustomFont()
+        scoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: self.frame.height - (self.frame.height/5))
         scoreLB.text = "Timed Score: " + "\(String(describing: score!))"
         self.addChild(scoreLB)
         
         let destroyedLB = SKLabelNode()
         destroyedLB.fontColor = UIColor.red
         destroyedLB.fontName = "SpacePatrol"
-        destroyedLB.fontSize = 32
+        destroyedLB.fontSize = setCustomFont()
         destroyedLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: (scoreLB.position.y) - scoreLB.frame.height)
         destroyedLB.text = "Meteors Destroyed: " + "\(String(describing: destroyed!))"
         self.addChild(destroyedLB)
@@ -51,10 +51,11 @@ class EndScene: SKScene {
         let highscoreLB = SKLabelNode()
         highscoreLB.fontName = "SpacePatrol"
         highscoreLB.fontColor = UIColor.red
-        highscoreLB.fontSize = 34
+        highscoreLB.fontSize = setCustomFont()
         let y = destroyedLB.position.y - destroyedLB.frame.height*2 - 70
         highscoreLB.position = CGPoint(x: self.frame.width/24 + (self.frame.width/3*2 -  self.frame.width/12)/2, y: y)
         highscoreLB.text = highScoreText()
+        highscoreLB.name = "highscorenode"
         self.addChild(highscoreLB)
         
         addButtons()
@@ -68,17 +69,17 @@ class EndScene: SKScene {
         playButton.name = "replay"
         self.addChild(playButton)
         
-        let modesButton = SKSpriteNode(imageNamed: "continueButton")
+        let modesButton = SKSpriteNode(imageNamed: "menuButton")
         modesButton.size = CGSize(width: self.frame.width/2 -  self.frame.width/10, height: ((self.frame.width/2 -  self.frame.width/10)*312)/1712)
         modesButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/20, y: self.frame.height/7*5)
-        modesButton.name = "continue"
+        modesButton.name = "menu"
         self.addChild(modesButton)
         
-        let storeButton = SKSpriteNode(imageNamed: "menuButton")
-        storeButton.size = CGSize(width: self.frame.width/2 -  self.frame.width/10, height: ((self.frame.width/2 -  self.frame.width/10)*312)/1712)
-        storeButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/20, y: self.frame.height/7*4)
-        storeButton.name = "menu"
-        self.addChild(storeButton)
+        let shareButton = SKSpriteNode(imageNamed: "share")
+        shareButton.size = CGSize(width: (self.frame.width/2 -  self.frame.width/10)/3, height: (((self.frame.width/2 -  self.frame.width/10)*248)/486)/3)
+        shareButton.position = CGPoint(x: (self.frame.width - playButton.size.width/2) -  self.frame.width/20, y: self.frame.height/7*2)
+        shareButton.name = "share"
+        self.addChild(shareButton)
         
     }
     
@@ -165,8 +166,9 @@ class EndScene: SKScene {
     
     func addCounterNode() -> EFCountingLabel{
         
-        let finalScoreLB = EFCountingLabel(frame: CGRect(x: self.frame.width/3 - (self.frame.width/2 -  self.frame.width/10)/2, y: self.frame.height/2 - 20, width: self.frame.width/2 -  self.frame.width/8, height: 40))
-        finalScoreLB.font = UIFont(name: "SpacePatrol", size: 48)
+        let y = (self.childNode(withName: "highscorenode")?.position.y)! + 60
+        let finalScoreLB = EFCountingLabel(frame: CGRect(x: self.frame.width/3 - (self.frame.width/2 -  self.frame.width/10)/2, y: y, width: self.frame.width/2 -  self.frame.width/8, height: 40))
+        finalScoreLB.font = UIFont(name: "SpacePatrol", size: setCustomFont())
         finalScoreLB.adjustsFontSizeToFitWidth = true
         finalScoreLB.backgroundColor = UIColor.clear
         finalScoreLB.textAlignment = .center
@@ -180,4 +182,19 @@ class EndScene: SKScene {
         finalScoreLB.countFrom(CGFloat(score), to: CGFloat(totalScore))
         return finalScoreLB
     }
+    
+    func setCustomFont() -> CGFloat {
+
+           //Current runable device/simulator width find
+           let bounds = UIScreen.main.bounds
+           let width = bounds.size.width
+
+           // basewidth you have set like your base storybord is IPhoneSE this storybord width 320px.
+           let baseWidth: CGFloat = 1194
+
+           // "14" font size is defult font size
+           let fontSize = 64 * (width / baseWidth)
+
+           return fontSize
+       }
 }

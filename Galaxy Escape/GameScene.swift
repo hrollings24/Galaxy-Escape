@@ -226,7 +226,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
     
     func startGame(modeParameter: Mode){
        
-        inverse = UserDefaults.standard.value(forKey: "inverse") as! Bool
+        inverse = UserDefaults.standard.value(forKey: "inverse") as? Bool
         randomX = 0
         mode = modeParameter
         if mode == .dash{
@@ -240,9 +240,7 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         }        
         
         // Scheduling timer to Call the function "spawnMeteor" with the interval of 0.5 seconds
-        if mode != .sprint{
-            meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
-        }
+        runMeteorTimer()
         self.rootNode.addChildNode(cameraNode!)
 
         texturePointer = 0
@@ -576,6 +574,14 @@ class GameScene: SCNScene, SCNPhysicsContactDelegate, SCNSceneRendererDelegate{
         }
         return closestNode
     }
+    
+    func runMeteorTimer(){
+        if mode != .sprint{
+            meteorTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.spawnMeteor1), userInfo: nil, repeats: true)
+        }
+    }
+    
+    
 }
 
 

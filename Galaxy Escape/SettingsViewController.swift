@@ -8,6 +8,13 @@
 
 import UIKit
 
+enum UIUserInterfaceIdiom : Int {
+    case unspecified
+
+    case phone // iPhone and iPod touch style UI
+    case pad   // iPad style UI (also includes macOS Catalyst)
+}
+
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var vibswitch: UISwitch!
@@ -16,12 +23,21 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var rightbutton: UIButton!
     @IBOutlet weak var bothbutton: UIButton!
     @IBOutlet weak var inverseswitch: UISwitch!
+    @IBOutlet weak var vibImage: UIImageView!
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if UIDevice.current.userInterfaceIdiom == .pad{
+            vibswitch.isHidden = true
+            vibImage.isHidden = true
+        }
+        
         vibswitch.setOn(UserDefaults.standard.value(forKey: "vibrations") as! Bool, animated: false)
-        inverseswitch.setOn(UserDefaults.standard.value(forKey: "inverse") as! Bool, animated: false)
         let fireBtnPos = UserDefaults.standard.value(forKey: "fireBtnPos") as! String
         setFireBtn(fireBtnPos: fireBtnPos)
         
@@ -42,16 +58,6 @@ class SettingsViewController: UIViewController {
        }
     }
     
-    @IBAction func invChanged(_ sender: Any) {
-        let swh : UISwitch = sender as! UISwitch
-
-        if swh.isOn {
-          UserDefaults.standard.set(true, forKey: "inverse")
-        } else {
-          UserDefaults.standard.set(false, forKey: "inverse")
-        }
-        
-    }
     
     @IBAction func left(_ sender: Any) {
         UserDefaults.standard.set("left", forKey: "fireBtnPos")
